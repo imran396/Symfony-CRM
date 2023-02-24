@@ -1,0 +1,26 @@
+<table id="indexTable" class="table">
+        <thead>
+            <tr>
+                <th>{% trans %}Url{% endtrans %}</th>
+                <th>{% trans %}Alias{% endtrans %}</th>
+                <th>{% trans %}Last post{% endtrans %}</th>
+                <th>{% trans %}Actions{% endtrans %}</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for entity in entities %}
+            <tr>
+                <td><a target="_blank" href="{{ entity.url }}">{{ entity.url|truncate(50) }}</a></td>
+                <td>{{ entity.alias }}</td>
+                <td>{% if entity.lastPost %}{{ entity.lastPost|date('d.m.Y H:i') }}{% endif %}</td>
+
+                <td>
+                    <a class="btn btn-table-actions markdone" href="{{ path('facebookurl_postednow', { 'id': entity.id }) }}">{% trans %}mark done{% endtrans %}</a>
+                    <a class="btn btn-table-actions" href="{{ path('facebookurl_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                    <a class="btn btn-table-actions" href="{{ path('facebookurl_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>

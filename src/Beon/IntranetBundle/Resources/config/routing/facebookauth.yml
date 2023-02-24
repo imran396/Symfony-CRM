@@ -1,0 +1,9 @@
+
+facebook_auth_path:
+    pattern: /auth/
+    defaults: { _controller: "IntranetBundle:FacebookAuth:auth" }
+facebook_accesstoken:
+    pattern: /access-token/
+    defaults: { _controller: "IntranetBundle:FacebookAuth:accessToken" }
+
+

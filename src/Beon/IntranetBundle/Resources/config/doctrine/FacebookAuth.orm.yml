@@ -1,0 +1,18 @@
+Beon\IntranetBundle\Entity\FacebookAuth:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        authToken:
+            type: text
+            column: auth_token
+        expiresAt:
+            type: datetime
+        createdAt:
+            type: datetime
+    lifecycleCallbacks: {  }

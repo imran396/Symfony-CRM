@@ -1,0 +1,51 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    {% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">Excel import</div>
+            
+            <div id="widget1container" class="block-body collapse in">
+                {% if unmatchedRows %}
+                    <h2>Achtung! Die folgenden Betrieb konnten nicht zugeordnet werden.</h2>
+                    <ul>
+                    {% for row in unmatchedRows %}
+                        <li>{{row}}</li>
+                    {% endfor %}
+                    </ul>
+                    <p>Diese Betriebe werden im folgenden vollkommen ignoriert. Gegebenfalls Datei erneut hochladen.</p>
+                {% endif %}
+                
+                {% if output %}
+                    <h2>{% if done %}Ergebnis{% else %}Testlauf{% endif %}</h2>
+                    <ul>
+                    {% for row in output %}
+                        <li>
+                            {{row.task}}
+                            <ul>
+                            {% for action in row.actions %}
+                                <li>
+                                    {{action.stakeholder}}
+                                    <ul>
+                                        {% for out in action.out %}
+                                            <li>{{out|nl2br}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                {% if not done %}
+                    <h2>Zuordnung</h2>
+                    {{ form(form) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

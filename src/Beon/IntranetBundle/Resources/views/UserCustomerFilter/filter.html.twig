@@ -1,0 +1,24 @@
+<div class="btn-group">
+  {{ form_start(userChoiceForm, {'attr':{'id':'userFilter'} }) }}
+  {% if userChoiceForm.user is defined %}
+    {{ form_widget(userChoiceForm.user, { 'attr':{'placeholder':'Select a user'|trans}}) }}
+  {% endif %}
+  {% if userChoiceForm.stakeholder is defined %}
+    {{ form_widget(userChoiceForm.stakeholder, { 'attr':{'placeholder':'Select a stakeholder'|trans} }) }}
+  {% endif %}
+  {% if userChoiceForm.city is defined %}
+    {{ form_widget(userChoiceForm.city, { 'attr':{'placeholder':'Select a city'|trans} }) }}
+  {% endif %}
+  {% if userChoiceForm.supplierType is defined %}
+    {{ form_widget(userChoiceForm.supplierType) }}
+  {% endif %}
+  {% if userChoiceForm.noteType is defined %}
+    {{ form_widget(userChoiceForm.noteType) }}
+  {% endif %}
+  {% if userChoiceForm.plainText is defined %}
+    {{ form_widget(userChoiceForm.plainText) }}
+  {% endif %}
+  {{ form_widget(userChoiceForm.submit) }}
+  {{ form_widget(userChoiceForm.clear) }}
+  {{ form_end(userChoiceForm) }}
+</div>

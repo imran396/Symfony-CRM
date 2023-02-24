@@ -1,0 +1,20 @@
+<tr>
+    <td style="width: 30%;">
+                                    <span style="cursor: pointer"
+                                          title="{{ task.description }}"> {{ task.title }}</span>
+    </td>
+    <td>
+        {{ task.user }}
+    </td>
+    <td>
+        {{ task.dueDate|date( defaultDateFormat) }}
+    </td>
+    <td>
+        {{ task.status|taskStatus }}
+    </td>
+    <td>
+        <a class="btn btn-table-actions"
+           href="{{ path('task_show',{'id':task.id}) }}">{% trans %}show{% endtrans %}</a>
+    </td>
+
+</tr>

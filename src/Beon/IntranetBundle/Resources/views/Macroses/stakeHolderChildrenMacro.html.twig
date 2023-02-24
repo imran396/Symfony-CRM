@@ -1,0 +1,33 @@
+{% macro entitiesIndex(entities, parentLevel) %}
+    <div class="block">
+        <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{{ parentLevel }}</div>
+        <div class="block-body">
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th>{% trans %}Name{% endtrans %}</th>
+                    <th>{% trans %}Address{% endtrans %}</th>
+                    <th>{% trans %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for entity in entities %}
+                    <tr>
+                        <td>{{ entity.name }}</td>
+                        <td>{{ entity.address }}</td>
+                        <td>
+                            <a class="btn btn-table-actions"
+                               href="{{ path('customer_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+{% endmacro %}

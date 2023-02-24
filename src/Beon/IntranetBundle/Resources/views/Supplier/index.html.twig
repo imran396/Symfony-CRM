@@ -1,0 +1,24 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <h1 class="page-title">{% trans %}Suppliers{% endtrans %}</h1>
+
+    <div class="btn-toolbar">
+        <a href="{{ path('supplier_new') }}" class="btn "><i class="icon-plus"></i> {% trans %}New supplier{% endtrans %}</a>
+	    {{filterForm|raw}}
+    </div>
+
+    <div class="well">
+        <div id="tablewidget" class="block-body collapse in">
+            {% include 'IntranetBundle:Supplier:indexTable.html.twig' %}
+        </div>
+    </div>
+
+
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+
+
+
+

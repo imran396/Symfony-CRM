@@ -1,0 +1,33 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Last name{% endtrans %}</th>
+        <th>{% trans %}First name{% endtrans %}</th>
+        <th>{% trans %}Email{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.lastName }}</td>
+            <td>{{ entity.firstName }}</td>
+            <td>{{ entity.email }}</td>
+            <td>
+                <div class="inline-forms">
+                    {% block actionsRows %}
+                    <a class="btn btn-table-actions"
+                       href="{{ path('contact_show', { 'id': entity.id }) }}">{% trans %}
+                        show{% endtrans %}</a>
+                    <a class="btn btn-table-actions"
+                       href="{{ path('contact_edit', { 'id': entity.id }) }}">{% trans %}
+                        edit{% endtrans %}</a>
+                    {% endblock %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+

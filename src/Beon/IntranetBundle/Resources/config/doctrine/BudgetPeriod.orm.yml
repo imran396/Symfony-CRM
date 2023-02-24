@@ -1,0 +1,32 @@
+Beon\IntranetBundle\Entity\BudgetPeriod:
+    type: entity
+    table: BudgetPeriod
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\BudgetPeriodRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        start:
+            type: date
+            nullable: true
+        end:
+            type: date
+            nullable: true
+        budget:
+            type: integer
+            nullable: true
+            unsigned: true
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            inversedBy: budgetPeriods
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+    lifecycleCallbacks: {  }

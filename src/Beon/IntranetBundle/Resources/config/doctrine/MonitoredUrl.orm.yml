@@ -1,0 +1,34 @@
+Beon\IntranetBundle\Entity\MonitoredUrl:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\MonitoredUrlRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        url:
+            type: string
+            length: 255
+        lastCheck:
+            type: datetime
+            column: last_check
+        isOwnWebsite:
+            type: boolean
+            column: is_own_website
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            inversedBy: MonitoredUrl
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "CASCADE"
+    oneToMany:
+        notes:
+            targetEntity: Note
+            mappedBy: monitoredurl
+    lifecycleCallbacks: {  }

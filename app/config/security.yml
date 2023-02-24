@@ -1,0 +1,133 @@
+parameters:
+    ach.stakeholder_restricted:  [ROLE_STAKEHOLDER, ROLE_PRESSRELEASE, ROLE_ALL, ROLE_STAKEHOLDER_RESTRICTED]
+    ach.facebook: [ROLE_STAKEHOLDER, ROLE_PRESSRELEASE, ROLE_ALL, ROLE_FACEBOOK]
+security:
+    providers:
+        administrators:
+            entity: { class: IntranetBundle:User }
+
+    encoders:
+          Beon\IntranetBundle\Entity\User:
+              algorithm:        plaintext
+              encode_as_base64: false
+              iterations:       1
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        supplier:
+            pattern:  ^/supplier/offer
+            security: false
+
+        external_upload:
+            pattern:  ^/upload/campaign
+            security: false
+
+        upload_public:
+            pattern:  ^/upload/public/
+            security: false
+            
+
+        mailgun_upload:
+            pattern:  ^/upload/mailgun
+            security: false
+
+        login:
+            pattern:  ^/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            form_login:
+                check_path: login_check
+                login_path: login
+            logout:
+#                invalidate_session: false
+                path:   logout
+                target: /login
+
+    access_control:
+            - { path: ^/user, roles: [ROLE_USERS] }
+            - { path: ^/accesslevel, roles: [ROLE_USERS] }
+            - { path: ^/facebookurl, roles: [ROLE_FACEBOOKURLS] }
+            - { path: ^/stakeholderfacebookurl, roles: [ROLE_STAKEHOLDERS_ALL] }
+            - { path: ^/monitoredurl, roles: [ROLE_MONITOREDURLS] }
+            - { path: ^/surveyresult, roles: [ROLE_SURVEYRESULTS] }
+            - { path: ^/contact, roles: [ROLE_CONTACTS] }
+            - { path: ^/cities, roles: [ROLE_CITIES] }
+            - { path: ^/.*timetracking, roles: [ROLE_TIMETRACKINGS] }
+            - { path: ^/supplier|^/suppliergroup, roles: [ROLE_SUPPLIERS] }
+
+            - { path: ^/campaign.*(edit|delete|new|update|create), roles: [ROLE_CAMPAIGNS_ALL] }
+            - { path: ^/campaign.*(approve|deny), roles: [ROLE_CAMPAIGNS_APPROVE] }
+            - { path: ^/campaign, roles: [ROLE_CAMPAIGNS] }
+            - { path: ^/pressrelease.*(edit|delete|new|update|create), roles: [ROLE_PRESSRELEASES_ALL] }
+            - { path: ^/pressrelease.*(approve|deny), roles: [ROLE_PRESSRELEASES_APPROVE] }
+            - { path: ^/pressrelease, roles: [ROLE_PRESSRELEASES] }
+            - { path: ^/note.*(edit|delete|update), roles: [ROLE_NOTES_ALL] }
+            - { path: ^.*note.*(new|create), roles: [ROLE_NOTES_NEW] }
+            - { path: ^/note/?$, roles: [ROLE_NOTES_ALL] }
+            - { path: ^/task.*(new|create|duplicate|duplicateDown), roles: [ROLE_TASKS_NEW] }
+            - { path: ^/task.*(edit|update), roles: [ROLE_TASKS_EDIT] }
+            - { path: ^/task.*(notify), roles: [ROLE_TASKS_NOTIFY] }
+            - { path: ^/task.*(approve|deny), roles: [ROLE_TASKS_APPROVE] }
+            - { path: ^/task, roles: [ROLE_TASKS] }
+            - { path: ^/complaint.*(edit|delete|new|update|create), roles: [ROLE_COMPLAINTS_ALL] }
+            - { path: ^/complaint, roles: [ROLE_COMPLAINTS] }
+            - { path: ^/stakeholder/customer-address, roles: [ROLE_STAKEHOLDERS_ADDRESS] }
+            - { path: ^/stakeholder/\d+/show, roles: [ROLE_STAKEHOLDERS_VIEW] }
+            - { path: ^/stakeholder/\d+/(edit|update), roles: [ROLE_STAKEHOLDERS_EDIT] }
+            - { path: ^/stakeholder/level/\d+/?, roles: [ROLE_STAKEHOLDERS_LIST] }
+            - { path: ^/stakeholder, roles: [ROLE_STAKEHOLDERS_ALL] }
+            - { path: ^/budgetperiod/\d+/show, roles: [ROLE_BUDGETPERIODS] }
+            - { path: ^/budgetperiod, roles: [ROLE_BUDGETPERIODS_ALL] }
+            - { path: ^/report/survey, roles: [ROLE_REPORTS_SURVEY] }
+            - { path: ^/report/timetrack, roles: [ROLE_REPORTS_TIMETRACKING] }
+            - { path: ^/report/facebook, roles: [ROLE_REPORTS_FACEBOOK] }
+            - { path: ^/report/campaignsaving, roles: [ROLE_REPORTS_CAMPAIGNSAVINGS] }
+            - { path: ^/report/cpspm, roles: [ROLE_REPORTS_CPSPM] }
+            - { path: ^/report/visit, roles: [ROLE_REPORTS_VISIT] }
+            - { path: ^/report/missingtt, roles: [ROLE_REPORTS_MISSINGTT] }
+            - { path: ^/report, roles: [ROLE_REPORTS] }
+
+            - { path: ^/upload.*(new|create)$, roles: [ROLE_UPLOADS_NEW] }
+            - { path: ^/upload/?$, roles: [ROLE_UPLOADS_LIST_ALL] }
+            - { path: ^/upload.*edit$, roles: [ROLE_UPLOADS_EDIT] }
+            - { path: ^/enumvalue.*edit$, roles: [ROLE_ENUMS_EDIT] }
+
+
+    role_hierarchy:
+        ROLE_TASKS_ALL:  [ROLE_TASKS,ROLE_TASKS_EDIT,ROLE_TASKS_NEW,ROLE_TASKS_NOTIFY,ROLE_NOTES_NEW,ROLE_STAKEHOLDERS_ADDRESS]
+        ROLE_TASKS_CUSTOMER:  [ROLE_TASKS,ROLE_TASKS_NEW,ROLE_TASKS_NOTIFY,ROLE_NOTES_NEW]
+        ROLE_TASKS_OWNGROUP:  [ROLE_TASKS,ROLE_TASKS_NEW,ROLE_TASKS_EDIT,ROLE_NOTES_NEW,ROLE_STAKEHOLDERS_ADDRESS]
+        ROLE_TASKS_OWN:  [ROLE_TASKS,ROLE_NOTES_NEW]
+        ROLE_PRESSRELEASES_ALL:  ROLE_PRESSRELEASES
+        ROLE_PRESSRELEASES_CUSTOMER:  ROLE_PRESSRELEASES
+        ROLE_CAMPAIGNS_ALL:  ROLE_CAMPAIGNS
+        ROLE_CAMPAIGNS_CUSTOMER:  ROLE_CAMPAIGNS
+        ROLE_UPLOADS_LIST_ALL: ROLE_UPLOADS_EDIT
+        ROLE_NOTES_ALL: [ROLE_NOTES,ROLE_NOTES_NEW]
+        ROLE_NOTES_RELATED:  [ROLE_NOTES,ROLE_NOTES_NEW]
+        ROLE_STAKEHOLDERS_ALL: ROLE_STAKEHOLDERS_VIEW,ROLE_STAKEHOLDERS_EDIT,ROLE_STAKEHOLDERS_LIST,ROLE_BUDGETPERIODS_ALL
+        ROLE_STAKEHOLDERS_CUSTOMER: ROLE_STAKEHOLDERS_VIEW,ROLE_STAKEHOLDERS_EDIT
+        ROLE_STAKEHOLDERS_VIEW: ROLE_STAKEHOLDERS
+        ROLE_TIMETRACKINGS_ALL: ROLE_TIMETRACKINGS
+        ROLE_TIMETRACKINGS_OWN: ROLE_TIMETRACKINGS
+        ROLE_TIMETRACKINGS_OWNGROUP: ROLE_TIMETRACKINGS
+        ROLE_TIMETRACKINGS_ALL: ROLE_TIMETRACKINGS
+        ROLE_REPORTS_SURVEY: ROLE_REPORTS
+        ROLE_REPORTS_TIMETRACKING: ROLE_REPORTS
+        ROLE_REPORTS_FACEBOOK: ROLE_REPORTS
+        ROLE_REPORTS_CAMPAIGNSAVINGS: ROLE_REPORTS
+        ROLE_REPORTS_CPSPM: ROLE_REPORTS
+        ROLE_REPORTS_VISIT: ROLE_REPORTS
+        ROLE_REPORTS_MISSINGTT: ROLE_REPORTS
+        ROLE_COMPLAINTS_ALL:  [ROLE_COMPLAINTS,ROLE_NOTES_NEW]
+        ROLE_COMPLAINTS_CUSTOMER:  [ROLE_COMPLAINTS,ROLE_NOTES_NEW]
+        ROLE_SUPPLIERS: ROLE_CONTACTS
+        ROLE_CITIES: ROLE_CONTACTS
+        ROLE_CONFIG_TASKS: ROLE_CONFIG
+        ROLE_BUDGETPERIODS_ALL: ROLE_BUDGETPERIODS
+        ROLE_BUDGETCHART: ROLE_BUDGETPERIODS

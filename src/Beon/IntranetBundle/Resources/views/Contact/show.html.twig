@@ -1,0 +1,91 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Contact{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <h2>{{ entity.firstName }} {{ entity.lastName }}</h2>
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>{% trans %}First name{% endtrans %}</th>
+                                <td>{{ entity.firstName }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans %}Last name{% endtrans %}</th>
+                                <td>{{ entity.lastName }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans %}Phone{% endtrans %}</th>
+                                <td>{{ entity.phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans %}Mobile{% endtrans %}</th>
+                                <td>{{ entity.mobile }}</td>
+                            </tr>
+                            {% if entity.birthday %}
+                            <tr>
+                                <th>{% trans %}Birthday{% endtrans %}</th>
+                                <td>{{ entity.birthday|date(defaultDateFormat)  }}</td>
+                            </tr>
+                           {% endif %}
+                            <tr>
+                                <th>{% trans %}Email{% endtrans %}</th>
+                                <td>{{ entity.email }}</td>
+                            </tr>
+                            <tr>
+                                <th>{% trans %}Role{% endtrans %}</th>
+                                <td>{{ entity.role }}</td>
+                            </tr>
+                        {% if entity.notes %}
+                            <tr>
+                                <th>{% trans %}Notes{% endtrans %}</th>
+                                <td>{{ entity.notes  }}</td>
+                            </tr>
+                           {% endif %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions"  href="{{ path('contact_edit', { 'id': entity.id }) }}">{% trans %}Edit{% endtrans %}</a>
+                    {{ form(delete_form) }}
+                </div>
+                <div>
+                    <a href="{{ path('contact') }}">{% trans %}Back to the list{% endtrans %}</a>
+                </div>
+            </div>
+        </div>
+        
+        {% if is_granted('ROLE_SUPPLIERS') %}
+            {% import "IntranetBundle:Macroses:suppliersMacro.html.twig" as helper %}
+            {{ helper.suppliersList(entity.suppliers, entity.getId(), addSupplierForm) }}
+        {% endif %}
+    </div>
+
+    {% if is_granted('ROLE_CITIES') %}
+        {% import "IntranetBundle:Macroses:citiesMacro.html.twig" as cityhelper %}
+        {{ cityhelper.citiesList(entity.cities, entity.getId(), addCityForm) }}
+    {% endif %}
+
+    {% if is_granted('ROLE_SUPPLIERS') %}
+        {% import "IntranetBundle:Macroses:suppliergroupsMacro.html.twig" as suppliergrouphelper %}
+        {{ suppliergrouphelper.suppliergroupsList(entity.suppliergroups,entity.getId(), addSuppliergroupForm) }}
+    {% endif %}
+
+    {% if is_granted('ROLE_STAKEHOLDERS') %}
+        {% import "IntranetBundle:Macroses:customers-contactMacro.html.twig" as customerhelper %}
+        {{ customerhelper.customersList(entity.customers,entity.getId(), addCustomerForm) }}
+    {% endif %}
+
+    {% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+        {% import "IntranetBundle:Macroses:pressreleaseMacro.html.twig" as pressrleaseTemplate %}
+        {{ pressrleaseTemplate.pressreleaseList(pressreleases) }}
+    {% endif %}
+
+    {% include "IntranetBundle:Macroses:contactRelation.html.twig"%}
+{% endblock %}

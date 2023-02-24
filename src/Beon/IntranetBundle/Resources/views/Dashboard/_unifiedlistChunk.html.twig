@@ -1,0 +1,21 @@
+<tr class="{% if todo %}todo{% endif %}">
+    <td>
+        {{ entity.title | truncate(80, true) }}
+    </td>
+    <td>{{ type }}</td>
+
+    <td>{% if(entity.approved is defined) %}{{ entity.approved|bool|trans }}{% endif %}</td>
+    <td>{{ entity.createdat|date( defaultDateTimeFormat) }}</td>
+
+    <td>
+        {% if path_url %}
+            {% if (type=='pressrelease' and is_granted('ROLE_PRESSRELEASES')) or (type=='note' and is_granted('ROLE_NOTES')) or (type=='campaign' and is_granted('ROLE_CAMPAIGNS')) or (type=='task' and is_granted('ROLE_TASKS')) %}
+                <a class="btn btn-table-actions" href="{{ path(path_url, { 'id': entity.id }) }}">
+                    {% trans %}show{% endtrans %}
+                </a>
+            {% endif %}
+        {% endif %}
+
+    </td>
+
+</tr>

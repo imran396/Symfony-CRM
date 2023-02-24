@@ -1,0 +1,362 @@
+Task: Aufgabe
+Tasks: Aufgaben
+New task: Neue Aufgabe
+Task list: Aufgabenliste
+edit: bearbeiten
+Back to the list: Zurück zur Liste
+list: Liste
+Select a user: Benutzer auswählen
+Not started: Nicht begonnen
+In progress: In Arbeit
+Waiting for internal approval: Warte auf interne Freigabe
+Waiting for external approval: Warte auf Freigabe durch Betrieb/Kunde
+Approved: Freigegeben
+Printing: Im Druck
+Done: Fertig
+Aborted: Abgebrochen
+Id: Id
+Description: Beschreibung
+User: Benutzer
+Due date: Fälligkeitsdatum
+Attached records: Verlinkt mit
+Actions: Aktionen
+show: anzeigen
+creation: anlegen
+Type: Typ
+Status: Status
+Expedited?: Express-Design?
+Graphics type: Art des Designauftrages
+New design?: Neues Design?
+Graphics format: Größe/Format
+Graphics circulation: Auflage
+Stakeholder: Beteiligter
+Stakeholders: Beteiligte
+Campaign: Kampagne
+Complaint: Beschwerde
+Press release: Pressemitteilung
+Pressrelease: Pressemitteilung
+Order reference: Auftragsnummer
+Invoice address: Rechnungsadresse
+Delivery address: Lieferadresse
+Print speed: Druckgeschwindigkeit
+Payment method: Zahlungsmethode
+Duplicate of: Kopie von
+send approval email: Freigabe anfordern
+Deny: Ablehnen
+Edit: Bearbeiten
+Notify: Benachrichtigen
+Create: Neu anlegen
+Note: Notiz
+Duplicate: Duplizieren
+Duplicates: Duplikate
+Duplicate Down: Herab-duplizieren
+Delete Confirmation: Lösch-Bestätigung
+Are you sure you want to delete?: Sind Sie sich sicher, dass Sie diesen Eintrag löschen wollen?
+Cancel: Abbrechen
+Delete: Löschen
+Logout: Ausloggen
+Menu: Menü
+Dashboard: Dashboard
+Users: Benutzer
+Supplier: Lieferant
+Supplier groups: Lieferantengruppen
+Facebook Url: Facebook Url
+Monitored Url: Beobachtete Url
+Survey results: Fragebögen
+Upload: Upload
+Timetracking: Stundenzettel
+City: Stadt
+Sign in: Einloggen
+Sign in for customers: Login für Kunden
+Make supplier offer: Werbliche Angebote abgeben
+Username: Benutzername
+Password: Kennwort
+normal task: Normaler Auftrag
+graphics task: Grafik-Auftrag
+Yes: Ja
+No: Nein
+Approve: Freigeben
+Upload file: Datei hochladen
+Uploads list: Liste der Uploads
+File name: Dateiname
+Created at: Zeitstempel
+Filter: Filtern
+Clear: Zurücksetzen
+Create note: Notiz erstellen
+Note creation: Notiz erstellen
+Text: Text
+Update: Speichern
+Internal use only: Nur zur internen Verwendung
+Note edit: Notiz bearbeiten
+Customer: Kunde
+Customers: Kunden
+New Customer: Neuer Kunde
+Project: Projekt
+Projects: Projekte
+New Project: Neues Projekt
+Cooperation: Kooperation
+Cooperations: Kooperationen
+New Cooperation: Neue Kooperation
+Affiliation type: Brand
+Affiliation types: Brands
+New Affiliation type: Neuer Brand
+Affiliation type group: Franchise-Gruppe
+Affiliation type groups: Franchise-Gruppen
+New Affiliation type group: Neue Franchise-Gruppe
+Budget period edit: Budget period edit
+Budget period creation: Budget period creation
+Budget period: Budget period
+Start: Start
+End: Ende
+Budget: Budget
+Period is over budget by %amount% amount and %percent% percent: Period is over budget by %amount% amount and %percent% percent
+Campaign edit: Campaign edit
+Campaigns: Kampagnen
+New campaign: Neue Kampagne
+Running: Laufend
+Unapproved: Noch nicht freigegeben
+Archive: Archiv
+Future: Zukünftig
+Denied: Abgelehnt
+Title: Titel
+Approval mail sent: Freigabe angefordert
+Draft: in Bearbeitung
+Do you want to prepopulate audience size from choosen supplier?: Do you want to prepopulate audience size from choosen supplier?
+Campaign creation: Campaign creation
+Details: Details
+CPS: CPS
+CPSPM: CPSPM
+CPM: CPM
+Number of ads: Anzahl Anzeigen
+Size of ads: Anzeigenformat
+Number of seconds: Anzahl Sekunden
+Ad details: Ad details
+Approved at: Freigegeben am
+Approval mail sent at: Freigabe angefordert am
+Create task: Aufgabe erstellen
+City edit: City edit
+New city: New city
+Name: Name
+Population: Population
+City creation: City creation
+Events: Events
+New complaint: New complaint
+Awaiting internal feedback: Warte auf Betrieb
+Closed: Abgeschlossen
+Subject: Betreff/Thema
+User Name: User Name
+Channel: Eingangen über
+Outlet received at: Eingegangen beim Restaurant am
+Body: Text
+Resolution: Lösung
+Beon received at: Eingegangen bei Beon am
+Responded at: Beantwortet am
+Complaints: Beschwerden
+Address: Address
+Discount info: Rabatt info
+Canceled: Canceled
+Cooperation type: Cooperation type
+Contact name: Contact name
+Contact phone: Contact phone
+Contact mobile: Contact mobile
+Contact email: Contact email
+Contract start: Contract start
+Contract end: Contract end
+Contact birthday: Contact birthday
+Monday: Montag
+Tuesday: Dienstag
+Wednesday: Mittwoch
+Thursday: Donnerstag
+Friday: Freitag
+Saturday: Samstag
+Sunday: Sonntag
+Holiday: Feiertag
+Daily: Täglich
+Irregular: Unregelmäßig
+Posting info: Posting info
+Check website: Check website
+Check city page: Check city page
+Last fb private post: Last fb private post
+Last visit: Last visit
+Create user: Create user
+Create restricted user: Create restricted user
+Create complaint: Create complaint
+Add monitored url: Add monitored url
+Stakeholder Dashboard: Stakeholder Dashboard
+Press releases: Press releases
+Edit Facebook Url: Edit Facebook Url
+New %from% => %to% relation: New %from% => %to% relation
+Isown: Isown
+Period is over budget by: Period is over budget by
+Facebook Fans: Facebook Fans
+Timeline: Timeline
+Action: Aktion
+New facebook url: New facebook url
+Url: Url
+Alias: Alias
+Last post: Last post
+mark done: mark done
+Budget periods: Budget periods
+Last post date: Last post date
+Deny Confirmation: Korrekturwunsch senden
+Are you sure you want to deny?: Bitte geben Sie hier ihren Änderungswunsch ein.
+Deny reason: Korrekturwunsch
+Approval Confirmation: Freigabe bestätigen
+Are you sure you want to approve?: Sind Sie sicher? Optional können Sie einen Kommentar eingeben.
+Approval comment: Kommentar
+Prev: Prev
+Next: Next
+Back: Back
+Role: Position
+First name: Vorname
+Last name: Nachname
+Phone: Telefon
+Mobile: Mobil
+Email: Email
+Uploads: Uploads
+Monitor Url edit: Monitor Url edit
+New monitored url: New monitored url
+Lastcheck: Lastcheck
+New note: New note
+Press release edit: Press release edit
+New press release: New press release
+Waiting for approval: Warte auf Freigabe
+Submitted: an Presse versandt
+Submitted at: an Presse versandt am
+Press release creation: Press release creation
+Supplier offer: Supplier offer
+Supplier edit: Supplier edit
+Pagesize: Pagesize
+New supplier: New supplier
+Audience size: Publikumsgröße
+Supplier creation: Supplier creation
+To create a campaign based on this offer, please click the following link: To create a campaign based on this offer, please click the following link
+Create Campaign: Create Campaign
+Frequency: Frequency
+Supplier group: Lieferantengruppe
+Create a new entry: Create a new entry
+Supplier group edit: Supplier group edit
+Supplier grups: Supplier grups
+New supplier group: New supplier group
+Supplier group creation: Supplier group creation
+Customer Selection: Customer Selection
+Not available: Not available
+Generate Report: Generate Report
+Survey Analysis Report: Survey Analysis Report
+You are viewing report for the customer: You are viewing report for the customer
+To change the customer, please click change customer link: To change the customer, please click change customer link
+Change Customer: Change Customer
+No records found: No records found
+Question: Question
+Choice: Choice
+Value: Value
+Average: Average
+Average Length Of Stay: Average Length Of Stay
+Hour(s): Hour(s)
+Minute(s): Minute(s)
+Surveyresult edit: Surveyresult edit
+New survey result: New survey result
+Date: Datum
+Survey result creation: Survey result creation
+Survey result: Survey result
+Time in: Time in
+Time out: Time out
+Welcome: Welcome
+Drinks: Drinks
+Drinksvalue: Drinksvalue
+Drinkswait: Drinkswait
+Food: Food
+Foodvalue: Foodvalue
+Foodwait: Foodwait
+Service: Service
+Music: Music
+Atmosphere: Atmosphere
+Overall: Overall
+Time Tracking edit: Time Tracking edit
+Time Tracking: Time Tracking
+New time tracking entry: New time tracking entry
+Day: Day
+Hours: Hours
+Time Tracking creation: Time Tracking creation
+Stakeholder Name: Stakeholder Name
+User edit: User edit
+New user: New user
+User creation: User creation
+Correction necessary: Korrektur notwendig
+Are you sure? You might loose unsaved changes.: Sind Sie sicher? Nicht gespeicherte Änderungen gehen verloren.
+Paper type: Papierqualität
+Create time tracking entry: Aufwand abrechnen
+Hours/Count: Stunden/Anzahl
+Hours/Price: Stunden/Preis
+Tariff: Tarif
+Created by: Erstellt von
+Another value..: Anderer Wert..
+Make this value available for reuse: Dieser Wert soll wiederverwendbar sein
+Enter a new value: Neuen Wert hier eingeben
+Included services: Inklusivleistungen
+Invoices to beon: Rechnungen an Beon
+Waiting for third party: Warte auf Dritte
+Contacts: Kontakte
+Sent Contacts: Versendet an
+Contact: Kontakt
+Suppliers: Lieferanten
+Cities: Städte
+Add City: Zu Stadt hinzufügen
+Add Supplier: Zu Lieferant hinzufügen
+Add Supplier Group: Zu Lieferantengruppe hinzufügen
+Are you sure?: Sind Sie sicher?
+Save: Speichern
+Send: Senden
+Add new contact relation: Neue Kontakt-Relation
+Proposal: Lösungsvorschlag
+Notified at: Benachrichtigt am
+No answer: Keine Antwort
+Add proposal: Lösungsvorschlag
+What's your propasal?: Wie lautet Ihr Lösungsvorschlag?
+Discount: Rabatt
+Notes: Notizen
+Discount (in %): Rabatt (in %)
+Framework contract: Rahmenvertrag
+Bonus in kind: Naturalrabatt
+Confirm to supplier: Bestätigung an Lieferant senden
+Reject to supplier: Ablehnung an Lieferant senden
+Ack to supplier: Eingangsbestätigung an Lieferant senden
+supplierConfirmSubject: Bestellung
+supplierRejectSubject: Ablehnung Angebot
+supplierAckSubject: Eingangbestätigung Angebot
+supplierConfirmIntro: >
+  Sehr geehrte Damen und Herren,
+  
+  hiermit bestellen wir folgende Leistung:
+supplierRejectIntro: >
+  Sehr geehrte Damen und Herren,
+  
+  leider müssen wir Ihnen mitteilen, dass folgendes Angebot nicht bestellt wird:
+supplierAckIntro: >
+  Sehr geehrte Damen und Herren,
+  
+  hiermit bestätigen wir den Eingang Ihres Angebots wie folgt (bitte beachten Sie, dass dies noch keine Bestellung darstellt):
+Add another file: Weitere Datei hinzufügen
+Invalid file type: Unzülassiger Dateityp
+Customer data: Kundendaten
+Return path: Rücklauf
+Confirmed: Bestellt
+Confirmed at: Bestellt am
+Christmas eve: Heilig Abend
+Christmas day: 1. Weihnachtsf.
+Boxing day: 2. Weihnachtsf.
+New years eve: Silvester
+New years day: Neujahr
+Approval logs: Freigabe Logs
+Send invoice upload link: Rechnungs-Upload anfordern
+Send upload link: Upload anfordern
+Submit files for printing: Druckdaten übermitteln
+Submit press release: An Presseverteiler versenden
+Config: Konfiguration
+Carbon copy: Kopie an
+Beon recommendation: Empfehlung von beon
+Approval reminder delay: Freigabe-Erinnerung
+Fixed date: Termin
+Fixed dates: Termine
+File size: Dateigröße
+Is invoice: Rechnung?

@@ -1,0 +1,152 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">
+                Campaign: {{ entity.title }}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+
+                <div id="tablewidget" class="block-body collapse in">
+                    {% include "IntranetBundle:Campaign:showTable.html.twig" with {'secure': true} %}
+                </div>
+
+                <div class="inline-forms mb10">
+                    {% if is_granted('ROLE_CAMPAIGNS_ALL') %}
+                        {% if (not entity.approvalmailsent and not entity.approved) or (entity.denied and not entity.approvalmailsent) %}
+                            <a class="btn" href="{{ path('campaign_send_approval_email',{id:entity.id}) }}">{% trans %}send approval email{% endtrans %}</a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if not entity.approved and is_granted('ROLE_CAMPAIGNS_APPROVE') and (
+                        is_granted('ROLE_CAMPAIGNS_ALL') or entity.approvalmailsent
+                    ) %}
+				        <button class="btn" id="approveButton">{% trans %}Approve{% endtrans %}</button>
+				        <button class="btn" id="denyButton">{% trans %}Deny{% endtrans %}</button>
+                    	{% import 'IntranetBundle:Macroses:approveButtonMacro.html.twig' as approveMacros %}
+                    {% endif %}
+                </div>
+
+                {% if is_granted('ROLE_CAMPAIGNS_ALL') and entity.getSupplierAction() %}
+                    <div class="inline-forms mb10">
+                        <a id="confirmButton" class="btn btn-table-actions" href="{{ path('campaign_suppliermail', { 'id': entity.id, 'type': entity.getSupplierAction() }) }}" {% if not entity.contact %}disabled="disabled"{% endif %}>{{ ((entity.getSupplierAction()|capitalize)~' to supplier')|trans }}</a>
+                        {% if entity.contact %}
+                            {% import 'IntranetBundle:Macroses:modalButtonMacro.html.twig' as confirmMacro %}
+                        {% endif %}
+                    </div>
+                {% endif %}
+                
+
+                {% if is_granted('ROLE_CAMPAIGNS_ALL') %}
+                    <div class="inline-forms">
+                        <a class="btn btn-table-actions" href="{{ path('campaign_edit', { 'id': entity.id }) }}">
+                           {% trans %}Edit{% endtrans %}
+                        </a>
+                        {{ form(delete_form) }}
+                        {{ form(duplicate_form) }}
+
+                        {% if entity.customer.level is defined and entity.customer.level == 1 %}
+                        <div class="btn-group">
+                                <button type="button" class="dropdown-toggle btn btn-table-actions" data-toggle="dropdown">
+                                    Duplicate Down <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a
+                                           href="{{ path('affilation_type_campaign_duplicate', { 'id': entity.id, 'type': 'all' }) }}">
+                                            {% trans %}All Children{% endtrans %}
+                                        </a></li>
+                                    <li><a
+                                           href="{{ path('affilation_type_campaign_duplicate', { 'id': entity.id, 'type': 'current' }) }}">
+                                            {% trans %}Running Contract{% endtrans %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <div class="inline-forms mb10">
+                    {% if is_granted('ROLE_NOTES_ALL') %}
+                        <a href="{{ path('campaign_new_related',{ 'id': entity.id, 'name':'note' }) }}" class="btn">{% trans %}Create note{% endtrans %}</a>
+                    {% endif %}
+                    
+                    {% if is_granted('ROLE_TASKS_ALL') %}
+                        <a href="{{ path('campaign_new_related',{ 'id': entity.id, 'name':'task' }) }}" class="btn">{% trans %}Create task{% endtrans %}</a>
+                    {% endif %}
+                    
+                    {% if is_granted('ROLE_TIMETRACKINGS') %}
+			            <a class="btn" href="{{ path('campaign_new_related',{ 'id': entity.id, 'name':'timetracking' }) }}">{% trans %}Create time tracking entry{% endtrans %}</a>
+		            {% endif %}
+                    
+                    
+                </div>
+
+                <div class="mb10">
+                    <a  href="{{ path('campaign') }}">
+                        {% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'campaign') }}
+        {% import 'IntranetBundle:Macroses:logsMacro.html.twig' as log %}
+        {{ log.template(logs) }}
+    </div>
+
+    {% if entity.supplier %}
+        <div class="row-fluid">
+            {% if entity.supplier %}
+                {% set supplier = entity.supplier %}
+                {% set campaign = entity %}
+                {% include 'IntranetBundle:Supplier:showChunk.html.twig' %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if entity.tasks|length %}
+        <div class="row-fluid">
+            {% import "IntranetBundle:Macroses:taskListMacro.html.twig" as taskList %}
+            {{ taskList.template(entity.tasks) }}
+        </div>
+    {% endif %}
+    
+    {% include "IntranetBundle:Note:listChunk.html.twig" %}
+
+    {% if entity.pressreleases|length %}
+        <div class="row-fluid">
+          {% include "IntranetBundle:Pressrelease:listChunk.html.twig" %}
+        </div>
+    {% endif %}
+    
+    {% include "IntranetBundle:Timetracking:listChunk.html.twig" %}
+
+	{% if approveMacros is defined %}
+	    {{ approveMacros.approveModal(approveForm) }}
+	    {{ approveMacros.denyModal(denyForm) }}
+    {% endif %}
+
+	  {% if confirmMacro is defined %}
+	    {{ confirmMacro.modal('confirm', (entity.getSupplierAction()|capitalize)~' to supplier', 'supplier' ~ (entity.getSupplierAction()|capitalize)~'Intro') }}
+    {% endif %}
+
+    {% if entity.approved and entity.status < constant(CampaignStatusEnum~'INVOICE_RECEIVED') %}
+        {% import "IntranetBundle:Macroses:modalButtonMacro.html.twig" as sendExternalUploadEmail %}
+        {% if entity.contact %}
+            {% set contactEmail = entity.contact.email|trim %}
+        {% else %}
+            {% set contactEmail = '' %}
+        {% endif %}
+        {{ sendExternalUploadEmail.modal('sendExternalUploadEmailInvoice','Send invoice upload link', contactEmail, path('campaign_send_upload_link',{'id':entity.id, 'type': 'invoice'}), 'z.B.: john@gmail.com, kevin@yahoo.com', 'Sehr geehrte Damen und Herren,
+
+bitte laden Sie Ihre Rechnung adressiert an die unten genannte Rechnungsadresse unter diesem [[link]] hoch. Bitte geben Sie auf der Rechnung die Bestellnummer sowie den Namen des Betriebes an. Bitte senden Sie uns ebenfalls über diesen Link Belegexemplare als PDF oder JPEG.') }}
+        {{ sendExternalUploadEmail.modal('sendExternalUploadEmail','Send upload link', contactEmail, path('campaign_send_upload_link',{'id':entity.id, 'type': 'other'}), 'z.B.: john@gmail.com, kevin@yahoo.com', 'Sehr geehrte Damen und Herren,
+
+bitte laden Sie Belegexemplare, Sendepläne, weitere Unterlagen etc. zu nachfolgendem Auftrag unter diesem [[link]] hoch.') }}
+    {% endif %}
+{% endblock %}

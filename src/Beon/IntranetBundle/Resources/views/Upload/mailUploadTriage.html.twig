@@ -1,0 +1,8 @@
+Hallo,
+
+der Email-Upload wurde erfolgreich ausgeführt.
+
+Da der Betreff keinem Datensatz zugeordnet werden konnte, müssen folgende Dateien manuell zugeordnet werden:
+{% for upload in uploads %}
+  <a href="{{ upload.editUrl }}">{{ upload.name }}</a>
+{% endfor %}

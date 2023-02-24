@@ -1,0 +1,30 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Edit Facebook Url{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                {{ form(edit_form, {'attr':{'class':'form-horizontal','novalidate': 'novalidate' }} ) }}
+
+                {% if customer %}
+                    <h3>{{ customer }}</h3>
+                {% endif %}
+
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a onclick="return confirmation()" class="btn btn-table-actions"  href="{{ path('customerfacebookurl') }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                        <a onclick="return confirmation()" class="btn btn-table-actions"  href="{{ path('customerfacebookurl_show', { 'id': entity.id }) }}"> {% trans %}show{% endtrans %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+

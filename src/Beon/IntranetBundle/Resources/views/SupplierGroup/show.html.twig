@@ -1,0 +1,83 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Supplier group{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="record_properties table table-bordered">
+                        <tbody>
+
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Framework contract{% endtrans %}</th>
+                            <td>{{ entity.frameworkContract|bool|trans }}</td>
+                        </tr>
+
+                        {% if entity.discount %}
+                        <tr>
+                            <th>{% trans %}Discount{% endtrans %}</th>
+                            <td>{{ entity.discount }} %</td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>{% trans %}Bonus in kind{% endtrans %}</th>
+                            <td>{{ entity.bonusInKind }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Notes{% endtrans %}</th>
+                            <td>{{ entity.notes }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('suppliergroup_edit', { 'id': entity.id }) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                    {{ form(delete_form) }}
+                </div>
+                <div class="inline-forms mb10">
+                    {% if is_granted('ROLE_SUPPLIERS') %}
+                        <a href="{{ path('suppliergroup_new_related',{ 'id': entity.id, 'name':'supplier' }) }}" class="btn">{% trans %}Create Supplier{% endtrans %}</a>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <a href="{{ path('suppliergroup') }}">
+                       {% trans %} Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'campaign') }}
+            {% import "IntranetBundle:Macroses:contactsMacro.html.twig" as helper %}
+            {{ helper.contactsList(entity.contacts) }}
+
+    </div>
+    {% if (entity.suppliers is defined) %}
+        {% include "IntranetBundle:Supplier:listChunk.html.twig" %}
+    {% endif %}
+    {% if (entity.campaigns is defined) %}
+        {% include "IntranetBundle:Campaign:listChunk.html.twig" %}
+    {% endif %}
+    {% if (entity.tasks is defined) %}
+        {% include "IntranetBundle:Task:listChunk.html.twig" %}
+    {% endif %}
+{% endblock %}
+
+

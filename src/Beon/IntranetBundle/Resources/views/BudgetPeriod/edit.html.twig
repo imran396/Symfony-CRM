@@ -1,0 +1,14 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+    {% block content %}
+        <div class="row-fluid">
+            <div class="block span6">
+                <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Budget period edit{% endtrans %}</div>
+                <div id="widget1container" class="block-body collapse in">
+                    {{ form(edit_form) }}
+                    {{ form(delete_form) }}
+                </div>
+            </div>
+
+        </div>
+    {% endblock %}

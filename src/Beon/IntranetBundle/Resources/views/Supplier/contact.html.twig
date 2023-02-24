@@ -1,0 +1,290 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+ {% block stylesheet %}
+     {% stylesheets filter='beon_css_rewriter_filter'
+     '@IntranetBundle/Resources/public/lib/bootstrap/css/suppiler_offer.css'
+    '@IntranetBundle/Resources/public/stylesheets/theme.css'
+    '@IntranetBundle/Resources/public/lib/font-awesome/css/font-awesome.css'
+    '@IntranetBundle/Resources/public/stylesheets/myelements.css'
+    '@IntranetBundle/Resources/public/stylesheets/jquery-linedtextarea.css'
+    '@IntranetBundle/Resources/public/stylesheets/select2.css'
+    '@IntranetBundle/Resources/public/lib/bootstrapvalidator/css/bootstrapValidator.css'
+    '@IntranetBundle/Resources/public/stylesheets/date-polyfill.css'
+    %}
+    <style>
+	.date-calendar-dialog {
+		z-index:1;
+	}
+    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+    
+    
+ {% endblock %}
+
+{% block body %}
+{% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    <div class="navbar" xmlns="http://www.w3.org/1999/html">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <ul class="nav pull-right unstyled">
+
+                </ul>
+                <a class="brand" href="/"><span class="first">EMAT</span> <span
+                            class="second">by beon-communications</span></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            
+            
+            <div class="span">
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        <a href="#" class="close" data-dismiss="alert">&times;</a>
+                        <strong>Success!</strong>{{ flashMessage }}
+                    </div>
+                {% endfor %}
+                <div class="block">
+                    <div class="block-heading">{% trans %}Supplier offer{% endtrans %}</div>
+                    <div class="block-body">
+			    <div class="alert alert-info">
+				    <p>Willkommen auf der Internetseite von beon-communications zur Abgabe Ihrer werblichen Angebote für Betriebe der Enchilada-Gruppe.</p>
+				    <p>Bitte füllen Sie alle Felder aus und senden Sie uns das Formular zusammen mit den Mediadaten zu. Die Mediadaten können Sie diesem Formular anhängen.</p>
+				    <p>Sie erhalten eine Rückmeldung via Email. Bei Fragen setzen wir uns mit Ihnen in Verbindung.</p>
+				    <p>beon-communications</p>
+			    </div>
+                       <form id="contactForm" action="{{ path('supplier_offer') }}" method="post" {{ form_enctype(form) }} class="form-horizontal form-add-edit" novalidate="novalidate">
+                        <div class="form-group">
+                             {{ form_label(form.customerName)}}
+                              <div class="col-lg-5">
+                                {{ form_errors(form.customerName) }}
+                                {{ form_widget(form.customerName) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                             {{ form_label(form.supplierName)}}
+                              <div class="col-lg-5">
+                                {{ form_errors(form.supplierName) }}
+                                {{ form_widget(form.supplierName) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contactFirstname) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.contactFirstname) }}
+                                {{ form_widget(form.contactFirstname) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contactLastname) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.contactLastname) }}
+                                {{ form_widget(form.contactLastname) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contactPosition) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.contactPosition) }}
+                                {{ form_widget(form.contactPosition) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contactPhone) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.contactPhone) }}
+                                {{ form_widget(form.contactPhone) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.contactEmail) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.contactEmail) }}
+                                {{ form_widget(form.contactEmail) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.notes) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.notes) }}
+                                {{ form_widget(form.notes) }}
+                             </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.offerValidTill) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.offerValidTill) }}
+                                {{ form_widget(form.offerValidTill) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.offerPeriodStart) }}
+                            <div class="col-lg-5">
+                                {{ form_errors(form.offerPeriodStart) }}
+                                {{ form_widget(form.offerPeriodStart) }}
+                            </div>
+                        </div>
+                       <div class="form-group">
+                            {{ form_label(form.offerPeriodEnd) }}
+                           <div class="col-lg-5">
+                               {{ form_errors(form.offerPeriodEnd) }}
+                               {{ form_widget(form.offerPeriodEnd) }}
+                           </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.price) }}
+                            <div class="col-lg-5">
+                                {{ form_errors(form.price) }}
+                                {{ form_widget(form.price) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.priceRegular) }}
+                             <div class="col-lg-5">
+                                {{ form_errors(form.priceRegular) }}
+                                {{ form_widget(form.priceRegular) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.offerType) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.offerType) }}
+                                 {{ form_widget(form.offerType) }}
+                            </div>
+                        </div>
+
+                         <div class="form-group">
+                            {{ form_label(form.numberOfSeconds) }}
+                             <div class="col-lg-5">
+                                 {{ form_errors(form.numberOfSeconds) }}
+                                 {{ form_widget(form.numberOfSeconds) }}
+                             </div>
+                        </div>
+                         <div class="form-group">
+                            {{ form_label(form.numberOfAds) }}
+                              <div class="col-lg-5">
+                                 {{ form_errors(form.numberOfAds) }}
+                                 {{ form_widget(form.numberOfAds) }}
+                            </div>
+                        </div>
+                       <div class="form-group">
+                            {{ form_label(form.visitors) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.visitors) }}
+                                 {{ form_widget(form.visitors) }}
+                             </div>
+                       </div>
+                       <div class="form-group">
+                            {{ form_label(form.readers) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.readers) }}
+                                 {{ form_widget(form.readers) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.viewers) }}
+                            <div class="col-lg-5">
+                                {{ form_errors(form.viewers) }}
+                                {{ form_widget(form.viewers) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.listeners) }}
+                           <div class="col-lg-5">
+                            {{ form_errors(form.listeners) }}
+                            {{ form_widget(form.listeners) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.audienceSize) }}
+                               <div class="col-lg-5">
+                                 {{ form_errors(form.audienceSize) }}
+                                 {{ form_widget(form.audienceSize) }}
+                               </div>
+                        </div>
+
+                        <div id="supplier_pagesize" class="form-group">
+                            <label class="control-label col-lg-3 required" for="supplier_pagesize" style="display: block; ">{% trans %}Size of ads{% endtrans %}</label>
+                            <div class="col-lg-5">
+                                <div class="pagesize_width">
+                                    {{ form_errors(form.adsizeWidth) }}
+                                    {{ form_widget(form.adsizeWidth) }}
+                                </div>
+                                <div class="floatLeft cross_icon_big"><span class="icon-remove"></span></div>
+                                <div class="pagesize_height">
+                                    {{ form_errors(form.adsizeHeight) }}
+                                    {{ form_widget(form.adsizeHeight) }}
+                                </div>
+                                <div class="floatLeft mm">mm</div>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.includedServices) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.includedServices) }}
+                                 {{ form_widget(form.includedServices) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.includedServicesOther) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.includedServicesOther) }}
+                                 {{ form_widget(form.includedServicesOther) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.files) }}
+                            <div class="col-lg-5">
+                                 {{ form_errors(form.files) }}
+                                 {{ form_widget(form.files) }}
+                            </div>
+                        </div>
+                        {#
+                        <div class="form-group">
+                             {{ form_errors(form) }}
+                            <label class="control-label col-lg-3  required">{% trans %}File{% endtrans %}-1</label>
+                             <div class="col-lg-5">
+                                   <div><input style="float: left" type="file" id="form_files_0"  name="form[files][0]" class="file-box"></div>
+                             </div>
+                         </div>
+                              <div id="file-fields-list" data-prototype="{{ form_widget(form.files.vars.prototype)|e }}"> </div>
+
+                          <div class="form-group">
+                              <label class="control-label col-lg-3  required"></label>
+                             <div class="col-lg-5">
+                                   <button class="btn btn-table-actions" type="button" id="add-another-file"><i class="icon-plus"></i> {% trans %}Add another file{% endtrans %}</button>
+                             </div>
+                          </div>
+                          #}
+                          
+                          <div class="mt20" >
+                              {{ form_row (form._token) }}
+                               <div class="form-group">
+                            <div class="col-lg-9 col-lg-offset-3">
+                                {{ form_widget(form.submit) }}
+                            </div>
+                        </div>
+
+                      </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% block javascripts %}
+        {% include 'IntranetBundle:Supplier:contactScript.html.twig' %}
+    {% endblock javascripts %}
+{% endblock %}
+
+
+

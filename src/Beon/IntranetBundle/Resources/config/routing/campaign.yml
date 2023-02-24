@@ -1,0 +1,68 @@
+campaign:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Campaign:index" }
+
+campaign_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Campaign:show" }
+
+campaign_new:
+    pattern:  /new/{supplier}
+    defaults: { _controller: "IntranetBundle:Campaign:new", supplier:false  }
+
+campaign_create:
+    pattern:  /create/{supplier}
+    defaults: { _controller: "IntranetBundle:Campaign:create", supplier:false  }
+    requirements: { _method: post }
+
+campaign_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Campaign:edit" }
+
+campaign_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Campaign:update" }
+    requirements: { _method: post|put }
+
+campaign_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Campaign:delete" }
+    requirements: { _method: post|delete }
+
+campaign_duplicate:
+    pattern:  /{id}/duplicate
+    defaults: { _controller: "IntranetBundle:Campaign:duplicate" }
+    requirements: { _method: post }
+
+campaign_send_approval_email:
+    pattern:  /{id}/send-approval-email
+    defaults: { _controller: "IntranetBundle:Campaign:sendApprovalEmail" }
+
+campaign_approve:
+    pattern:  /approve/{id}
+    defaults: { _controller: "IntranetBundle:Campaign:approve" }
+
+campaign_deny:
+    pattern:  /{id}/deny
+    defaults: { _controller: "IntranetBundle:Campaign:deny" }
+
+campaign_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:Campaign:newRelated" }
+    requirements:
+          name: ^note|task|timetracking$
+
+affilation_type_campaign_duplicate:
+    pattern:  /{id}/duplicate-down/{type}
+    defaults: { _controller: "IntranetBundle:Campaign:duplicateDown" }
+    requirements:
+          type: ^all|current$
+
+campaign_suppliermail:
+    pattern:  /{id}/suppliermail/{type}
+    defaults: { _controller: "IntranetBundle:Campaign:supplierMail" }
+    requirements: { _method: post }
+
+campaign_send_upload_link:
+    pattern:  /{id}/sendUploadLink/{type}
+    defaults: { _controller: "IntranetBundle:Campaign:sendUploadLink" }

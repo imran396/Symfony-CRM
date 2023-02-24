@@ -1,0 +1,117 @@
+Beon\IntranetBundle\Entity\Pressrelease:
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\PressreleaseRepository
+    type: entity
+    table: PressRelease
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        approvalmailsent:
+            type: boolean
+            column: approvalMailSent
+        approved:
+            type: boolean
+        title:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        pressreleasenotes:
+            type: text
+            nullable: true
+            fixed: false
+            comment: ''
+        deleted:
+            type: boolean
+        submitted:
+            type: boolean
+        createdat:
+            type: datetime
+            nullable: true
+            comment: ''
+            column: createdAt
+        approvedAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        approvalMailSentAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        submittedAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        lastApprovalMailSentAt:
+            type: datetime
+            nullable: true
+        serializedApprovalMail:
+            type: text
+            nullable: true
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            inversedBy: pressReleases
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        approvedBy:
+            targetEntity: User
+            joinColumn:
+                name: approved_by_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        approvementSender:
+            targetEntity: User
+            joinColumn:
+                name: approvement_sender_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        duplicateOf:
+            targetEntity: Pressrelease
+            joinColumn:
+                name: duplicate_of
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        type:
+            targetEntity: EnumValue
+            joinColumn:
+                name: type
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        campaign:
+            targetEntity: Campaign
+            joinColumn:
+                name: campaign_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+
+    oneToMany:
+        uploads:
+            targetEntity: Upload
+            mappedBy: pressrelease
+        notes:
+            targetEntity: Note
+            mappedBy: pressrelease
+        tasks:
+            targetEntity: Task
+            mappedBy: pressrelease
+    lifecycleCallbacks: {  }

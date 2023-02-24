@@ -1,0 +1,67 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}User{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>{% trans %}Name{% endtrans %}</th>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Email{% endtrans %}</th>
+                            <td>{{ entity.email }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Access level{% endtrans %}</th>
+                            <td><a href="{{ path('accesslevel_show', { 'id': entity.accessLevel.id }) }}">{{ entity.accessLevel }}</a>
+                        </tr>
+
+                        {% if numberOfSuccessfullLogin.totalSuccessfullLogin is defined %}
+                        <tr>
+                            <th>{% trans %}Last 30 days number of successfull login{% endtrans %}</th>
+                            <td>{{ numberOfSuccessfullLogin.totalSuccessfullLogin }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if successfullLogin.createdAt is defined %}
+                        <tr>
+                            <th>{% trans %}Last successfull login{% endtrans %}</th>
+                            <td>{{ successfullLogin.createdAt|date(defaultDateTimeFormat) }}</td>
+                        </tr>
+                        {% endif %}
+
+                        {% if(unsuccessfullLogin.createdAt is defined and successfullLogin.createdAt is defined and  unsuccessfullLogin.createdAt > successfullLogin.createdAt) %}
+                        <tr>
+                            <th>{% trans %}Last unsuccessfull login{% endtrans %}</th>
+                            <td>{{ unsuccessfullLogin.createdAt|date(defaultDateTimeFormat) }}</td>
+                        </tr>
+                        {% endif %}
+                       
+                        </tbody>
+                    </table>
+                </div>
+
+				<div class="inline-forms">
+                <a class="btn btn-table-actions" href="{{ path('user_edit', { 'id': entity.id }) }}">
+                   {% trans %}Edit{% endtrans %}
+                </a>
+				{{ form(delete_form) }}
+				</div>
+
+                <div>
+					<a href="{{ path('user') }}">
+                    	{% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

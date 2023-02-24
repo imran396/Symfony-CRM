@@ -1,0 +1,27 @@
+
+{% if (entity.campaigns is defined and entity.campaigns|length) or (campaign is defined and campaign|length) %}
+    {% if entity.campaigns %}
+      {% set entities = entity.campaigns %}
+    {% else %}
+      {% set entities = campaign %}
+    {% endif %}
+
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Campaign{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    {% embed "IntranetBundle:Campaign:indexTable.html.twig" %}
+                        {% block actionsRows %}
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('campaign_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}

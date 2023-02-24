@@ -1,0 +1,44 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Complaint{% endtrans %}</h1>
+    
+    <div class="btn-toolbar">
+        
+        {% if is_granted('ROLE_COMPLAINTS_ALL') %}
+	    <a href="{{ path('complaint_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New complaint{% endtrans %}</a>
+	{% endif %}    
+	{{filterForm|raw}}
+    </div>
+    
+
+    <div class="well">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs unstyled">
+            <li class="active"><a href="#notStarted" data-toggle="tab">{% trans %}Not started{% endtrans %}</a></li>
+            <li><a href="#inProgress" data-toggle="tab">{% trans %}In progress{% endtrans %}</a></li>
+            <li><a href="#feedback" data-toggle="tab">{% trans %}Awaiting internal feedback{% endtrans %}</a></li>
+            <li><a href="#closed" data-toggle="tab">{% trans %}Closed{% endtrans %}</a></li>
+        </ul>
+
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% import "IntranetBundle:Complaint:indexTabPaneMacro.html.twig" as tabs %}
+            {{ tabs.pane(notStarted,'notStarted','active') }}
+            {{ tabs.pane(inProgress,'inProgress','') }}
+            {{ tabs.pane(AwaitingFeedBack,'feedback','') }}
+            {{ tabs.pane(closed,'closed','') }}
+
+        </div>
+    </div>
+
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+    {{ paginator.pager(notStartedPagesCount,1,'notStarted') }}
+    {{ paginator.pager(inProgressPagesCount,1,'inProgress') }}
+    {{ paginator.pager(AwaitingFeedBackPageCount,1,'feedback') }}
+    {{ paginator.pager(closedPagesCount,1,'closed') }}
+
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+{% endblock %}

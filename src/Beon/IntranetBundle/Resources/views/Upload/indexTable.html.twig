@@ -1,0 +1,33 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}File name{% endtrans %}</th>
+        <th>{% trans %}File size{% endtrans %}</th>
+        <th>{% trans %}Created at{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>
+		{% if entity.isInvoice %} <i class="icon icon-file"></i>{%endif%}
+		{% if entity.fsFilename %}  <a
+                    href="{{ path('upload_download_public',{id:entity.id,fsFilename:entity.fsFilename}) }}">{{ entity.filename }}</a>
+                {% else %}
+                    {{ entity.filename }}
+                {% endif %}
+            </td>
+            <td>{% if entity.size %}{{ entity.size|formatBytes }}{% endif %}</td>
+            <td>{% if entity.createdat %}{{ entity.createdat|date( defaultDateTimeFormat) }}{% endif %}</td>
+            <td>
+                <ul class="unstyled">
+                    <li>
+                        <a class="btn btn-table-actions" href="{{ path('upload_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

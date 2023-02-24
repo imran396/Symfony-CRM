@@ -1,0 +1,39 @@
+
+<script type="text/javascript">
+    (function ($) {
+
+        var audienceLabels = {{  supplierAudienceTitles|json_encode()|raw }};
+        var audienceLabel = $('label[for="supplier_audiencesize"]');
+        var audienceLabelDefaultText = audienceLabel.text();
+        var supplierTypeSelect = $('#supplier_supplierType');
+        var frequencyItems = $('label[for="supplier_frequency"],#supplier_frequency');
+        var supplierPagesize = $('label[for="supplier_pagesize"],#supplier_pagesize');
+
+        function setAudienceTitle() {
+
+            if (supplierTypeSelect.val() && typeof audienceLabels[supplierTypeSelect.val()] != 'undefined') {
+                audienceLabel.text(audienceLabels[supplierTypeSelect.val()]);
+            } else {
+                audienceLabel.text(audienceLabelDefaultText);
+            }
+
+            if (supplierTypeSelect.val() == {{ constant(SupplierTypesEnum~'PrintType') }}) {
+                frequencyItems.show();
+                supplierPagesize.show();
+            } else {
+                frequencyItems.hide();
+                supplierPagesize.hide();
+            }
+        }
+
+        setAudienceTitle();
+
+        supplierTypeSelect.change(function () {
+            $this = $(this);
+            setAudienceTitle();
+        });
+
+
+    })(jQuery);
+</script>
+

@@ -1,0 +1,13 @@
+{% for entity in budgets %}
+    <a class="btn btn-table-actions" href="{{ path('budgetperiod_show', { 'id': entity.id }) }}">
+        {% if entity.start %}
+            {{ entity.start|date(defaultDateFormat) }}
+        {% endif %}
+        &ndash;
+
+        {% if entity.end %}
+            {{ entity.end|date(defaultDateFormat) }}
+        {% endif %}
+    </a>
+{% endfor %}
+

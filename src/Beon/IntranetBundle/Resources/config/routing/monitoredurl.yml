@@ -1,0 +1,39 @@
+monitoredurl:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:index" }
+
+monitoredurl_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:show" }
+
+monitoredurl_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:new" }
+
+monitoredurl_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:create" }
+    requirements: { _method: post }
+
+monitoredurl_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:edit" }
+
+monitoredurl_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:update" }
+    requirements: { _method: post|put }
+
+monitoredurl_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:delete" }
+    requirements: { _method: post|delete }
+
+monitoredurl_postednow:
+    pattern:  /{id}/postednow
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:postedNow" }
+monitoredurl_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:MonitoredUrl:newRelated" }
+    requirements:
+          name: ^complaint$

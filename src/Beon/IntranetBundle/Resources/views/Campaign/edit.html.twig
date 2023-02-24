@@ -1,0 +1,40 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    {% form_theme edit_form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Campaign edit{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+
+                {{ form(edit_form, {'attr':{'class':'form-horizontal' }} ) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a onclick="return confirmation()" class="btn btn-table-actions" href="{{ path('campaign') }}">
+                           {% trans %} Back to the list {% endtrans %}
+                        </a>
+                        <a onclick="return confirmation()" class="btn btn-table-actions"  href="{{ path('campaign_show', { 'id': entity.id }) }}"> {% trans %}show{% endtrans %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'campaign',uploadDeleteForms,upload_file_form) }}
+    </div>
+
+    {% include 'IntranetBundle:Campaign:modalForm.html.twig' %}
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'IntranetBundle:Campaign:featuresScript.html.twig' %}
+{% endblock %}
+
+
+

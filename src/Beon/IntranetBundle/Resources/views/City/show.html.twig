@@ -1,0 +1,64 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}City{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                      <tbody>
+                        <tr>
+                            <th>{% trans %}Id{% endtrans %}</th>
+                            <td>{{ "CT%05d"|format(entity.id) }}</td>
+                        </tr>
+
+                       <tr>
+                <th>{% trans %}Name{% endtrans %}</th>
+                <td>{{ entity.name }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Population{% endtrans %}</th>
+                <td>{{ entity.population|number_format(0, ',') }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Notes{% endtrans %}</th>
+                <td>{{ entity.notes }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Events{% endtrans %}</th>
+                <td>{{ entity.events }}</td>
+            </tr>
+                   </tbody>
+                </table>
+
+                </div>
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('city_edit', { 'id': entity.id }) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                    {{ form(delete_form) }}
+                </div>
+            </div>
+        </div>
+
+      {% import "IntranetBundle:Macroses:contactsMacro.html.twig" as helper %}
+            {{ helper.contactsList(entity.contacts) }}
+    </div>
+
+    {% if (entity.suppliers is defined) %}
+             {% include "IntranetBundle:Supplier:listChunk.html.twig" %}
+    {% endif %}
+
+    {% if (entity.customers is defined) %}
+             {% include "IntranetBundle:Customer:listChunk.html.twig" %}
+    {% endif %}
+
+{% endblock %}
+
+
+

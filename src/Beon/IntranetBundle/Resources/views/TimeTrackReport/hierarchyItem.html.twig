@@ -1,0 +1,11 @@
+{{ currentItem.getLabel() }}
+<ul>
+    {% for tariff, hours in currentItem.getCummulatedData() %}
+        {% if hours != 0 %}
+            <li class="data">{{ hours|ttPrice(tariff) }}</li>
+        {% endif %}
+    {% endfor %}
+    {% for child in currentItem.getChildren() %}
+        <li>{% include 'IntranetBundle:TimeTrackReport:hierarchyItem.html.twig' with {'currentItem': child} %}</li>
+    {% endfor %}
+</ul>

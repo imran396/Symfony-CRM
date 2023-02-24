@@ -1,0 +1,9 @@
+Hi {{ recipient }}, 
+
+der Auftrag {{ "AG%05d"|format(entity.id) }} "{{ entity.title }}" {% if entity.customer %}von {{ entity.customer.name }} {% endif %}wurde durch {{ approver }} freigegeben.
+
+{% if comment %}
+{{ comment }}
+
+{% endif %}
+<a href="{{ link }}">{{ link }}</a>

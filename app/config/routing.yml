@@ -1,0 +1,17 @@
+beon:
+    resource: "@IntranetBundle/Resources/config/routing.yml"
+    prefix:   /
+
+
+login:
+    path:     /login
+    defaults: { _controller: IntranetBundle:Security:login }
+
+
+login_check:
+    path: /login_check
+
+logout:
+    path:   /logout
+
+

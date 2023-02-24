@@ -1,0 +1,3 @@
+<p>{{ intro|nl2br }}</p>
+{% include "IntranetBundle:Campaign:showTable.html.twig" %}
+<p>Bitte laden Sie Ihre Rechnung adressiert an die oben genannte Rechnungsadresse unter diesem <a target="_blank" href="{{ externalUploadUrl }}">link</a> hoch. Bitte geben Sie auf der Rechnung die Bestellnummer sowie den Namen des Betriebes an. Bitte senden Sie uns ebenfalls über diesen Link Belegexemplare als PDF oder JPEG.<br/><br/>Wir freuen uns auf eine gute Zusammenarbeit.<br/><br/><br/>{{ sender.getClosing()|nl2br }}</p>

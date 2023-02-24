@@ -1,0 +1,22 @@
+{% macro monitoredUrlList(entities) %}
+   {% if entities|length %}
+    <div class="block">
+        <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Monitored Url{% endtrans %}</div>
+        <div class="block-body">
+
+                {% embed "IntranetBundle:MonitoredUrl:indexTable.html.twig" %}
+                    {% block actionsRows %}
+                        <td>
+                            <div class="inline-forms">
+
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('monitoredurl_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+
+                            </div>
+                        </td>
+                    {% endblock %}
+                {% endembed %}
+        </div>
+    </div>
+   {% endif %}
+{% endmacro %}

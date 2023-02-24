@@ -1,0 +1,20 @@
+Beon\IntranetBundle\Entity\EnumValue:
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\EnumRepository
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        className:
+            type: string
+            length: 255
+        value:
+            type: string
+        reusable:
+            type: boolean
+
+    lifecycleCallbacks: {  }

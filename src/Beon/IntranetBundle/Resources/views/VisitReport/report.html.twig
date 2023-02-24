@@ -1,0 +1,27 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+<h1 class="page-title">{% trans %}Visit Report{% endtrans %}</h1>
+
+<div class="well">
+    <table class="table">
+        <tr>
+            <th>Customer</th>
+            <th>Total number of visits</th>
+            <th>Missing dates</th>
+            <th>Last visit</th>
+            <th>Next visit</th>
+        </tr>
+        {% for row in report %}
+        <tr>
+            <td><a href="{{ path('customer_show', { 'id': row.customer.id }) }}">{{ row.customer }}</a></td>
+            <td>{{ row.count }}</td>
+            <td>{{ row.missing_dates }}</td>
+            <td>{% if row.last_visit %}{{ row.last_visit|date(defaultDateFormat) }}{% endif %}</td>
+            <td>{% if row.next_visit %}{{ row.next_visit|date(defaultDateFormat) }}{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
+

@@ -1,0 +1,35 @@
+Beon\IntranetBundle\Entity\AccessLevel:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\AccessLevelRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        forCustomers:
+            type: boolean
+        forEmployees:
+            type: boolean
+        forOthers:
+            type: boolean
+    manyToMany:
+        permissions:
+            targetEntity: Permission
+            joinTable:
+                name: AccessLevelPermission
+                joinColumns:
+                    access_level_id:
+                        referencedColumnName: id
+                        onDelete: "CASCADE"
+                inverseJoinColumns:
+                    permission_id:
+                        referencedColumnName: id
+                        onDelete: "CASCADE"
+
+    lifecycleCallbacks: {  }

@@ -1,0 +1,80 @@
+Beon\IntranetBundle\Entity\Complaint:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\ComplaintRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        subject:
+            type: string
+            length: 255
+            nullable: true
+        body:
+            type: text
+            nullable: true
+
+        outletReceivedAt:
+            type: date
+            nullable: true
+        beonReceivedAt:
+            type: date
+            nullable: true
+        respondedAt:
+            type: date
+            nullable: true
+        status:
+            type: smallint
+            nullable: false
+            unsigned: true
+        resolution:
+            type: smallint
+            nullable: true
+            unsigned: true
+        proposal:
+            type: text
+            nullable: true
+        notifiedAt:
+            type: datetime
+            nullable: true
+        resolutiondAt:
+            type: datetime
+            nullable: true
+
+    oneToMany:
+        notes:
+            targetEntity: Note
+            mappedBy: complaint
+        tasks:
+            targetEntity: Task
+            mappedBy: complaint
+
+    manyToOne:
+        customer:
+          targetEntity: Customer
+          inversedBy: complaints
+          joinColumn:
+              nullable: false
+              onDelete: "CASCADE"
+              name: customer_id
+              referencedColumnName: id
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "CASCADE"
+
+        channel:
+            targetEntity: EnumValue
+            joinColumn:
+                name: channel
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+
+    lifecycleCallbacks: {  }

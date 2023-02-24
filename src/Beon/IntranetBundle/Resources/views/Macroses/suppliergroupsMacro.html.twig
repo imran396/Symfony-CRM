@@ -1,0 +1,40 @@
+{% macro suppliergroupsList(suppliergroups, contactId, addSupplierGroupForm) %}
+
+    <div class="block">
+        <div class="block-heading" data-toggle="collapse" data-target="#suppliergroupcontactWigdget">{% trans %}Supplier groups{% endtrans %}</div>
+        <div class="block-body" id="suppliergroupcontactWigdget">
+        {% if suppliergroups|length  %}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                </tr>
+                </thead>
+                {% for suppliergroup in suppliergroups %}
+             <tbody>
+                    <tr>
+                        <td>{{ suppliergroup.name }}</td>
+                        {% if is_granted('ROLE_SUPPLIERS') %}
+                            <td><a onclick="return confirm('Are you sure?')" class="btn btn-table-actions"
+                                   href="{{ path('suppliergroup_contact_delete', {'id':suppliergroup.id, 'contactId':contactId}) }}">{% trans %}Delete{% endtrans %}</a>
+                            <a class = "btn btn-table-actions"  href="{{ path('suppliergroup_show', { 'id': suppliergroup.id }) }}">{% trans %} show{% endtrans %}</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+             </tbody>
+                {% endfor %}
+            </table>
+            {% endif %}
+            <div id="supplierGroupContactForm" style="display: none">
+                <div id="addSupplierGroup">
+                    {% if addSupplierGroupForm %}
+                        {{ form(addSupplierGroupForm) }}
+                    {% endif %}
+                </div>
+            </div>
+            <a class="btn btn-table-actions" href="javascript:void(0);" id="supplierGroupContact">{% trans %}Add Supplier Group{% endtrans %}</a>
+        </div>
+    </div>
+{% endmacro %}
+
+

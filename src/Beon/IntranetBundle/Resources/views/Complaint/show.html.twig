@@ -1,0 +1,162 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+
+    {% embed "IntranetBundle:Macroses:standardShow.html.twig" with {'hide_delete': not is_granted('ROLE_COMPLAINTS_ALL'), 'hide_edit': not is_granted('ROLE_COMPLAINTS_ALL')} %}
+
+        {% set entityName = "complaint" %}
+
+        {% block header %}
+            Complaint
+        {% endblock %}
+
+        {% block tableBody %}
+
+            <tbody>
+            <tr>
+                <th>{% trans %}Id{% endtrans %}</th>
+                <td>{{ "RX%05d"|format(entity.id) }}</td>
+            </tr>
+            {% if entity.user is not empty %}
+            <tr>
+                <th>{% trans %}Username{% endtrans %}</th>
+                <td><a href="{{ path('user_show', { 'id': entity.user.id }) }}">{{ entity.user }}</a></td>
+            </tr>
+            {% endif %}
+
+            {% if entity.customer is not empty %}
+            <tr>
+                <th>{% trans %}Customer{% endtrans %}</th>
+                <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+            </tr>
+            {% endif %}
+            <tr>
+                <th>{% trans %}Subject{% endtrans %}</th>
+                <td>{{ entity.subject }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Body{% endtrans %}</th>
+                <td>{{ entity.body|nl2br }}</td>
+            </tr>
+             <tr>
+                <th>{% trans %}Status{% endtrans %}</th>
+                <td>{{ entity.status|ComplaintStatus }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Resolution{% endtrans %}</th>
+                <td>{{ entity.resolution|ComplaintResolution }}  {% if entity.resolutiondAt is not empty %} at {{ entity.resolutiondAt|date(defaultDateFormat)}}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Channel{% endtrans %}</th>
+                <td>{{ entity.channel }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Outlet received at{% endtrans %}</th>
+                <td>
+                    {% if  entity.outletReceivedAt %}
+                        {{ entity.outletReceivedAt|date(defaultDateFormat) }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if entity.proposal is not empty %}
+             <tr>
+                <th>{% trans %}Proposal{% endtrans %}</th>
+                <td>{{ entity.proposal }}</td>
+            </tr>
+            {% endif %}
+
+            <tr>
+                <th>{% trans %}Beon received at{% endtrans %}</th>
+                <td>
+                    {% if entity.beonReceivedAt %}
+                        {{ entity.beonReceivedAt|date(defaultDateFormat) }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans %}Notified at{% endtrans %}</th>
+                <td>
+                    {% if entity.notifiedAt %}
+                        {{ entity.notifiedAt|date(defaultDateTimeFormat) }}
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <th>{% trans %}Responded at{% endtrans %}</th>
+                <td>
+                    {% if entity.respondedAt %}
+                        {{ entity.respondedAt|date(defaultDateFormat) }}
+                    {% endif %}
+                </td>
+            </tr>
+            </tbody>
+
+        {% endblock %}
+
+        {% block buttons %}
+            <div class="inline-forms">
+               {% if is_granted('ROLE_COMPLAINTS_CUSTOMER') and entity.status != constant(ComplaintStatusEnum~'CLOSED') %}
+                    <a class="btn btn-table-actions" href="{{ path('Complaint_no_answer', { 'id': entity.id}) }}">{% trans %}No answer{% endtrans %}</a>
+                    <a class="btn btn-table-actions" id="proposalButton" href="{{ path('Complaint_proposal',{id:entity.id}) }}">{% trans %}Add proposal{% endtrans %}</a>
+                    {% import 'IntranetBundle:Macroses:modalButtonMacro.html.twig' as proposalMacro %}
+                    {{ proposalMacro.modal('proposal', 'Add proposal') }}
+               {% endif %}
+
+               {% if is_granted('ROLE_COMPLAINTS_ALL') %}
+                  <a class="btn btn-table-actions" href="{{ path('complaint_notify', { 'id': entity.id}) }}">{% trans %}Notify{% endtrans %}</a>
+               {% endif %}
+
+                {% if is_granted('ROLE_TASKS_ALL') %}
+                    <a class="btn btn-table-actions"
+                       href="{{ path('complaint_new_related', { 'id': entity.id,'name':'task' }) }}">
+                        {% trans %}Create task{% endtrans %}
+                    </a>
+                {% endif %}
+
+                {% if is_granted('ROLE_NOTES_NEW') %}
+                    <a class="btn btn-table-actions"
+                       href="{{ path('complaint_new_related', { 'id': entity.id,'name':'note' }) }}">
+                        {% trans %}Create note{% endtrans %}
+                    </a>
+                {% endif %}
+            </div>
+        {% endblock %}
+
+        {% block extraRows %}
+            {% if entity.tasks|length > 0 %}
+                {% set entities = entity.tasks %}
+                <div class="row-fluid">
+
+                    <div class="block">
+                        <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Tasks{% endtrans %}</div>
+                        <div id="widget1container" class="block-body collapse in">
+                            <div id="tablewidget" class="block-body collapse in">
+                                {% include "IntranetBundle:Task:indexTable.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if entity.notes|length > 0 %}
+                {% set entities = entity.notes %}
+
+                <div class="row-fluid">
+                    <div class="block">
+                        <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Notes{% endtrans %}</div>
+                        <div id="widget1container" class="block-body collapse in">
+                            <div id="tablewidget" class="block-body collapse in">
+                                {% include "IntranetBundle:Note:indexTable.html.twig" %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endblock %}
+
+    {% endembed %}
+
+    {% import 'IntranetBundle:Macroses:logsMacro.html.twig' as log %}
+    {{ log.template(logs) }}
+{% endblock %}

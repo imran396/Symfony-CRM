@@ -1,0 +1,204 @@
+Beon\IntranetBundle\Entity\Task:
+    type: entity
+    table: Task
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\TaskRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        type:
+            type: smallint
+            nullable: false
+            unsigned: true
+        title:
+            type: string
+            length: 255
+            fixed: false
+        description:
+            type: text
+            nullable: true
+        dueDate:
+            type: date
+            nullable: true
+            required: false
+        status:
+            type: smallint
+            nullable: false
+            unsigned: true
+        printSpeed:
+            type: smallint
+            nullable: true
+            unsigned: true
+        internalapprovalmailsent:
+            type: boolean
+            column: internalApprovalMailSent
+        approvalmailsent:
+            type: boolean
+            column: approvalMailSent
+        approved:
+            type: boolean
+        approvedAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        orderReference:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+        newDesign:
+            type: boolean
+        expedited:
+            type: boolean
+        invoiceAddress:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        deliveryAddress:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        paymentMethod:
+            type: smallint
+            nullable: true
+        createdAt:
+            type: datetime
+            nullable: true
+        firstApprovalMailSentAt:
+            type: datetime
+            nullable: true
+        lastApprovalMailSentAt:
+            type: datetime
+            nullable: true
+        serializedApprovalMail:
+            type: text
+            nullable: true
+    oneToMany:
+        uploads:
+            targetEntity: Upload
+            mappedBy: task
+        notes:
+            targetEntity: Note
+            mappedBy: task
+        timetrackings:
+            targetEntity: Timetracking
+            mappedBy: task
+        logs:
+          targetEntity: Log
+          mappedBy: task
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        carbonCopy:
+            targetEntity: User
+            joinColumn:
+                name: carbon_copy_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        customer:
+            targetEntity: Customer
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        campaign:
+            targetEntity: Campaign
+            joinColumn:
+                name: campaign_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        pressrelease:
+            targetEntity: Pressrelease
+            inversedBy: tasks
+            joinColumn:
+                name: pressrelease_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        complaint:
+            targetEntity: Complaint
+            inversedBy: tasks
+            joinColumn:
+                name: complaint_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        internalApprovementSender:
+            targetEntity: User
+            joinColumn:
+                name: internal_approvement_sender_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        approvementSender:
+            targetEntity: User
+            joinColumn:
+                name: approvement_sender_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        approvedBy:
+            targetEntity: User
+            joinColumn:
+                name: approved_by_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        createdBy:
+            targetEntity: User
+            joinColumn:
+                name: created_by_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        duplicateOf:
+            targetEntity: Task
+            joinColumn:
+                name: duplicate_of
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        graphicsCirculation:
+            targetEntity: EnumValue
+            joinColumn:
+                name: graphicsCirculation
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+        graphicsFormat:
+            targetEntity: EnumValue
+            joinColumn:
+                name: graphicsFormat
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+        graphicsType:
+            targetEntity: EnumValue
+            joinColumn:
+                name: graphicsType
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+        paperType:
+            targetEntity: EnumValue
+            joinColumn:
+                name: paperType
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+        approvalReminderDelay:
+            targetEntity: EnumValue
+            joinColumn:
+                name: approvalReminderDelay
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"

@@ -1,0 +1,26 @@
+<tr>
+    <td colspan="3">
+        <input type="checkbox" class="checkbox-toggle" name="uploadFiles[]" value="{{ upload.id }}" />
+        {% if upload.isInvoice %}
+            <i class="icon icon-file"></i>
+        {% elseif upload.getTagColor %}
+            <i class="tag-toggle tag-{{ upload.getTagColor }}" data-id="{{ upload.id }}"></i>
+        {% endif %}
+        {% if upload.fsFilename %}
+            <a href="{{ path('upload_download_public',{id:upload.id,fsFilename:upload.fsFilename}) }}">{{ upload.filename }}</a>
+        {% else %}
+            {{ upload.filename }}
+        {% endif %}
+    </td>
+</tr>
+<tr class="uploadMeta">
+    <td colspan="2">{% if upload.size %}{{ upload.size|formatBytes(0) }}{% endif %}</td>
+    <td>{% if upload.createdat %}{{ upload.createdat|date(defaultDateTimeFormatShort) }}{% endif %}</td>
+</tr>
+{% if uploadDeleteForms %}
+<tr class="uploadMeta deleteForm">
+    <td colspan="3">
+        {{ form(uploadDeleteForms[upload.id]) }}
+    </td>
+</tr>
+{% endif %}

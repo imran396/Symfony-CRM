@@ -1,0 +1,23 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Time Tracking{% endtrans %}</h1>
+    <div class="btn-toolbar">
+        
+        {% if app.request.get('taskId') %}
+	    <a href="{{ path('task') }}" class="btn"><i class="icon-plus"></i>{% trans %}Back to task list{% endtrans %}</a>
+        {%else%}
+	    <a href="{{ path('timetracking_new') }}" class="btn"><i class="icon"></i>{% trans %}New time tracking entry{% endtrans %}</a>
+	{%endif%}
+	
+	{{filterForm|raw}}
+    </div>
+    <div class="well">
+
+
+   {% include 'IntranetBundle:Timetracking:indexTable.html.twig' %}
+
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

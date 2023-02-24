@@ -1,0 +1,12 @@
+Hi {{ recipient }}, 
+
+der Auftrag {{ "AG%05d"|format(entity.id) }} "{{ entity.title }}" {% if entity.customer %}von {{ entity.customer.name }} {% endif %}hat durch {{ denier }} folgende Änderungswünsche:
+
+{% if reason %}
+Grund: {{ reason }}
+
+{% else %}
+(keine Begründung)
+
+{% endif %}
+<a href="{{ link }}">{{ link }}</a>

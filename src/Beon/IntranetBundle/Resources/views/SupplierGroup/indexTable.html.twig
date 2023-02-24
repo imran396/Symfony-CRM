@@ -1,0 +1,21 @@
+<table  id="indexTable" class="records_list table">
+    <thead>
+    <tr>
+        <th>{% trans %}Id{% endtrans %}</th>
+        <th>{% trans %}Name{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ "GR%05d"|format(entity.id) }}</td>
+            <td>{{ entity.name }}</td>
+            <td>
+                <a class="btn btn-table-actions" href="{{ path('suppliergroup_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                <a class="btn btn-table-actions" href="{{ path('suppliergroup_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

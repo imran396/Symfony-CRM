@@ -1,0 +1,37 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+  <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget"> {% trans %}Access level creation{% endtrans %}</div>
+
+            <div id="widget1container" class="block-body collapse in">
+                {{ form_start(form, {'attr':{'class':'form-horizontal' }} ) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.forCustomers) }}
+                {{ form_row(form.forOthers) }}
+                {{ form_row(form.forEmployees) }}
+
+                {% for permission in form.permissions %}
+                 <div class="floatLeft" style="float:left;">
+                     {% set labels = permission.vars.label|split('|') %}
+                     {{ form_widget(permission) }}
+                     {{ form_label(permission,labels.0,{ 'label_attr': {'title':  labels.1}}) }}
+                </div>
+                {% endfor %}
+
+                <div style="clear:both;"></div>
+                {{ form_end(form) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path('accesslevel') }}">
+                             {% trans %}Back to the list{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

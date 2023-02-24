@@ -1,0 +1,78 @@
+Beon\IntranetBundle\Entity\Supplier:
+    type: entity
+    table: Supplier
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\SupplierRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        audiencesize:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: audienceSize
+        frequency:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: frequency
+        pagesizeWidth:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: pagesizeWidth
+        pagesizeHeight:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: pagesizeHeight
+    oneToMany:
+        uploads:
+            targetEntity: Upload
+            mappedBy: supplier
+        campaigns:
+            targetEntity: Campaign
+            mappedBy: supplier
+
+    manyToMany:
+        contacts:
+            targetEntity: Contact
+            mappedBy: suppliers
+
+    manyToOne:
+        group:
+            targetEntity: SupplierGroup
+            joinColumn:
+                name: group_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        city:
+            targetEntity: City
+            joinColumn:
+                name: city_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        supplierType:
+            targetEntity: EnumValue
+            joinColumn:
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+
+    lifecycleCallbacks: {  }

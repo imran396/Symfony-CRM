@@ -1,0 +1,142 @@
+<table class="table table-bordered">
+    <tbody>
+    <tr>
+        <th>{% trans %}Id{% endtrans %}</th>
+        <td>{{ "AD%05d"|format(entity.id) }}</td>
+    </tr>
+    {% if entity.duplicateOf %}
+    <tr>
+        <th>{% trans %}Duplicate of{% endtrans %}</th>
+        <td><a href="{{ path('campaign_show', { 'id': entity.duplicateOf.id }) }}">{{ "AD%05d"|format(entity.duplicateOf.id) }}</a></td>
+    </tr>
+    {% endif %}
+    <tr>
+        <th>{% trans %}Title{% endtrans %}</th>
+        <td>{{ entity.title }}</td>
+    </tr>
+    {% if entity.details %}
+        <tr>
+            <th>{% trans %}Details{% endtrans %}</th>
+            <td>{{ entity.details }}</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th>{% trans %}Start{% endtrans %}</th>
+        <td>{{ entity.start|date(defaultDateFormat) }}</td>
+    </tr>
+    <tr>
+        <th>{% trans %}End{% endtrans %}</th>
+        <td>{{ entity.end|date(defaultDateFormat) }}</td>
+    </tr>
+    <tr>
+        <th>{% trans %}Budget{% endtrans %}</th>
+        <td>{{ entity.budget|number_format(2, ',', '.') }}</td>
+    </tr>
+    {% if entity.discount > 0 %}
+        <tr>
+            <th>{% trans %}Discount{% endtrans %}</th>
+            <td>{{ entity.discount|number_format(2, ',', '.') }} ({{ entity.discountPercent }}&thinsp;%)</td>
+        </tr>
+    {% endif %}
+    <tr>
+        <th>{% trans %}Stakeholder{% endtrans %}</th>
+        <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+    </tr>
+    {% if entity.audiencesize > 0 %}
+    <tr>
+        <th>{{ entity.supplier.supplierType|audienceLabel }}</th>
+        <td>{{ entity.audiencesize|number_format(0, '', '.') }}</td>
+    </tr>
+    {% endif %}
+    {% if cps is defined and cps > 0 %}
+        <tr>
+            <th>{% trans %}CPS{% endtrans %}</th>
+            <td>{{ cps|number_format(2, ',', '') }}</td>
+        </tr>
+    {% endif %}
+    {% if cpspm is defined and cpspm > 0 %}
+        <tr>
+            <th>{% trans %}CPSPM{% endtrans %}</th>
+            <td>{{ cpspm|number_format(4, ',', '') }}</td>
+        </tr>
+    {% endif %}
+    {% if cpm is defined and cpm > 0 %}
+        <tr>
+            <th>{% trans %}CPM{% endtrans %}</th>
+            <td>{{ cpm|number_format(2, ',', '.') }}</td>
+        </tr>
+    {% endif %}
+    {% if entity.supplier.supplierType is supplierPrint %}
+        <tr>
+            <th>{% trans %}Number of ads{% endtrans %}</th>
+            <td>{{ entity.numberOfAds|number_format(1, ',', '') }}</td>
+        </tr>
+    {% endif %}
+
+    {% if entity.supplier.supplierType is supplierPrint %}
+      <tr>
+        <th>{% trans %}Size of ads{% endtrans %}</th>
+        <td>{{ entity.adsizeWidth }} × {{ entity.adsizeHeight }} mm ({{ entity.adsizeWidth *  entity.adsizeHeight}}  mm²)</td>
+    </tr>
+    {% endif %}
+
+    {% if entity.supplier.supplierType is supplierRadioOrTv %}
+        <tr>
+            <th>{% trans %}Number of seconds{% endtrans %}</th>
+            <td>{{ entity.numberOfSeconds }}</td>
+        </tr>
+    {% endif %}
+    {% if entity.adDetails %}
+        <tr>
+            <th>{% trans %}Ad details{% endtrans %}</th>
+            <td>
+                <pre class="numbered">{{ entity.adDetails }}</pre>
+            </td>
+        </tr>
+    {% endif %}
+    {% if entity.invoiceAddress %}
+        <tr>
+            <th>{% trans %}Invoice address{% endtrans %}</th>
+            <td>{{ entity.invoiceAddress|nl2br }}</td>
+        </tr>
+    {% endif %}
+    {% if entity.includedServices.id is not constant(CampaignIncludedServicesEnum~'NONE') %}
+        <tr>
+            <th>{% trans %}Included services{% endtrans %}</th>
+            <td>{{ entity.includedServices }}</td>
+        </tr>
+    {% endif %}
+    {% if secure is defined and entity.beonRecommendation %}
+        <tr>
+            <th>{% trans %}Beon recommendation{% endtrans %}</th>
+            <td>{{ entity.beonRecommendation }}</td>
+        </tr>
+    {% endif %}
+    {% if entity.returnPath %}
+        <tr>
+            <th>{% trans %}Return path{% endtrans %}</th>
+            <td>{{ entity.returnPath }}</td>
+        </tr>
+    {% endif %}
+    {% if secure is defined %}
+    <tr>
+        <th>{% trans %}Status{% endtrans %}</th>
+        <td>
+            {% if entity.deleted == true %}
+                {% trans %}Aborted{% endtrans %}
+            {% elseif entity.approved == true %}
+                {{ entity.status|CampaignStatus }}
+            {% elseif entity.denied == true %}
+                {% trans %}Denied{% endtrans %}
+            {% elseif entity.approvalmailsent == true %}
+                {% trans %}Approval mail sent at{% endtrans %} {{ entity.approvalMailSentAt|date(defaultDateTimeFormat) }}
+            {% else %}
+                {% trans %}Draft{% endtrans %}
+            {% endif %}
+        </td>
+    </tr>
+    {% endif %}
+
+
+    </tbody>
+</table>

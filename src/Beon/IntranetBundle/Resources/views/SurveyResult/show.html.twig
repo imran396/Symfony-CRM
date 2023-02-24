@@ -1,0 +1,119 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Survey result{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>{% trans %}Customer{% endtrans %}</th>
+                            <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Date{% endtrans %}</th>
+                            <td>{{ entity.date|date(defaultDateFormat) }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Time in{% endtrans %}</th>
+                            <td>{{ entity.timeIn }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Time out{% endtrans %}</th>
+                            <td>{{ entity.timeOut }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Frequency{% endtrans %}</th>
+                            <td>{{ entity.getLabel('frequency') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Welcome{% endtrans %}</th>
+                            <td>{{ entity.getLabel('welcome') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Drinks{% endtrans %}</th>
+                            <td>{{ entity.getLabel('drinks') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Drinksvalue{% endtrans %}</th>
+                            <td>{{ entity.getLabel('drinksValue') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Drinkswait{% endtrans %}</th>
+                            <td>{{ entity.getLabel('drinksWait') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Food{% endtrans %}</th>
+                            <td>{{ entity.getLabel('food') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Foodvalue{% endtrans %}</th>
+                            <td>{{ entity.getLabel('foodValue') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Foodwait{% endtrans %}</th>
+                            <td>{{ entity.getLabel('foodWait') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Service{% endtrans %}</th>
+                            <td>{{ entity.getLabel('service') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Music{% endtrans %}</th>
+                            <td>{{ entity.getLabel('music') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Atmosphere{% endtrans %}</th>
+                            <td>{{ entity.getLabel('atmosphere') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Happyhour</th>
+                            <td>{{ entity.getLabel('happyHour') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Enchiladahour</th>
+                            <td>{{ entity.getLabel('enchiladaHour') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Casinomexicano</th>
+                            <td>{{ entity.getLabel('casinoMexicano') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ladiesnight</th>
+                            <td>{{ entity.getLabel('ladiesNight') }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Overall{% endtrans %}</th>
+                            <td>{{ entity.getLabel('overall') }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path('surveyresult') }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('surveyresult_edit', { 'id': entity.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                    </li>
+                    <li>{{ form(delete_form) }}</li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+

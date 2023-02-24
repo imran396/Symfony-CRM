@@ -1,0 +1,44 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+
+        <th>{% trans %}Id{% endtrans %}</th>
+        <th>{% trans %}Subject{% endtrans %}</th>
+        <th>{% if flavor is defined and flavor == "status" %}{% trans %}Status{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}</th>
+        <th>{% trans %}User Name{% endtrans %}</th>
+        <th>{% trans %}Channel{% endtrans %}</th>
+        <th>{% trans %}Outlet received at{% endtrans %}</th>
+        {% if displayStatus is defined and displayStatus %}
+            <th>{% trans %}Status{% endtrans %}</th>
+        {% endif %}
+        {% block actionsHeader %}
+            <th>{% trans %}Actions{% endtrans %}</th>
+        {% endblock %}
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for entity in entities %}
+
+        <tr>
+             <td style="width: 80px;">{{ "RX%05d"|format(entity.id) }}</td>
+            <td>{{ entity.subject }}</td>
+            <td>{% if flavor is defined and flavor == "status" %}{{ entity.status|ComplaintStatus }}{% else %}{{ entity.customer.name }}{% endif %}</td>
+            <td>{{ entity.user }}</td>
+            <td>{{ entity.channel }}</td>
+            <td>{% if entity.outletReceivedAt %}{{ entity.outletReceivedAt|date(defaultDateFormat) }}{% endif %}</td>
+            {% if displayStatus is defined and displayStatus %}
+                <td>{{ entity.status|ComplaintStatus }}</td>
+            {% endif %}
+            {% block actionsRows %}
+                <td>
+                    <a class="btn btn-table-actions" href="{{ path('complaint_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                    {% if is_granted('ROLE_COMPLAINTS_ALL') %}
+                    <a class="btn btn-table-actions" href="{{ path('complaint_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                    {% endif %}
+                </td>
+            {% endblock %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

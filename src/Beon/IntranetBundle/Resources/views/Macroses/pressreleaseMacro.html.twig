@@ -1,0 +1,56 @@
+{% macro pressreleaseList(pressreleases) %}
+{% if pressreleases|length  %}
+ <div class="row-fluid">
+<div class="block">
+    <div class="block-heading" data-toggle="collapse" data-target="#pressWidget">
+        {% trans %} Press Release {% endtrans %}
+    </div>
+
+    <div  id="pressWidget"  class="block-body collapse in">
+
+        <table id="indexTable" class="table">
+            <thead>
+            <tr>
+                <th> {% trans %}Id{% endtrans %}</th>
+                <th> {% trans %}Title{% endtrans %}</th>
+                <th> {% trans %}Stakeholder{% endtrans %}</th>
+                <th> {% trans %}User Name{% endtrans %}</th>
+                <th> {% trans %}Created at{% endtrans %}</th>
+                {% block actionsHeader %}
+                    <th> {% trans %}Actions{% endtrans %}</th>
+                {% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for entity in pressreleases %}
+
+                <tr>
+                    <td style="width: 80px;">{{ "PM%05d"|format(entity.id) }}</td>
+                    <td>{{ entity.title }}</td>
+                    <td>{{ entity.customer }}</td>
+                    <td>{{ entity.user }}</td>
+                    <td>{% if entity.createdat %}{{ entity.createdat|date( defaultDateTimeFormat) }}{% endif %}</td>
+
+                    {% block actionsRows %}
+                        <td>
+                            <a class="btn btn-table-actions"
+                               href="{{ path('pressrelease_show', { 'id': entity.id }) }}">{% trans %}
+                                show{% endtrans %}</a>
+                            {% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('pressrelease_edit', { 'id': entity.id }) }}">{% trans %}
+                                    edit{% endtrans %}</a>
+                            {% endif %}
+                        </td>
+                    {% endblock %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+  </div>
+{% endif %}
+{% endmacro %}

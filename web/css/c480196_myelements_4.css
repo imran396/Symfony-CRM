@@ -1,0 +1,52 @@
+.btn-table-actions {
+         margin-bottom: 10px;
+         text-transform: capitalize;
+     }
+
+input, select, textarea, .linedwrap {
+    margin-bottom: 10px !important;
+}
+
+div.button-wrapper {
+    margin: 10px;
+}
+
+.mlt10 {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.mlb10 {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.numbered table {
+
+}
+
+.numbered table th {
+    white-space: nowrap;
+    border: none;
+}
+
+pre.numbered {
+    background: none;
+    border: none;
+}
+
+.numbered table td {
+    border: none;
+}
+
+pre.numbered, pre.numbered tr > * {
+    padding: 0;
+}
+pre.numbered table {
+    margin: 0;
+}
+
+
+/*.form_row{*/
+/*margin-bottom: 20px !important;*/
+/*}*/

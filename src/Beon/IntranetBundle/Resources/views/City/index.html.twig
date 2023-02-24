@@ -1,0 +1,20 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}City{% endtrans %}</h1>
+    <div class="btn-toolbar">
+        <a href="{{ path('city_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New city{% endtrans %}</a>
+
+        <div class="btn-group">
+        </div>
+    </div>
+    <div class="well">
+
+
+   {% include 'IntranetBundle:City:indexTable.html.twig' %}
+
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

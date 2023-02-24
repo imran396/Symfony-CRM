@@ -1,0 +1,27 @@
+report_survey_analysis:
+    pattern:  /survey
+    defaults: { _controller: "IntranetBundle:SurveyAnalysis:report" }
+
+report_time_track:
+    pattern:  /timetrack
+    defaults: { _controller: "IntranetBundle:TimeTrackReport:timeTrack" }
+    
+report_export_csv:
+    path:     /export/csv
+    defaults: { _controller: "IntranetBundle:TimeTrackReport:export" }
+    requirements: { _method: post }
+report_campaign_saving:
+    path:     /campaignsaving
+    defaults: { _controller: "IntranetBundle:CampaignReport:saving" }
+report_facebook:
+    pattern:  /facebook
+    defaults: { _controller: "IntranetBundle:FacebookReport:report" }
+report_cpspm:
+    pattern:  /cpspm
+    defaults: { _controller: "IntranetBundle:CampaignReport:cpspm" }
+report_visit:
+    pattern:  /visit
+    defaults: { _controller: IntranetBundle:VisitReport:report }
+report_missingtt:
+    pattern:  /missingtt
+    defaults: { _controller: IntranetBundle:MissingTimetrackingsReport:report }

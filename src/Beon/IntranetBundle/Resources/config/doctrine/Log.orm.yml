@@ -1,0 +1,92 @@
+Beon\IntranetBundle\Entity\Log:
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\LogRepository
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        action:
+            type: integer
+        createdAt:
+            type: datetime
+            column: created_at
+        status:
+            type: smallint
+            unsigned: true
+            nullable: true
+        text:
+            type: text
+            nullable: true
+
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "CASCADE"
+        facebookurl:
+            targetEntity: FacebookUrl
+            joinColumn:
+                name: facebookurl_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "CASCADE"
+        monitoredurl:
+            targetEntity: MonitoredUrl
+            joinColumn:
+                name: monitoredurl_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "CASCADE"
+        campaign:
+            targetEntity: Campaign
+            joinColumn:
+                 name: campaign_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "CASCADE"
+
+        pressrelease:
+            targetEntity: Pressrelease
+            joinColumn:
+                 name: pressrelease_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "CASCADE"
+        task:
+            targetEntity: Task
+            joinColumn:
+                 name: task_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "CASCADE"
+        complaint:
+            targetEntity: Complaint
+            joinColumn:
+                 name: complaint_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "CASCADE"
+        contact:
+            targetEntity: Contact
+            joinColumn:
+                 name: contact_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "SET NULL"
+
+        supplier:
+            targetEntity: Supplier
+            joinColumn:
+                 name: supplier_id
+                 referencedColumnName: id
+                 nullable: true
+                 onDelete: "SET NULL"
+
+    lifecycleCallbacks: {  }

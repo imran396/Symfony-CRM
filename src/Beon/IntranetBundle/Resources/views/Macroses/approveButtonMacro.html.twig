@@ -1,0 +1,67 @@
+{% macro approveModal(form) %}
+    <div class="modal hide fade" id="confirmApprove" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        {% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+        {{ form_start(form) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>{% trans %}Approval Confirmation{% endtrans %}</h3>
+            </div>
+            <div class="modal-body">
+
+            <p class="error-text"><i class="icon-warning-sign modal-icon mt20"></i>{% trans %}Are you sure you want to approve?{% endtrans %}<br/>
+                {{ form_widget(form.comment) }}
+                {{ form_widget(form.files) }}
+            </p>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+                <button class="btn btn-danger" data-dismiss="approveAction">{% trans %}Approve{% endtrans %}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var $modal = $('#confirmApprove');
+            $('#approveButton').click(function (e) {
+                e.preventDefault();
+                $modal.find('textarea').val('');
+                $modal.modal('show');
+            });
+        });
+    </script>
+{% endmacro %}
+
+{% macro denyModal(form) %}
+    <div class="modal hide fade" id="confirmDeny" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        {% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+        {{ form_start(form) }}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3>{% trans %}Deny Confirmation{% endtrans %}</h3>
+            </div>
+            <div class="modal-body">
+                <p class="error-text"><i class="icon-warning-sign modal-icon mt20"></i>{% trans %}Are you sure you want to deny?{% endtrans %}<br/>
+                    {{ form_widget(form.reason) }}
+                    {{ form_widget(form.files) }}
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+                <button class="btn btn-danger">{% trans %}Deny{% endtrans %}</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var $modal = $('#confirmDeny');
+            $('#denyButton').click(function (e) {
+                e.preventDefault();
+                $modal.find('textarea').val('');
+                $modal.modal('show');
+            });
+        });
+    </script>
+{% endmacro %}

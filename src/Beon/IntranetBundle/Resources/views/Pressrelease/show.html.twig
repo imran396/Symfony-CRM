@@ -1,0 +1,224 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Press release{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>{% trans %}Id{% endtrans %}</th>
+                            <td>{{ "PM%05d"|format(entity.id) }}</td>
+                        </tr>
+                        {% if entity.duplicateOf %}
+                        <tr>
+                            <th>{% trans %}Duplicate of{% endtrans %}</th>
+                            <td><a href="{{ path('pressrelease_show', { 'id': entity.duplicateOf.id }) }}">{{ "PM%05d"|format(entity.duplicateOf.id) }}</a></td>
+                        </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>{% trans %}Type{% endtrans %}</th>
+                            <td>{{ entity.type }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Title{% endtrans %}</th>
+                            <td>{{ entity.title }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Notes{% endtrans %}</th>
+                            <td>{{ entity.pressreleasenotes }}</td>
+                        </tr>
+
+                        {% if entity.user %}
+                            <tr>
+                                <th>{% trans %}User{% endtrans %}</th>
+                                <td><a href="{{ path('user_show', { 'id': entity.user.id }) }}">{{ entity.user }}</a></td>
+                            </tr>
+                        {% endif %}
+
+                        {% if entity.customer %}
+                            <tr>
+                                <th>{% trans %}Stakeholder{% endtrans %}</th>
+                                <td>
+                                    <a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+			{% if entity.campaign %}
+                            <tr>
+                                <th>{% trans %}Campaign{% endtrans %}</th>
+                                <td>
+                                    <a href="{{ path('campaign_show', { 'id': entity.campaign.id }) }}">{{ entity.campaign }}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+
+                        <tr>
+                            <th>{% trans %}Created at{% endtrans %}</th>
+                            <td>{{ entity.createdat|date( defaultDateTimeFormat) }}</td>
+                        </tr>
+
+                        <tr>
+                            <th>{% trans %}Status{% endtrans %}</th>
+                            <td>
+                                {% if entity.deleted == true %}
+                                    {% trans %}Aborted{% endtrans %}
+                                {% elseif entity.submitted == true %}
+                                    {% trans %}Submitted at{% endtrans %} {{ entity.submittedAt|date(defaultDateTimeFormat) }}
+                                {% elseif entity.approved == true %}
+                                    {% trans %}Approved at{% endtrans %} {{ entity.approvedAt|date(defaultDateTimeFormat) }}
+                                {% elseif entity.approvalmailsent == true %}
+                                    {% trans %}Approval mail sent at{% endtrans %} {{ entity.approvalMailSentAt|date(defaultDateTimeFormat) }}
+                                {% else %}
+                                    {% trans %}Draft{% endtrans %}
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="inline-forms mb10">
+                    {% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+                        {% if not entity.approvalmailsent and not entity.submitted and not entity.approved %}
+                            <a class="btn" href="{{ path('pressrelease_send_approval_email',{id:entity.id}) }}">{% trans %}send approval email{% endtrans %}</a>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if is_granted('ROLE_PRESSRELEASES_SUBMIT') and entity.approved == 1 and entity.submitted == 0 and numberOfContacts > 0  %}
+                        <button id="submitButton" class="btn">{% trans %}Submit press release{% endtrans %} ({{numberOfContacts}} {% trans %}Contacts{% endtrans %})</button>
+                        {% import 'IntranetBundle:Macroses:modalButtonMacro.html.twig' as submitMacro %}
+                        <script>
+                            $('#submitButton').click(function(e) {
+                                e.preventDefault();
+
+                                if ($(this).hasClass('checkboxes-shown')) {
+                                    var selected = [];
+                                    $('.checkbox-toggle:checked').each(function(){
+                                        selected.push($(this).val());
+                                    })
+                                    uploadIds = selected.join(',');
+
+                                    if (selected.length > 0) {
+                                        var modal = $('#submitPressreleaseModal');
+                                        modal.modal('show').find('[data-dismiss="sendAction"]').unbind('click').click(function () {
+                                            $.ajax({
+                                                url: {{ path('pressrelease_submit')|json_encode|raw }},
+                                                type: "POST",
+                                                data: {'id': {{entity.id}}, 'uploadIds': uploadIds, 'text': modal.find('textarea').val()},
+                                                beforeSend: function(){
+                                                    modal.modal('hide');
+                                                    $('#submit_files_loader').html('Wird übermittelt...');
+                                                },
+                                                success: function (data) {
+                                                    $('#submit_files_loader').html('');
+                                                    $('input:checkbox:checked').attr('checked', false);
+                                                    response = JSON.parse(data);
+                                                    if (response.status == true) {
+                                                        $('#submit_files_loader').html( response.msg );
+                                                    } else {
+                                                        $('#submit_files_loader').html( response.msg );
+                                                    }
+                                                    setTimeout("location.reload()", 1000);
+                                                }
+                                            });
+                                        });
+                                    }
+
+                                    $(this).removeClass('checkboxes-shown');
+                                    $('.checkbox-toggle').hide();
+                                } else {
+                                    $('.checkbox-toggle').show();
+                                    $(this).addClass('checkboxes-shown');
+                                }
+                            });
+                        </script>
+                    {% endif %}
+
+			        {% if not entity.approved and is_granted('ROLE_PRESSRELEASES_APPROVE') and (
+				        is_granted('ROLE_PRESSRELEASES_ALL') or entity.approvalmailsent
+			        ) %}
+				        <button class="btn" id="approveButton">{% trans %}Approve{% endtrans %}</button>
+				        <button class="btn" id="denyButton">{% trans %}Correction necessary{% endtrans %}</button>
+                    	{% import 'IntranetBundle:Macroses:approveButtonMacro.html.twig' as approveMacros %}
+                    {% endif %}
+                </div>
+
+                {% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+                    <div class="inline-forms">
+                        <a class="btn btn-table-actions" href="{{ path('pressrelease_edit', { 'id': entity.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                        {% if entity.deleted == false %}
+                            {{ form(delete_form) }}
+                        {% endif %}
+                        {% if entity.customer.level is defined and entity.customer.level == 1 %}
+                            <div class="btn-group">
+                                <button type="button" class="dropdown-toggle btn btn-table-actions" data-toggle="dropdown">
+                                    Duplicate Down <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a
+                                           href="{{ path('affilation_type_pressrelease_duplicate', { 'id': entity.id, 'type': 'all' }) }}">
+                                            {% trans %}All Children{% endtrans %}
+                                        </a></li>
+                                    <li><a
+                                           href="{{ path('affilation_type_pressrelease_duplicate', { 'id': entity.id, 'type': 'current' }) }}">
+                                            {% trans %}Running Contract{% endtrans %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                <div class="inline-forms mb10">
+                    {% if is_granted('ROLE_NOTES_ALL') %}
+                        <a href="{{ path('pressrelease_new_related',{ 'id': entity.id, 'name':'note' }) }}" class="btn">{% trans %}Create note{% endtrans %}</a>
+                    {% endif %}
+                    {% if is_granted('ROLE_TASKS_ALL') %}
+                        <a href="{{ path('pressrelease_new_related',{ 'id': entity.id, 'name':'task' }) }}" class="btn">{% trans %}Create task{% endtrans %}</a>
+                    {% endif %}
+                </div>
+
+                <div class="mb10">
+                    <a href="{{ path('pressrelease') }}">
+                        {% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'pressrelease') }}
+        {% if is_granted('ROLE_PRESSRELEASES_SUBMIT') %}
+            {% import 'IntranetBundle:Macroses:contactsMacro.html.twig' as contactLog %}
+            {{ contactLog.contactsList(contacts,'', entity.submitted ? 'Sent Contacts' : 'Contacts') }}
+        {% endif %}
+        {% import 'IntranetBundle:Macroses:logsMacro.html.twig' as log %}
+        {{ log.template(logs) }}
+
+    </div>
+
+    {% if is_granted('ROLE_NOTES') %}
+        {% include "IntranetBundle:Note:listChunk.html.twig" %}
+    {% endif %}
+    {% if is_granted('ROLE_TASKS') %}
+        {% include "IntranetBundle:Task:listChunk.html.twig" %}
+    {% endif %}
+
+	{% if approveMacros is defined %}
+	    {{ approveMacros.approveModal(approveForm) }}
+	    {{ approveMacros.denyModal(denyForm) }}
+    {% endif %}
+
+	{% if submitMacro is defined %}
+	    {{ submitMacro.modal('submitPressrelease', 'Submit press release', submitMailBody) }}
+    {% endif %}
+{% endblock %}

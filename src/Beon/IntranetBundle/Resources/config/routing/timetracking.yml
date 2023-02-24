@@ -1,0 +1,29 @@
+timetracking:
+    path:     /
+    defaults: { _controller: "IntranetBundle:Timetracking:index" }
+timetracking_show:
+    path:     /{id}/show
+    defaults: { _controller: "IntranetBundle:Timetracking:show" }
+
+timetracking_new:
+    path:     /new
+    defaults: { _controller: "IntranetBundle:Timetracking:new" }
+
+timetracking_create:
+    path:     /create
+    defaults: { _controller: "IntranetBundle:Timetracking:create" }
+    requirements: { _method: post }
+
+timetracking_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "IntranetBundle:Timetracking:edit" }
+
+timetracking_update:
+    path:     /{id}/update
+    defaults: { _controller: "IntranetBundle:Timetracking:update" }
+    requirements: { _method: post|put }
+
+timetracking_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "IntranetBundle:Timetracking:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,31 @@
+{% macro template(entities) %}
+    {% if entities|length > 0  %}
+    <div class="row-fluid">
+        <div class="block span12">
+        <div class="block-heading" data-toggle="collapse" data-target="#tablelogwidget">{% trans %}Approval logs{% endtrans %}</div>
+            <div id="tablelogwidget" class="block-body collapse in">
+            <table id="indexTable" class="table">
+                <thead>
+                <tr>
+                    <th>{% trans %}User{% endtrans %}</th>
+                    <th>{% trans %}Action{% endtrans %}</th>
+                    <th>{% trans %}Created at{% endtrans %}</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for entity in entities %}
+                    <tr title="{{ entity.text }}">
+                        <td>{{ entity.user }}</td>
+                        <td>{{ entity|logAction }}</td>
+                        <td>{{ entity.createdAt|date(defaultDateTimeFormat) }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% endmacro %}

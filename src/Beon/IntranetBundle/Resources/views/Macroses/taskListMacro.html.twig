@@ -1,0 +1,21 @@
+{% macro template(tasks) %}
+
+    {% embed 'IntranetBundle:Macroses:taskListTemplate.html.twig' %}
+    {% endembed %}
+{% endmacro %}
+
+{% macro templateCustomer(tasks,affileationTasks,campaignTasks) %}
+
+    {% embed 'IntranetBundle:Macroses:taskListTemplate.html.twig' %}
+
+        {% block loopChunk %}
+            {% for task in tasks %}
+                {% include 'IntranetBundle:Macroses:taskItemChunk.html.twig' %}
+            {% endfor %}
+            {% for task in affileationTasks %}
+                {% include 'IntranetBundle:Macroses:taskItemChunk.html.twig' %}
+            {% endfor %}
+        {% endblock %}
+
+    {% endembed %}
+{% endmacro %}

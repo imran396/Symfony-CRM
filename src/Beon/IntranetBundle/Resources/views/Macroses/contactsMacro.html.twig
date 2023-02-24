@@ -1,0 +1,56 @@
+{% macro contactsList(contacts,addSupplierForm,title='Contacts') %}
+    {% if contacts|length  %}
+        <div class="block span6">
+            <div class="block-heading">{{ title|trans }}</div>
+
+            <div class="block-body">
+                {% set separator = '' %}
+                {% for contact in contacts %}{{ separator }}{% set separator = ', ' %} <a href="{{ path('contact_show',{'id':contact.id}) }}">{{ contact.firstName }} {{ contact.lastName }}</a>{% endfor %}
+
+                {% if addSupplierForm %}
+                    {{ form(addSupplierForm) }}
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro showContact(entity) %}
+    <div class="block span6">
+        <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %} Contact{% endtrans %}</div>
+        <div id="widget1container" class="block-body collapse in">
+
+            <div id="tablewidget" class="block-body collapse in">
+                <table class="table table-bordered">
+                    <tbody>
+
+                    <tr>
+                        <th>{% trans %}First name{% endtrans %}</th>
+                        <td>{{ entity.firstName }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Last name{% endtrans %}</th>
+                        <td>{{ entity.lastName }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Phone{% endtrans %}</th>
+                        <td>{{ entity.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Mobile{% endtrans %}</th>
+                        <td>{{ entity.mobile }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Email{% endtrans %}</th>
+                        <td>{{ entity.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Role{% endtrans %}</th>
+                        <td>{{ entity.role }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endmacro %}

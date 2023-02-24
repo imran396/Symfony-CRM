@@ -1,0 +1,13 @@
+Hallo,
+
+der Grafik-Auftrag "{{ entity }}" wurde bearbeitet und liegt zur Freigabe vor.
+
+<a href="{{ link }}">{{ link }}</a>
+
+{% if link_campaign %}
+    Der Auftrag gehört zur Kampagne "<a href="{{ link_campaign }}">{{ entity.campaign }}</a>".
+
+{% endif%}
+
+
+{{ sender.getClosing() }}

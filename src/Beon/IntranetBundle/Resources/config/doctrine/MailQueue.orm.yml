@@ -1,0 +1,43 @@
+Beon\IntranetBundle\Entity\MailQueue:
+    type: entity
+    table: MailQueue
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\MailQueueRepository
+    id:
+        id:
+            type: string
+            nullable: false
+            unsigned: true
+            id: true
+    fields:
+        entity:
+            type: string
+            nullable: true
+            length: 60
+            fixed: false
+            comment: ''
+        entityId:
+            type: integer
+            nullable: true
+            unsigned: true
+        state:
+            type: integer
+            nullable: true
+            unsigned: true
+        sentDate:
+            type: datetime
+            nullable: true
+            comment: ''
+        lastApprovalReminderSentAt:
+            type: datetime
+            nullable: true
+        message:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        redirect:
+            type: string
+            nullable: true
+            length: 60
+            fixed: false

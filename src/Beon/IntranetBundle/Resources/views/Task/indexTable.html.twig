@@ -1,0 +1,44 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Id{% endtrans %}</th>
+        <th>{% trans %}Type{% endtrans %}</th>
+        <th>{{ 'Title'|trans|stripParatheses }}</th>
+        <th>{% trans %}User{% endtrans %}</th>
+        <th>{% trans %}Due date{% endtrans %}</th>
+        <th>{% trans %}Attached records{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+
+        <tr class="{% if entity.type is constant(TaskTypeEnum~'GRAPHICS') and entity.expedited %}expedited{% endif %}">
+            <td style="width: 80px;">{{ "AG%05d"|format(entity.id) }}</td>
+            <td>{{ entity.type|taskType|trans }}{% if entity.type is constant(TaskTypeEnum~'GRAPHICS') %}: {{ entity.graphicsType }}{% endif %}</td>
+            <td>
+                {% if duplicateTask is defined and entity.type is constant(TaskTypeEnum~'GRAPHICS') and entity.graphicsFormat %}
+                    {{ entity.graphicsFormat }}
+                {% else %}
+                    <span title="{{ entity.description }}">
+                        {{ entity.title }}
+                    </span>
+                {% endif %}
+            </td>
+            <td>{{ entity.user }}</td>
+            <td>{% if entity.dueDate %}{{ entity.dueDate|date(defaultDateFormat) }}{% endif %}</td>
+            <td>
+                {% for label, value in entity.attachedRecords %}{{label|trans}}: {{value}}<br/>{% endfor %}
+            </td>
+            {% block actionsRows %}
+            <td>
+                <a class="btn btn-table-actions" href="{{ path('task_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                {% if is_granted('ROLE_TASKS_EDIT') %}
+                    <a class="btn btn-table-actions" href="{{ path('task_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                {% endif %} 
+	    </td>
+            {% endblock %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

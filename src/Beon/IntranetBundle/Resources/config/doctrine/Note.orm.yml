@@ -1,0 +1,102 @@
+Beon\IntranetBundle\Entity\Note:
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\NoteRepository
+    type: entity
+    table: Note
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        text:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        date1:
+            type: date
+            nullable: true
+        date2:
+            type: date
+            nullable: true
+        createdat:
+            type: datetime
+            nullable: true
+            comment: ''
+            column: createdAt
+        internalUseOnly:
+            type: boolean
+
+    manyToOne:
+        user: 
+            targetEntity: User
+            inversedBy: notes
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        customer:
+            targetEntity: Customer
+            inversedBy: notes
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        pressrelease:
+            targetEntity: Pressrelease
+            inversedBy: notes
+            joinColumn:
+                name: pressrelease_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        task:
+            targetEntity: Task
+            inversedBy: notes
+            joinColumn:
+                name: task_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        monitoredurl:
+            targetEntity: MonitoredUrl
+            inversedBy: notes
+            joinColumn:
+                name: monitored_url
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        campaign:
+            targetEntity: Campaign
+            inversedBy: notes
+            joinColumn:
+                name: campaign_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        complaint:
+            targetEntity: Complaint
+            inversedBy: notes
+            joinColumn:
+                name: complaint_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        supplier:
+            targetEntity: Supplier
+            inversedBy: notes
+            joinColumn:
+                name: supplier_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        type:
+            targetEntity: EnumValue
+            joinColumn:
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+
+    oneToMany:
+        uploads:
+            targetEntity: Upload
+            mappedBy: note
+    lifecycleCallbacks: {  }

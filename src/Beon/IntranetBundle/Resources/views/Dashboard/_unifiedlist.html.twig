@@ -1,0 +1,53 @@
+<div class="block ">
+
+    <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Timeline{% endtrans %}</div>
+    <div id="tablewidget" class="block-body collapse in">
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>{% trans %}Title{% endtrans %}</th>
+                <th>{% trans %}Type{% endtrans %}</th>
+                <th>{% trans %}Approved{% endtrans %}</th>
+                <th>{% trans %}Created at{% endtrans %}</th>
+                <th>{% trans %}Action{% endtrans %}</th>
+            </tr>
+
+            </thead>
+            <tbody>
+
+            {% for key,entity in unifiedData %}
+
+                {% if(entity.campaign is defined) %}
+                    {% set type = 'campaign' %}
+                    {% set path_url = 'campaign_show' %}
+                    {% set todo = not entity.approved and entity.approvalmailsent %}
+                {% elseif(entity.note is defined) %}
+                    {% set type='note' %}
+                    {% set path_url='note_show' %}
+                    {% set todo = false %}
+                {% elseif(entity.press is defined) %}
+                    {% set type='pressrelease' %}
+                    {% set path_url='pressrelease_show' %}
+                    {% set todo = not entity.approved and entity.approvalmailsent %}
+
+                {% elseif (entity.task is defined) %}
+                    {% set type='task' %}
+                    {% set path_url='task_show' %}
+                    {% set todo = not entity.approved and entity.approvalmailsent %}
+                {% endif %}
+
+                {% if is_granted('ROLE_NOTES_INTERNAL') or not (entity.internalUseOnly is defined and entity.internalUseOnly == true) %}
+                    {% include 'IntranetBundle:Dashboard:_unifiedlistChunk.html.twig' %}
+                {% endif %}
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+    </div>
+</div>

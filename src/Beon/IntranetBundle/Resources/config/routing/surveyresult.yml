@@ -1,0 +1,30 @@
+surveyresult:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:SurveyResult:index" }
+
+surveyresult_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:SurveyResult:show" }
+
+surveyresult_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:SurveyResult:new" }
+
+surveyresult_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:SurveyResult:create" }
+    requirements: { _method: post }
+
+surveyresult_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:SurveyResult:edit" }
+
+surveyresult_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:SurveyResult:update" }
+    requirements: { _method: post|put }
+
+surveyresult_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:SurveyResult:delete" }
+    requirements: { _method: post|delete }

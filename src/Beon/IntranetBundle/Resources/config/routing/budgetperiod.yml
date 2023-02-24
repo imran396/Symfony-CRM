@@ -1,0 +1,31 @@
+budgetperiod:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:index" }
+
+budgetperiod_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:show" }
+
+budgetperiod_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:new" }
+    requirements: { _method: post }
+
+budgetperiod_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:create" }
+    requirements: { _method: post }
+
+budgetperiod_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:edit" }
+
+budgetperiod_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:update" }
+    requirements: { _method: post|put }
+
+budgetperiod_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:BudgetPeriod:delete" }
+    requirements: { _method: post|delete }

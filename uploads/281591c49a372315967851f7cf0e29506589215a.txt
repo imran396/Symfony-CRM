@@ -1,0 +1,2 @@
+1. Flot Pie chart total radius is 100% and every pie segement is divided by proportionally and he genearate percent section itself.
+if total spent is 150%  so we can add section budget exceed 50% it easy to implement. If we want to 150% pie section into pie chart segment it is not supported by flot pie I have read there docs. 

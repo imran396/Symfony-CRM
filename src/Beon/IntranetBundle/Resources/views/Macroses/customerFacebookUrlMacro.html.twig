@@ -1,0 +1,45 @@
+{% macro fbUrlList(entities) %}
+    {% if entities|length %}
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Facebook Url{% endtrans %}</div>
+            <div class="block-body">
+                <table id="indexTable" class="table">
+                    <thead>
+                    <tr>
+                        <th>{% trans %}Url{% endtrans %}</th>
+                        <th>{% trans %}Alias{% endtrans %}</th>
+                        <th>{% trans %}Last post date{% endtrans %}</th>
+                        <th>{% trans %}Actions{% endtrans %}</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                {% if (entities.customer is defined) %}
+                    {% for entity in entities.customer %}
+
+
+                        <tr>
+                            <td>{{ entity.facebook.facebookUrl.url }}</td>
+                            <td>{{ entity.facebook.facebookUrl.alias }}</td>
+                            <td>{% if entity.facebook.facebookUrl.lastPost %}{{ entity.facebook.facebookUrl.lastPost|date('d.m.Y H:i') }}{% endif %}</td>
+
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('facebookurl_show', { 'id': entity.facebook.facebookUrl.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+                {% endif %}
+                    </tbody>
+                </table>
+                {% if entities.message is defined %}
+                    <p style="font-size: 15px; font-weight: bold; border-bottom: 1px solid #DDD">{% trans %}Last post{% endtrans %}</p>
+                    <div>{{ entities.message }}</div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endmacro %}

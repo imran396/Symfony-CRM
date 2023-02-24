@@ -1,0 +1,26 @@
+<table class="table">
+    <tr>
+        <th>Campaign ID</th>
+        <th>Campaign Title</th>
+        <th>Customer Name</th>
+        <th>Supplier Name</th>
+        {% if data.type == 'cpm' %}
+            <th>CPM</th>
+        {% else %}
+            <th>CPSPM</th>
+        {% endif %}
+    </tr>
+    {% for record in data.data %}
+    <tr>
+        <td><a href="{{ path('campaign_show', { 'id': record.campaignId }) }}">{{ record.campaignId }}</a></td>
+        <td>{{ record.title }}</td>
+        <td>{{ record.name }}</td>
+        <td>{{ record.supplierName }}</td>
+        {% if data.type == 'cpm' %}
+            <td>{{ record.cpm|number_format(4, ',', '.') }}</td>
+        {% else %}
+            <td>{{ record.cpspm|number_format(4, ',', '.') }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>

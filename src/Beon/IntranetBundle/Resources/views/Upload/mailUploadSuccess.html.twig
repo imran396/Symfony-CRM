@@ -1,0 +1,10 @@
+Hallo,
+
+der Email-Upload wurde erfolgreich ausgeführt.
+
+<a href="{{ link }}">{{ entity }}</a>
+
+Dateien:
+{% for upload in uploads %}
+  <a href="{{ upload.url }}">{{ upload.name }}</a>
+{% endfor %}

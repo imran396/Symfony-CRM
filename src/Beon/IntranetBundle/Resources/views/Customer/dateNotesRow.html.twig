@@ -1,0 +1,53 @@
+<div class="row-fluid">
+    {% if fixedDates|length > 0 %}
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse">{% trans %}Fixed dates{% endtrans %}</div>
+
+            <div class="block-body collapse in">
+
+                <div id="tablewidget" class="block-body collapse in">
+                    {% set entities = fixedDates %}
+
+                    {% embed "IntranetBundle:Note:fixedDates.html.twig" %}
+                        {% block actionsRows %}
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+                        {% endblock %}
+                        {% block actionsHeader %}
+                            <th>{% trans %}Actions{% endtrans %}</th>
+                        {% endblock %}
+                    {% endembed %}
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if agenda|length > 0 %}
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse">{% trans %}Agenda-Protokoll{% endtrans %}</div>
+
+            <div class="block-body collapse in">
+
+                <div id="tablewidget" class="block-body collapse in">
+                    {% set entities = agenda %}
+
+                    {% embed "IntranetBundle:Note:fixedDates.html.twig" %}
+                        {% block actionsRows %}
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+                        {% endblock %}
+                        {% block actionsHeader %}
+                            <th>{% trans %}Actions{% endtrans %}</th>
+                        {% endblock %}
+                    {% endembed %}
+
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>

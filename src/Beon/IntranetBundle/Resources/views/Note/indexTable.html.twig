@@ -1,0 +1,20 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Text{% endtrans %}</th>
+        <th>{% trans %}Created at{% endtrans %}</th>
+        <th>{% trans %}User{% endtrans %}</th>
+        {% block actionsHeader %}
+            <th>{% trans %}Actions{% endtrans %}</th>
+        {% endblock %}
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for entity in entities %}
+        {% if is_granted('ROLE_NOTES_INTERNAL') or not (entity.internalUseOnly is defined and entity.internalUseOnly == true) %}
+            {% include 'IntranetBundle:Note:noteItemChunk.html.twig' %}
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,8 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+    {% block content %}
+	{% form_theme edit_form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+        {% import "IntranetBundle:Macroses:standardViewsMacro.html.twig" as view %}
+         {% set editPath =  path('complaint_show', { 'id': entity.id }) %}
+        {{ view.edit(edit_form,'complaint','Complaint edit',editPath) }}
+    {% endblock %}

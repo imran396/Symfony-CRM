@@ -1,0 +1,44 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Enum Value{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                      <tbody>
+            <tr>
+                <th>{% trans %}Classname{% endtrans %}</th>
+                <td>{{ entity.className }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Value{% endtrans %}</th>
+                <td>{{ entity.fullValue }}</td>
+            </tr>
+            <tr>
+                <th>{% trans %}Reusable{% endtrans %}</th>
+                <td>{{ entity.reusable|bool|trans }}</td>
+            </tr>
+        </tbody>
+                </table>
+
+                </div>
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('enumvalue_edit', { 'id': entity.id }) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+

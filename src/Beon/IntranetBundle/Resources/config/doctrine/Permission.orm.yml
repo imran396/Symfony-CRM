@@ -1,0 +1,18 @@
+Beon\IntranetBundle\Entity\Permission:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\PermissionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        identifier:
+            type: string
+            length: 255
+        description:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

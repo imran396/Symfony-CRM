@@ -1,0 +1,7 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+    {% block content %}
+	{% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+        {% import "IntranetBundle:Macroses:standardViewsMacro.html.twig" as view %}
+        {{ view.new(form,'complaint','Complaint creation') }}
+    {% endblock %}

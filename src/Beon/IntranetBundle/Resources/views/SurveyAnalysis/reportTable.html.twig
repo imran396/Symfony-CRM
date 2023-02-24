@@ -1,0 +1,129 @@
+{% if data.lengthOfStay is defined %}
+ <table class="table">
+    <tr>
+        <th width="40%">Question: {{ data.lengthOfStay.question|title }} </th>
+        <th width="60%">&nbsp;</th>
+    </tr>
+    {% if data.lengthOfStay.customer is defined %}
+    <tr>
+        <td>{{ data.customerName }}</td>
+        <td> {{ data.lengthOfStay.customer.hours }} Hour {{ data.lengthOfStay.customer.minutes }} Minutes Average Stay  </td>
+    </tr>
+    {% endif %}
+    {% if data.lengthOfStay.parent is defined %}
+    <tr>
+        <td>{{ data.parentName }}</td>
+        <td> {{ data.lengthOfStay.parent.hours }} Hour {{ data.lengthOfStay.parent.minutes }} Minutes Average Stay  </td>
+    </tr>
+    {% endif %}
+    {% if data.lengthOfStay.grandParent is defined %}
+    <tr>
+        <td>{{ data.grandParentName }}</td>
+        <td> {{ data.lengthOfStay.grandParent.hours }} Hour {{ data.lengthOfStay.grandParent.minutes }} Minutes Average Stay  </td>
+    </tr>
+    {% endif %}
+</table>
+{% endif %}
+
+{% for question in data %}
+{% if question.type is defined %}
+{% set cTotal = data.customerTotal %}
+{% if question.customer.ka is defined %}
+    {% set cKa = question.customer.ka.count %}
+    {% set cTotal = data.customerTotal - cKa %}
+{% endif %}
+
+{% set pTotal = data.parentTotal %}
+{% if question.parent.ka is defined %}
+    {% set pKa = question.parent.ka.count %}
+    {% set pTotal = data.parentTotal - pKa %}
+{% endif %}
+
+{% set gpTotal = data.grandParentTotal %}
+{% if question.grandParent.ka is defined %}
+    {% set gpKa = question.grandParent.ka.count %}
+    {% set gpTotal = data.grandParentTotal - gpKa %}
+{% endif %}
+    <table class="table">
+        <tr>
+            <th width="40%">Question: {{ question.question|title }} </th>
+            <th width="60%">&nbsp;</th>
+        </tr>
+        {% if question.customer is defined %}
+        <tr>
+            <td>{{ data.customerName }}</td>
+            <td>
+            {% if 1 == question.type %}
+                {% for key, value in question.customer %}
+                    {% if value is iterable and key != 'ka' and value.count > 0 and cTotal > 0 %}
+                        {{ ( ( value.count / cTotal ) * 100 )|number_format(2, '.') }}%  {{ key }}, 
+                    {% endif %}
+                {% endfor %}
+                {% if question.customer.ka is defined and question.customer.ka.count > 0 %}
+                    {{ ( ( question.customer.ka.count / data.customerTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+             {% elseif 0 == question.type %}
+                {% if question.customer.sum > 0 and cTotal > 0 %}
+                    {{ ( question.customer.sum / cTotal )|number_format(2, '.') }}  Average,  
+                {% endif %}
+                
+                {% if question.customer.ka is defined and question.customer.ka.count > 0 %}
+                    {{ ( ( question.customer.ka.count / data.customerTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+             {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if question.parent is defined %}
+        <tr>
+            <td>{{ data.parentName }}</td>
+            <td>
+            {% if 1 == question.type %}
+                {% for key, value in question.parent %}
+                    {% if value is iterable and key != 'ka' and value.count > 0 and pTotal > 0 %}
+                        {{ ( ( value.count / pTotal ) * 100 )|number_format(2, '.') }}%  {{ key }}, 
+                    {% endif %}
+                {% endfor %}
+                {% if question.parent.ka is defined and question.parent.ka.count > 0 %}
+                    {{ ( ( question.parent.ka.count / data.parentTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+            {% elseif 0 == question.type %}
+                {% if question.parent.sum > 0 and pTotal > 0%}
+                    {{ ( question.parent.sum / pTotal )|number_format(2, '.') }}  Average,  
+                {% endif %}
+                
+                {% if question.parent.ka is defined and question.parent.ka.count > 0 %}
+                    {{ ( ( question.parent.ka.count / data.parentTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+            {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if question.grandParent is defined %}
+        <tr>
+            <td>{{ data.grandParentName }}</td>
+            <td>
+            {% if 1 == question.type %}
+                {% for key, value in question.grandParent %}
+                    {% if value is iterable and key != 'ka' and value.count > 0 and gpTotal > 0 %}
+                        {{ ( ( value.count / gpTotal ) * 100 )|number_format(2, '.') }}%  {{ key }},
+                    {% endif %}
+                {% endfor %}
+                {% if question.grandParent.ka is defined and question.grandParent.ka.count > 0 %}
+                    {{ ( ( question.grandParent.ka.count / data.grandParentTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+            {% elseif 0 == question.type %}
+                {% if question.grandParent.sum > 0 and gpTotal > 0%}
+                    {{ ( question.grandParent.sum / gpTotal )|number_format(2, '.') }}  Average,  
+                {% endif %}
+                
+                {% if question.grandParent.ka is defined and question.grandParent.ka.count > 0 %}
+                    {{ ( ( question.grandParent.ka.count / data.grandParentTotal ) * 100 )|number_format(2, '.') }}%  k.A.
+                {% endif %}
+            {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+    </table>
+{% endif %}
+{% endfor %}

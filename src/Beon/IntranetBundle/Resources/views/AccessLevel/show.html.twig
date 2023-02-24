@@ -1,0 +1,55 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}
+                Access level{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>Name</th>
+                            <td>{{ entity.name }}</td>
+                        </tr>
+                        <tr>
+                            <th>For customers</th>
+                            <td>{{ entity.forCustomers|bool|trans }}</td>
+                        </tr>
+                        <tr>
+                            <th>For employees</th>
+                            <td>{{ entity.forEmployees|bool|trans }}</td>
+                        </tr>
+                        <tr>
+                            <th>For others</th>
+                            <td>{{ entity.forOthers|bool|trans }}</td>
+                        </tr>
+                        <tr>
+                            <th>Permission</th>
+                            <td>
+                                <ul>
+                                {% for permission in entity.permissions %}
+                                    <li><strong>{{ permission.identifier }}</strong>{% if permission.description %}: {{ permission.description }}{% endif %}</li>
+                                {% endfor %}
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('accesslevel_edit', { 'id': entity.id }) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                    {{ form(delete_form) }}
+                    {{ form(duplicate_form) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

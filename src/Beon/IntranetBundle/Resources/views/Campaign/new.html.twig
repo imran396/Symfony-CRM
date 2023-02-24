@@ -1,0 +1,37 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    {% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Campaign creation{% endtrans %}</div>
+
+            <div id="widget1container" class="block-body collapse in">
+
+
+                {{ form(form) }}
+
+                {% if customer is defined and customer is not empty %}
+                    <h3>{{ customer }}</h3>
+                {% endif %}
+
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path('campaign') }}">
+                           {% trans %} Back to the list{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% include 'IntranetBundle:Campaign:modalForm.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'IntranetBundle:Campaign:featuresScript.html.twig' %}
+{% endblock %}
+

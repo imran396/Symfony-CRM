@@ -1,0 +1,9 @@
+
+mailqueue_approve:
+    pattern:  /{id}
+    defaults: { _controller: "IntranetBundle:MailQueue:approve" }
+
+mailqueue_approve_confirm:
+    pattern:  /confirm/{id}
+    defaults: { _controller: "IntranetBundle:MailQueue:approveConfirm" }
+

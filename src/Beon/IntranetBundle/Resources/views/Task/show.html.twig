@@ -1,0 +1,265 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+	<div class="row-fluid">
+
+	    <div class="block span6">
+		<div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Task{% endtrans %}</div>
+		<div id="widget1container" class="block-body collapse in">
+		    <div id="tablewidget" class="block-body collapse in">
+			<table class="table table-bordered">
+			    <tbody>
+			    <tr>
+				<th>{% trans %}Id{% endtrans %}</th>
+				<td>{{ "AG%05d"|format(entity.id) }}</td>
+			    </tr>
+
+			    <tr>
+				<th>{% trans %}Type{% endtrans %}</th>
+				<td>{{ entity.type|taskType|trans }}</td>
+			    </tr>
+
+			    <tr>
+				    <th>{{ 'Title'|trans|stripParatheses }}</th>
+				    <td>{{ entity.title }}</td>
+			    </tr>
+
+			    {% if entity.createdBy %}
+				<tr>
+				    <th>{% trans %}Created by{% endtrans %}</th>
+				    <td><a href="{{ path('user_show', { 'id': entity.createdBy.id }) }}">{{ entity.createdBy }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.user %}
+				<tr>
+				    <th>{% trans %}User{% endtrans %}</th>
+				    <td><a href="{{ path('user_show', { 'id': entity.user.id }) }}">{{ entity.user }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.carbonCopy %}
+				<tr>
+				    <th>{% trans %}Carbon copy{% endtrans %}</th>
+				    <td><a href="{{ path('user_show', { 'id': entity.carbonCopy.id }) }}">{{ entity.carbonCopy }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.customer %}
+				<tr>
+				    <th>{% trans %}Stakeholder{% endtrans %}</th>
+				    <td>
+					<a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.campaign %}
+				<tr>
+				    <th>{% trans %}Campaign{% endtrans %}</th>
+				    <td>
+					<a href="{{ path('campaign_show', { 'id': entity.campaign.id }) }}">{{ entity.campaign }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.complaint %}
+				<tr>
+				    <th>{% trans %}Complaint{% endtrans %}</th>
+				    <td>
+					<a href="{{ path('complaint_show', { 'id': entity.complaint.id }) }}">{{ entity.complaint }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    {% if entity.pressrelease %}
+				<tr>
+				    <th>{% trans %}Press release{% endtrans %}</th>
+				    <td>
+					<a href="{{ path('pressrelease_show', { 'id': entity.pressrelease.id }) }}">{{ entity.pressrelease }}</a>
+				    </td>
+				</tr>
+			    {% endif %}
+
+			    <tr>
+				    <th>{{ 'Description'|trans|stripParatheses }}</th>
+				    <td>{{ entity.description|nl2br }}</td>
+			    </tr>
+			    <tr>
+				    <th>{% trans %}Due date{% endtrans %}</th>
+				    <td>{{ entity.dueDate|date(defaultDateFormat) }}</td>
+			    </tr>
+			    <tr>
+			    	<th>{% trans %}Status{% endtrans %}</th>
+				    <td>
+				        {{ entity.status|taskStatus|trans }}
+				        {% if entity.status is constant(TaskStatusEnum~'NOT_STARTED') or entity.status is constant(TaskStatusEnum~'IN_PROGRESS') %}
+					    {% if entity.approved %}
+					        / {% trans %}Approved{% endtrans %}
+					    {% elseif entity.approvalMailSent %}
+					        / {% trans %}Waiting for external approval{% endtrans %}
+					    {% elseif entity.internalapprovalMailSent %}
+					        / {% trans %}Waiting for internal approval{% endtrans %}
+					    {% endif %}
+				        {% endif %}
+
+				</td>
+			    </tr>
+
+			    {% if entity.type is constant(TaskTypeEnum~'GRAPHICS') %}
+				    <tr>
+				        <th>{% trans %}Expedited?{% endtrans %}</th>
+				        <td>{{ entity.expedited|bool|trans }}</td>
+				    </tr>
+				    <tr>
+				        <th>{% trans %}New design?{% endtrans %}</th>
+				        <td>{{ entity.newDesign|bool|trans }}</td>
+				    </tr>
+				    <tr>
+				        <th>{% trans %}Graphics type{% endtrans %}</th>
+				        <td>{{ entity.graphicsType }}</td>
+				    </tr>
+				    <tr>
+				        <th>{% trans %}Graphics format{% endtrans %}</th>
+				        <td>{{ entity.graphicsFormat }}</td>
+				    </tr>
+
+                    {% if entity.graphicsType is not constant(TaskGraphicsTypeEnum~'AD') and entity.graphicsType is not constant(TaskGraphicsTypeEnum~'WEB') and entity.graphicsType is not constant(TaskGraphicsTypeEnum~'FACEBOOK') %}
+                		<tr>
+				            <th>{% trans %}Paper type{% endtrans %}</th>
+				            <td>{{ entity.paperType }}</td>
+				        </tr>
+
+			            {% if entity.paperType is not constant(TaskPaperTypeEnum~'NONE') %}
+		
+				            <tr>
+				                <th>{% trans %}Graphics circulation{% endtrans %}</th>
+				                <td>{{ entity.graphicsCirculation }}</td>
+				            </tr>
+				            <tr>
+				                <th>{% trans %}Payment method{% endtrans %}</th>
+				                <td>{{ entity.paymentMethod|taskPaymentType }}</td>
+				            </tr>
+				            <tr>
+				                <th>{% trans %}Invoice address{% endtrans %}</th>
+				                <td>{{ entity.invoiceAddress|nl2br }}</td>
+				            </tr>
+				            <tr>
+				                <th>{% trans %}Delivery address{% endtrans %}</th>
+				                <td>{{ entity.deliveryAddress|nl2br }}</td>
+				            </tr>
+                            {% if entity.printSpeed %}
+				            <tr>
+				                <th>{% trans %}Print speed{% endtrans %}</th>
+				                <td>{{ entity.printSpeed|printSpeedType }}</td>
+				            </tr>
+                            {% endif %}
+				            <tr>
+				                <th>{% trans %}Order reference{% endtrans %}</th>
+				                <td>{{ entity.orderReference }}</td>
+				            </tr>
+			            {% endif %}
+			        {% endif %}
+			    {% endif %}
+			    </tbody>
+			</table>
+
+		    </div>
+
+            {% if not readOnly %}
+		        {% if entity.type is constant(TaskTypeEnum~'GRAPHICS') %}
+			    <div class="inline-forms mb10">
+			        {% if is_granted('ROLE_TASKS_ALL') or is_granted('ROLE_TASKS_OWNGROUP') %}
+				    {% if not entity.approvalmailsent and (not entity.internalapprovalmailsent or is_granted('ROLE_TASKS_ALL')) and (entity.status is constant(TaskStatusEnum~'NOT_STARTED') or entity.status is constant(TaskStatusEnum~'IN_PROGRESS')) and not entity.approved %}
+				        <a class="btn" href="{{ path('task_send_approval_email',{id:entity.id}) }}">{% trans %}send approval email{% endtrans %}</a>
+				    {% endif %}
+			        {% endif %}
+
+			        {% if not entity.approved and is_granted('ROLE_TASKS_APPROVE') and (
+				        is_granted('ROLE_TASKS_ALL') or entity.approvalmailsent
+			        ) %}
+				        <button class="btn" id="approveButton" data-ready="{{ entity.internalapprovalmailsent or entity.approvalmailsent }}">{% trans %}Approve{% endtrans %}</button>
+				        <button class="btn" id="denyButton" data-ready="{{ entity.internalapprovalmailsent or entity.approvalmailsent }}">{% trans %}Correction necessary{% endtrans %}</button>
+                    	{% import 'IntranetBundle:Macroses:approveButtonMacro.html.twig' as approveMacros %}
+			        {% endif %}
+			    </div>
+		        {% endif %}
+
+		        {% if is_granted('ROLE_TASKS_EDIT') or is_granted('ROLE_TASKS_NEW') %}
+			    <div class="inline-forms">
+			        {% if is_granted('ROLE_TASKS_EDIT') %}
+				        <a class="btn btn-table-actions" href="{{ path('task_edit', { 'id': entity.id }) }}">
+				            {% trans %}Edit{% endtrans %}
+				        </a>
+			        {% endif %}
+			        {% if is_granted('ROLE_TASKS_ALL') %}
+				        {{ form(delete_form) }}
+			        {% endif %}
+			        {% if is_granted('ROLE_TASKS_NEW') %}
+				        {{ form(duplicate_form) }}
+			        {% endif %}
+			        {% if is_granted('ROLE_TASKS_ALL') and entity.customer.level is defined and entity.customer.level == 1 %}
+                        <div class="btn-group">
+                            <button type="button" class="dropdown-toggle btn btn-table-actions" data-toggle="dropdown">
+                                Duplicate Down <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a
+                                       href="{{ path('affilation_type_task_duplicate', { 'id': entity.id, 'type': 'all' }) }}">
+                                        {% trans %}All Children{% endtrans %}
+                                    </a></li>
+                                <li><a
+                                       href="{{ path('affilation_type_task_duplicate', { 'id': entity.id, 'type': 'current' }) }}">
+                                        {% trans %}Running Contract{% endtrans %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+			        {% endif %}
+			    </div>
+		        {% endif %}
+
+
+		        <div class="inline-forms mb10">
+			        {% if not entity.approved and not is_granted('ROLE_TASKS_CUSTOMER') and app.user.id != entity.user.id %}
+			            <a class="btn" href="{{ path('task_notify', { 'id': entity.id}) }}">{% trans %}Notify{% endtrans %}</a>
+			        {% endif %}
+			        {% if not entity.approved or not is_granted('ROLE_TASKS_CUSTOMER') %}
+            			<a class="btn" href="{{ path('task_new_related',{ 'id': entity.id, 'name':'note' }) }}">{% trans %}Create note{% endtrans %}</a>
+			        {% endif %}
+                    {% if is_granted('ROLE_TIMETRACKINGS') %}
+                        <a class="btn" href="{{ path('task_new_related',{ 'id': entity.id, 'name':'timetracking' }) }}">{% trans %}Create time tracking entry{% endtrans %}</a>
+                    {% endif %}
+		        </div>
+            {% endif %}
+				  
+
+		    <ul class="record_actions unstyled">
+			<li>
+			    <a href="{{ path('task') }}">
+				{% trans %}Back to the list{% endtrans %}
+			    </a>
+			</li>
+		    </ul>
+		</div>
+	    </div>
+
+	    {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'task',null,upload_file_form) }}
+        {% import 'IntranetBundle:Macroses:logsMacro.html.twig' as log %}
+        {{ log.template(logs) }}
+
+	</div>
+	{% include "IntranetBundle:Note:listChunk.html.twig" %}
+	{% include "IntranetBundle:Task:duplicates.html.twig" %}
+	{% include "IntranetBundle:Timetracking:listChunk.html.twig" %}
+	
+	{% if approveMacros is defined %}
+	    {{ approveMacros.approveModal(approveForm) }}
+	    {{ approveMacros.denyModal(denyForm) }}
+    {% endif %}
+{% endblock %}

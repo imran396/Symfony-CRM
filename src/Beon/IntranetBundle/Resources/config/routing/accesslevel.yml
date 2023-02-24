@@ -1,0 +1,35 @@
+accesslevel:
+    path:     /
+    defaults: { _controller: "IntranetBundle:AccessLevel:index" }
+
+accesslevel_show:
+    path:     /{id}/show
+    defaults: { _controller: "IntranetBundle:AccessLevel:show" }
+
+accesslevel_new:
+    path:     /new
+    defaults: { _controller: "IntranetBundle:AccessLevel:new" }
+
+accesslevel_create:
+    path:     /create
+    defaults: { _controller: "IntranetBundle:AccessLevel:create" }
+    requirements: { _method: post }
+
+accesslevel_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "IntranetBundle:AccessLevel:edit" }
+
+accesslevel_update:
+    path:     /{id}/update
+    defaults: { _controller: "IntranetBundle:AccessLevel:update" }
+    requirements: { _method: post|put }
+
+accesslevel_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "IntranetBundle:AccessLevel:delete" }
+    requirements: { _method: post|delete }
+
+accesslevel_duplicate:
+    pattern:  /{id}/duplicate
+    defaults: { _controller: "IntranetBundle:AccessLevel:duplicate" }
+    requirements: { _method: post }

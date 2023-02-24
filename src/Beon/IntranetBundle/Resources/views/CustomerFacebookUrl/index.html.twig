@@ -1,0 +1,18 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Stakeholder{% endtrans %} => {% trans %}Facebook Url{% endtrans %}</h1>
+
+    <div class="btn-toolbar">
+        <a href="{{ path('customerfacebookurl_new') }}" class="btn"><i class="icon-plus"></i> {% trans with {'%from%': 'Stakeholder'|trans, '%to%': 'Facebook Url'|trans} %}New %from% => %to% relation{% endtrans %}</a>
+
+        <div class="btn-group">
+        </div>
+    </div>
+
+    <div class="well">
+        {% include 'IntranetBundle:CustomerFacebookUrl:indexTable.html.twig' %}
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

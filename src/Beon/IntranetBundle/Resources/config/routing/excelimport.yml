@@ -1,0 +1,11 @@
+excelimport_upload:
+    path:     /
+    defaults: { _controller: IntranetBundle:ExcelImport:upload }
+
+excelimport_save_upload:
+    path:     /save_upload
+    defaults: { _controller: IntranetBundle:ExcelImport:saveUpload }
+    
+excelimport_select:
+    path:     /select
+    defaults: { _controller: IntranetBundle:ExcelImport:select }

@@ -1,0 +1,44 @@
+{% macro customersList(customers,contactId,addCustomerForm) %}
+
+  <div class="row-fluid">
+    <div class="block">
+        <div class="block-heading" data-toggle="collapse" data-target="#customerewidget">{% trans %}Stakeholders{% endtrans %}</div>
+        <div class="block-body" id="customerewidget" class="block-body collapse in">
+        {% if customers|length %}
+            <table class="table" >
+              <thead>
+                <tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                </tr>
+              </thead>
+                <tbody>
+                {% for customer in customers %}
+                    <tr>
+                        <td>{{ customer.name }}</td>
+                        {% if is_granted('ROLE_STAKEHOLDERS') %}
+                            <td><a onclick="return confirm('Are you sure?')" class="btn btn-table-actions"
+                                   href="{{ path('customer_contact_delete',{'id':customer.id,'contactId':contactId}) }}">{% trans %}Delete{% endtrans %}</a>
+                            <a class = "btn btn-table-actions"  href="{{ path('customer_show', { 'id': customer.id }) }}">{% trans %} show{% endtrans %}</a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+            <div id="customerContactForm" style="display: none">
+                <div id="addCustomer">
+                    {% if addCustomerForm %}
+                     {{ form(addCustomerForm) }}
+            {% endif %}
+                </div>
+            </div>
+            <a class="btn btn-table-actions" href="javascript:void(0);" id="customerContact">{% trans %}Add Stakeholders{% endtrans %}</a>
+        </div>
+
+
+        </div>
+    </div>
+
+{% endmacro %}

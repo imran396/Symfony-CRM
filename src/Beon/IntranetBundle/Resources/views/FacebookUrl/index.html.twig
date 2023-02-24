@@ -1,0 +1,30 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Facebook Url{% endtrans %}</h1>
+
+    <div class="btn-toolbar">
+        <a href="{{ path('facebookurl_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New facebook url{% endtrans %}</a>
+
+        <div class="btn-group">
+        </div>
+    </div>
+
+    <div class="well">
+        {% include 'IntranetBundle:FacebookUrl:indexTable.html.twig' %}
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+
+<script>
+    $(function () {
+        $(document).on("click", "a.markdone", function (e) {
+            e.preventDefault();
+            var button = $(this);
+            $.ajax($(this).attr('href')).done(function (data) {
+                button.attr('disabled', true).closest('td').prev().text(data);
+            });
+        });
+    });
+</script>
+{% endblock content %}
+

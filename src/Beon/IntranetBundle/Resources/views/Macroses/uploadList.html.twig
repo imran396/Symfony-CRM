@@ -1,0 +1,92 @@
+{% set taskSubmitFiles = (name == 'task' and uploadDeleteForms is empty and is_granted('ROLE_CAMPAIGNS_SUBMITFILES') and entity.submitFilesStatus is defined and entity.submitFilesStatus == true) %}
+<div class="block span6">
+    <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Uploads{% endtrans %}</div>
+    <div id="widget1container" class="block-body collapse in"> 
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 90%">{% trans %}File name{% endtrans %}</th>
+                <th style="text-align: right">{% trans %}File size{% endtrans %}</th>
+                <th style="text-align: right">{% trans %}Created at{% endtrans %}</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% block loopChunk %}
+                {% for upload in entity.uploads %}
+                    {% include 'IntranetBundle:Macroses:uploadItemChunk.html.twig' %}
+                {% endfor %}
+            {% endblock %}
+            </tbody>
+        </table>
+
+        {% if is_granted('ROLE_UPLOADS_NEW') and uploadFileForm %}
+            {{ form(uploadFileForm) }}
+        {% endif %}
+
+        <button id="sendExternalUploadEmailInvoiceButton" class="btn btn-table-actions hidden" type="button">{% trans %}Send invoice upload link{% endtrans %}</button>
+        <button id="sendExternalUploadEmailButton" class="btn btn-table-actions hidden" type="button">{% trans %}Send upload link{% endtrans %}</button>
+        {% if taskSubmitFiles %}
+            <button class="btn btn-table-actions" id="submit_uploaded_files">{% trans %}Submit files for printing{% endtrans %}</button>
+        {% endif %}
+        <span id="submit_files_loader"></span>
+    </div>
+
+    <script>
+        $('.tag-toggle').click(function() {
+            var tag = $(this);
+            $.ajax({
+                url: {{ path('upload_toggle_group_flag')|json_encode|raw }},
+                type: "POST",
+                data: {'id': tag.data('id')},
+                success: function (data) {
+                    tag.removeClass('tag-grey').removeClass('tag-yellow').removeClass('tag-green').addClass(data);
+                }
+            });
+        });
+        
+        {% if taskSubmitFiles %}
+            var entity = {{ entity.id }};
+            $('#submit_uploaded_files').click(function(){
+                if ($(this).hasClass('checkboxes-shown')) {
+                    var selected = [];
+                    $('.checkbox-toggle:checked').each(function(){
+                        selected.push( $(this).val() );
+                    })
+                    if( selected.length <= 0 ){
+                        $(this).removeClass('checkboxes-shown');
+                        $('.checkbox-toggle').hide();
+                        return false;
+                    }
+                    uploadIds = selected.join(',');
+                                    
+                    $.ajax({
+                        url: {{ path('task_submit_files')|json_encode|raw }},
+                        type: "POST",
+                        data: {'id': entity, 'uploadIds': uploadIds},
+                        beforeSend: function(){
+                            $('#submit_files_loader').html('Submitting files. Please wait...');
+                        },
+                        success: function (data) {
+                            $('#submit_files_loader').html('');
+                            $('input:checkbox:checked').attr('checked', false);
+                            response = JSON.parse(data);
+                            if( response.status == true )
+                            {
+                                $('#submit_files_loader').html( response.msg );
+                            } else {
+                                $('#submit_files_loader').html( response.msg );
+                            }
+                            setTimeout("location.reload()", 1000);
+                        }
+                    });
+                    $(this).removeClass('checkboxes-shown');
+                    $('.checkbox-toggle').hide();
+                } else {
+                    $('.checkbox-toggle').show();
+                    $(this).addClass('checkboxes-shown');
+                }
+            })
+        {% endif %}
+    </script>
+</div>

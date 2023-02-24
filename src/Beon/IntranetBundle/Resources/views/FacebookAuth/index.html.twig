@@ -1,0 +1,14 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}FacebookAuth Token{% endtrans %}</h1>
+
+    <div class="well">
+
+
+   {% include 'IntranetBundle:FacebookAuth:indexTable.html.twig' %}
+
+    </div>
+    <div><a class="btn btn-table-actions" href="{{ fbloginurl }}">Generate Facebook AuthToken</a></div>
+{% endblock content %}

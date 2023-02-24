@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EMAT by beon-communications</title>
+    <base href="{{ path('beon_homepage') }}"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+ {% block stylesheet %}
+    {% stylesheets filter='beon_css_rewriter_filter'
+    '@IntranetBundle/Resources/public/lib/bootstrap/css/bootstrap.css'
+    '@IntranetBundle/Resources/public/stylesheets/theme.css'
+    '@IntranetBundle/Resources/public/lib/font-awesome/css/font-awesome.css'
+    '@IntranetBundle/Resources/public/stylesheets/myelements.css'
+    '@IntranetBundle/Resources/public/stylesheets/jquery-linedtextarea.css'
+    '@IntranetBundle/Resources/public/stylesheets/common.css'
+    '@IntranetBundle/Resources/public/stylesheets/select2.css'
+    '@IntranetBundle/Resources/public/lib/bootstrapvalidator/css/bootstrapValidator.css'
+    '@IntranetBundle/Resources/public/lib/jstree/themes/default/style.css'
+     %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+
+    {% javascripts
+    '@IntranetBundle/Resources/public/lib/jquery-1.11.1.min.js'
+    '@IntranetBundle/Resources/public/lib/jquery-linedtextarea.js'
+    '@IntranetBundle/Resources/public/lib/bootstrap/js/bootstrap.min.js'
+    '@IntranetBundle/Resources/public/lib/select2.min.js'
+    '@IntranetBundle/Resources/public/lib/jstree/jstree.js'
+    '@IntranetBundle/Resources/public/lib/bootstrapvalidator/js/bootstrapValidator.js'
+    '@IntranetBundle/Resources/public/lib/jquery.messyCode.js'
+    '@IntranetBundle/Resources/public/shared/js/modernizr.com/Modernizr-2.5.3.forms.js'
+     %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery.ui.all.css" />
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+    {% block stylesheets %}{% endblock %}
+    <script language="javascript">
+	    $(document).ready(function() {
+		    var fileUploadedCount = 1;
+		    var errorMsgInvalidFileType = "{% trans %}Invalid file type{% endtrans %}";
+		
+		    $(".fileOnClick").click(function() {
+			    var fileData = $(".fileUploadDiv", $(this)).html();
+			    fileData = fileData.replace(new RegExp('default','g'),fileUploadedCount);
+			    fileData = fileData.replace(new RegExp(errorMsgInvalidFileType,'g'),'');
+			    $(".fileGetUploadDiv", $(this)).append(fileData);
+			    fileUploadedCount++;
+		    });		
+		
+		    $('.multipleFileWidget').on("change", ".validateFileType", function () { 
+		        var filename = $(this).val();
+		        var extension = filename.replace(/^.*\./, '');	      
+		        
+		        if (jQuery.inArray(extension, disallowedFileTypes)!==-1) {	
+			        $(this).val('');
+			        $("#error-"+this.id).html(errorMsgInvalidFileType);
+			        $("#error-"+this.id).show();
+		        } else {
+			        $("#error-"+this.id).html("");
+			        $("#error-"+this.id).hide();
+		        }
+		    });
+		
+		    $(".reloadPage").click(function() {	  
+		        window.location.href=window.location.href;
+		    });
+	    });
+
+	    var disallowedFileTypes = new Array();
+	    {% for disallowedFileType in disallowedFileTypes %}
+	        disallowedFileTypes.push("{{ disallowedFileType }}");
+	    {%endfor%}
+
+	    var matched, browser;
+	    jQuery.uaMatch = function( ua ) {
+	        ua = ua.toLowerCase();
+
+	        var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(msie) ([\w.]+)/.exec( ua ) ||
+		    ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+		    [];
+
+	        return {
+		    browser: match[ 1 ] || "",
+		    version: match[ 2 ] || "0"
+	        };
+	    };
+	    matched = jQuery.uaMatch( navigator.userAgent );
+	    browser = {};
+	    if ( matched.browser ) {
+	        browser[ matched.browser ] = true;
+	        browser.version = matched.version;
+	    }
+
+	    // Chrome is Webkit, but Webkit is also Safari.
+	    if ( browser.chrome ) {
+	        browser.webkit = true;
+	    } else if ( browser.webkit ) {
+	        browser.safari = true;
+	    }
+	    jQuery.browser = browser;
+
+
+    </script>
+
+    <!-- Needed for Validation -->
+    <script type="text/javascript" src="{{ asset('bundles/intranet/shared/js/html5Forms.js') }}" data-webforms2-support="date" data-webforms2-force-js-validation="true" data-lang="qq"></script>
+
+</head>
+
+<!--[if lt IE 7 ]>
+<body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<body class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<body class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>
+<body class="ie ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body>
+
+<!--<![endif]-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            {%   if app.user.displayName  is defined %}
+            <ul class="nav pull-right">
+
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i> {{ app.user.displayName }}
+                        <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        {#<li><a tabindex="-1" href="#">Settings</a></li>#}
+                        {#<li class="divider"></li>#}
+                        <li><a tabindex="-1" href="logout">{% trans %}Logout{% endtrans %}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            {% endif %}
+
+            <a class="brand" href="/"><span class="first">EMAT</span> <span class="second">by beon-communications</span></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+{% block content %}
+{% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Upload file{% endtrans %}</div>
+
+            <div id="widget1container" class="block-body collapse in">
+                {{ form(form) }}
+	    </div>
+        </div>
+    </div>
+{% endblock %}
+
+</body>
+</html>

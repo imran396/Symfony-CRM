@@ -1,0 +1,119 @@
+{% spaceless %}
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $(".lined").linedtextarea();
+
+            var $campaignSupplierSelect = $('#campaign_supplier');
+            var $contactSelect = $('#campaign_contact');
+
+            var printGroup = $('#campaign_numberOfAds, #campaign_sizeOfAds').parent();
+            var radioAndTvGroup = $('#campaign_numberOfSeconds').parent();
+
+            {% image '@IntranetBundle/Resources/public/ico/ajax_loader_gray_32.gif' %}
+            var $spinner = $('<img class="spinner" src="{{ asset_url }}">').insertAfter($campaignSupplierSelect.parent()).hide();
+            {% endimage %}
+
+            var $audienceSizeInput = $('#campaign_audiencesize');
+            var $audienceSizeModal = $('#changeAudienceSizeConfirm');
+            var firstRun = true;
+            var audienceLabel = $('label[for="campaign_audiencesize"]');
+            var audienceLabelDefaultText = audienceLabel.text();
+            var audienceLabels = {{  supplierAudienceTitlesEnum|json_encode()|raw }};
+
+            $campaignSupplierSelect.change(function () {
+                $this = $(this);
+
+                $.ajax({
+                    url: {{ path('supplier_get_supplier_data')|json_encode|raw }},
+                    type: "POST",
+                    dataType: 'json',
+                    data: {'supplier_id': $this.val()},
+                    beforeSend: function () {
+                        $spinner.show();
+                        radioAndTvGroup.hide();
+                        printGroup.hide();
+                    },
+                    success: function (data) {
+                        $spinner.hide();
+                        if (data) {
+                            if (!firstRun) {
+                                applyAudienceSize(data.audiencesize);
+                            }
+                            applySupplierContacts(data.contacts);
+                            applySupplierType(data.type);
+                        }
+                        firstRun = false;
+                    },
+                    error: function () {
+                        $resultBlock.hide();
+                    }
+                });
+            }).change();
+
+
+            function applyAudienceSize($audienceSize) {
+                if (parseInt($audienceSize) > 0 && $audienceSize != $audienceSizeInput.val()) {
+                    $audienceSizeModal.modal('show');
+
+                    $('[data-dismiss="changeAudienceSizeAction"]').unbind("click").click(function () {
+                        $audienceSizeInput.val($audienceSize);
+                        $audienceSizeModal.modal('hide');
+                    });
+                }
+            }
+
+            function applySupplierContacts($supplierContacts) {
+                $contactSelect.find('option').each(function() {
+                    var valid = $.inArray(parseInt($(this).attr('value')), $supplierContacts);
+                    $(this).toggle($(this).attr('value') == '' || valid != -1);
+                });
+                var valid = $.inArray(parseInt($contactSelect.val()), $supplierContacts);
+                if (valid == -1) {
+                    $contactSelect.val('');
+                }
+            }
+
+            function applySupplierType($supplierType) {
+                if ($supplierType && typeof audienceLabels[$supplierType] != 'undefined') {
+                    audienceLabel.text(audienceLabels[$supplierType]);
+                } else {
+                    audienceLabel.text(audienceLabelDefaultText);
+                }
+
+                switch ($supplierType) {
+                    case {{ constant(SupplierTypesEnum~'PrintType') }}:
+                        radioAndTvGroup.hide();
+                        printGroup.show();
+                        break;
+                    case {{ constant(SupplierTypesEnum~'OnlineType') }}:
+                        radioAndTvGroup.hide();
+                        printGroup.hide();
+                        $('#campaign_sizeOfAds,label[for="campaign_sizeOfAds"]').show();
+                        break;
+                    case {{ constant(SupplierTypesEnum~'RadioType') }}:
+                    case {{ constant(SupplierTypesEnum~'TvType') }}:
+                        radioAndTvGroup.show();
+                        printGroup.hide();
+                        break;
+                    default:
+                        radioAndTvGroup.hide();
+                        printGroup.hide();
+                        break;
+                }
+            }
+
+             $('#campaign_invoiceAddress').after($('<button class="btn icon-link"></button>').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: {{ path('customer_get_address')|json_encode|raw }},
+                    type: "POST",
+                    dataType: 'json',
+                    data: {'customer_id': $('#campaign_customer').val(), 'forCampaignInvoice': 1},
+                    success: function (data) {
+                        $('#campaign_invoiceAddress').val(data);
+                    }
+                });
+            }));
+        });
+    </script>
+{% endspaceless %}

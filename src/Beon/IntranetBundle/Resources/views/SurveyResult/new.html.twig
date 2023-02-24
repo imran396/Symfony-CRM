@@ -1,0 +1,36 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+{% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+  <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Survey result creation{% endtrans %}</div>
+
+            <div id="widget1container" class="block-body collapse in">
+		
+		{{ form_start(form) }}
+
+                {{form_row(form.customer)}}
+                {{form_row(form.date)}}
+                {{form_row(form.timeIn)}}
+                {{form_row(form.timeOut)}}
+                
+                <div class="radio-main">
+		  {{form(form)}}
+                
+                </div>
+                
+                {{form_row(form.submit)}}
+                {{ form_end(form) }}
+                
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path('surveyresult') }}">
+                            {% trans %}Back{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

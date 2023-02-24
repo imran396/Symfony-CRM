@@ -1,0 +1,53 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Id{% endtrans %}</th>
+        <th>{% trans %}Type{% endtrans %}</th>
+        <th>{% trans %}Title{% endtrans %}</th>
+        <th>{% trans %}Start{% endtrans %}</th>
+        <th>{% trans %}End{% endtrans %}</th>
+        <th>{% trans %}Budget{% endtrans %}</th>
+        <th>{% trans %}Status{% endtrans %}</th>
+        {% block actionsHeader %}
+            <th>{% trans %}Actions{% endtrans %}</th>
+        {% endblock %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.formattedId }}</td>
+            <td>{{ entity.supplier.supplierType }}</td>
+            <td>{{ entity.title }}</td>
+            <td>{% if entity.start %}{{ entity.start|date(defaultDateFormat) }}{% endif %}</td>
+            <td>{% if entity.end %}{{ entity.end|date(defaultDateFormat) }}{% endif %}</td>
+            <td>{{ entity.budget|number_format(2, ',', '.') }}</td>
+            <td>
+                {% if entity.deleted == true %}
+                    {% trans %}Aborted{% endtrans %}
+                {% elseif entity.approved == true %}
+                    {{ entity.status|CampaignStatus }}
+                {% elseif entity.denied == true %}
+                    {% trans %}Denied{% endtrans %}
+                {% elseif entity.approvalmailsent == true %}
+                    {% trans %}Approval mail sent{% endtrans %}
+                {% else %}
+                    {% trans %}Draft{% endtrans %}
+                {% endif %}
+            </td>
+
+            {% block actionsRows %}
+                <td>
+                    <a class="btn btn-table-actions"
+                       href="{{ path('campaign_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                    {% if is_granted('ROLE_CAMPAIGNS_ALL') %}
+                        <a class="btn btn-table-actions"
+                           href="{{ path('campaign_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                    {% endif %}
+                </td>
+            {% endblock %}
+
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,227 @@
+<script type="text/javascript">
+    var guessPrintCost;
+    jQuery(function ($) {
+        var printItems = $(
+                '#task_graphicsCirculation, ' +
+                '#task_paymentMethod, '+
+                '#task_invoiceAddress, '+
+                '#task_deliveryAddress, '+
+                '#task_printSpeed, '+
+                '#task_orderReference'
+        ).closest('.form-main');
+
+        var graphicsItems = $(
+                '#task_graphicsType, ' +
+                '#task_paperType, ' +
+                '#task_graphicsFormat, ' +
+                '#task_expedited, '+
+                '#task_newDesign,' +
+                '#task_approvalReminderDelay'
+        ).closest('.form-main').add(printItems);
+        var normalItems = $('#task_complaint, #task_dueDate').closest('.form-main');
+        var userSelect = $('#task_user').closest('.form-main');
+        var typeChoice = $('#task_type');
+        var graphicsTypeChoice = $('#task_graphicsType');
+        var graphicsCirculationChoice = $('#task_graphicsCirculation');
+        var graphicsFormatChoice = $('#task_graphicsFormat');
+        var statusChoicePrinting = $('#task_status option[value={{ constant(TaskStatusEnum~'PRINTING') }}]');
+        var statusChoiceThirdPartyWait = $('#task_status option[value={{ constant(TaskStatusEnum~'THIRD_PARTY_WAIT') }}]');
+        var customerChoice = $('#task_customer');
+        var paperChoice = $('#task_paperType');
+        var printSpeedChoice = $('#task_printSpeed');
+        var paymentMethodChoice = $('#task_paymentMethod');
+        var invoiceAddressField = $('#task_invoiceAddress');
+        var deliveryAddressField = $('#task_deliveryAddress');
+        var customerAddress = {{ getCustomerAddress()|json_encode|raw }};
+        var customerAddresses = {};
+
+        var addDaysWarningMessages = {{ addDaysWarningMessages|json_encode|raw }};
+        var addDaysWarningMessage = $('<div>').css('color', 'red').addClass('form-main').hide();
+        $('#task_expedited').after($('<a class="btn" href="{%if getConfigValue(1050).value is defined %} {{ getConfigValue(1050).value }} {% endif %}">Preisliste</a>')).parent().after(addDaysWarningMessage);
+
+        var setAddDaysWarningMessage = function() {
+            var idx = parseInt($('#task_newDesign').val() * 2) + parseInt($('#task_expedited').val());
+            if (addDaysWarningMessages[idx]) {
+                addDaysWarningMessage.text(addDaysWarningMessages[idx]);
+                addDaysWarningMessage.show();
+            } else {
+                addDaysWarningMessage.hide();
+            }
+        };
+        $('#task_newDesign, #task_expedited').change(setAddDaysWarningMessage);
+        
+        var guessPrintCostReqId = 0;
+        paymentMethodChoice.after($('<div id="guessPrintCostOutput"></div>'));
+        guessPrintCost = function() {
+            if (paperChoice.is(':visible') && paperChoice.val() != {{ constant(TaskPaperTypeEnum~'NONE') }} && graphicsFormatChoice.val() && graphicsCirculationChoice.val() && graphicsTypeChoice.val()) {
+              $.ajax({
+                  url: {{ path('task_guess_printcost')|json_encode|raw }},
+                  type: "POST",
+                  dataType: 'json',
+                  data: {
+                    'type': graphicsTypeChoice.val(),
+                    'format': graphicsFormatChoice.val(),
+                    'circulation': graphicsCirculationChoice.val(),
+                    'paper': paperChoice.val(),
+                    'reqId': ++guessPrintCostReqId,
+                  },
+                  success: function (data) {
+                      if (data.reqId == guessPrintCostReqId) {
+                        var output = '';
+                        if (data.count > 0) {
+                          output = data.output;
+                        }
+                        $('#guessPrintCostOutput').attr('title', data.ids).html(output);
+                        //console.log('guessPrintCost', data);
+                      }
+                  }
+              });
+            }
+        };
+
+        typeChoice.change(function () {
+            if ($(this).val() == {{ constant(TaskTypeEnum~'GRAPHICS') }}) {
+                graphicsItems.show();
+                setAddDaysWarningMessage();
+                normalItems.hide();
+                if (typeChoice.attr('type') != 'hidden') {
+                    userSelect.hide();
+                }
+                paperChoice.change();
+                statusChoicePrinting.show();
+                statusChoiceThirdPartyWait.hide();                
+            } else {
+                paperChoice.val({{ constant(TaskPaperTypeEnum~'NONE') }});
+                graphicsTypeChoice.val('');
+                graphicsItems.hide();
+                addDaysWarningMessage.hide();
+                normalItems.show();
+                userSelect.show();
+                statusChoicePrinting.hide();
+                statusChoiceThirdPartyWait.show();
+            }
+        }).change();
+
+        paperChoice.change(function () {
+            if ((typeChoice.size() == 0 || typeChoice.val() == {{ constant(TaskTypeEnum~'GRAPHICS') }}) && $(this).val() != {{ constant(TaskPaperTypeEnum~'NONE') }}) {
+                printItems.show();
+                var value = graphicsTypeChoice.val();
+                if (value == {{ constant(TaskGraphicsTypeEnum~'FLYER') }} || value == {{ constant(TaskGraphicsTypeEnum~'POSTER') }} || value == {{ constant(TaskGraphicsTypeEnum~'BUSINESS_CARD') }} || value == {{ constant(TaskGraphicsTypeEnum~'PVC') }} || value == {{ constant(TaskGraphicsTypeEnum~'MASH') }}) {
+                    printSpeedChoice.closest('.form-main').show();
+                } else {
+                    printSpeedChoice.closest('.form-main').hide();
+                }
+                guessPrintCost();
+            } else {
+                printItems.hide();
+            }
+        }).change();
+
+        graphicsTypeChoice.change(function () {
+            var value = $(this).val();
+            if (value == '' || value == {{ constant(TaskGraphicsTypeEnum~'AD') }} || value == {{ constant(TaskGraphicsTypeEnum~'WEB') }} || value == {{ constant(TaskGraphicsTypeEnum~'FACEBOOK') }}) {
+                paperChoice.val({{ constant(TaskPaperTypeEnum~'NONE') }}).change().closest('.form-main').hide();
+                filterFormat(null);
+            } else {
+                paperChoice.change().closest('.form-main').show();
+                if (value == {{ constant(TaskGraphicsTypeEnum~'FLYER') }}) {
+                    filterCirculation([500, 1000, 2500, 5000, 10000]);
+                    filterFormat(['A5', 'A6', 'A7', 'DINlang Klappflyer']);
+                } else if (value == {{ constant(TaskGraphicsTypeEnum~'POSTER') }}) {
+                    filterCirculation([5, 6, 7, 8, 9, 10, 15, 20, 25, 100]);
+                    filterFormat(['A0', 'A1', 'A2', 'A3', 'A4', 'Banner']);
+                } else if (value == {{ constant(TaskGraphicsTypeEnum~'BUSINESS_CARD') }}) {
+                    filterCirculation([100, 250, 500, 1000, 2500, 5000]);
+                    filterFormat(['Visitenkarte', 'Cocktailfähnchen']);
+                } else {
+                    filterCirculation(null);
+                    filterFormat(null);
+                }
+                if (value == {{ constant(TaskGraphicsTypeEnum~'MENU') }} || value == {{ constant(TaskGraphicsTypeEnum~'BOOKLET') }}) {
+                    $('#task_expedited').val(0).find('option:not(:selected)').prop('disabled', true);
+                    $('#task_newDesign').val(1).find('option:not(:selected)').prop('disabled', true);
+                } else {
+                    $('#task_expedited, #task_newDesign').find('option').prop('disabled', false);
+                }
+            }
+            guessPrintCost();
+        }).change();
+        
+        graphicsFormatChoice.change(guessPrintCost);
+        graphicsCirculationChoice.change(guessPrintCost);
+
+        function filterCirculation(values) {
+            if (values === null) {
+                graphicsCirculationChoice.find('option').show();
+            } else {
+                graphicsCirculationChoice.find('option').each(function() {
+                    var valid = $.inArray(parseInt($(this).text()), values);
+                    $(this).toggle(valid != -1 || $(this).is(':selected'));
+                });
+            }
+        }
+
+        function filterFormat(values) {
+            if (values === null) {
+                graphicsFormatChoice.find('option').show();
+            } else {
+                graphicsFormatChoice.find('option').each(function() {
+                    var valid = $.inArray($(this).text(), values);
+                    $(this).toggle(valid != -1 || $(this).is(':selected'));
+                });
+            }
+        }
+
+        function applyCustomerAddress() {
+            if (typeChoice.val() == {{ constant(TaskTypeEnum~'GRAPHICS') }}) {
+                invoiceAddressField.prop('readonly', false);
+                var customer_id = customerChoice.val();
+                if (customer_id == '') {
+                    invoiceAddressField.prop('readonly', false);
+                    return;
+                }
+                if (customerAddress != null || customerAddresses.hasOwnProperty(customer_id)) {
+                    var isVorkasse = paymentMethodChoice.val() == {{ constant(TaskPaymentTypeEnum~'VORKASSE_FRANCHISE') }};
+                    var isNachnahme = paymentMethodChoice.val() == {{ constant(TaskPaymentTypeEnum~'NACHNAHME') }};
+                    var address = customerAddress != null ? customerAddress : customerAddresses[customer_id];
+                    if (isVorkasse) {
+                        invoiceAddressField.data('changed', false).val({{ getEnchiladasFranchiseAddress()|json_encode|raw }});
+                    }
+                    if (isNachnahme && !invoiceAddressField.data('changed')) {
+                        invoiceAddressField.val(address);
+                    }
+                    if (!deliveryAddressField.data('changed')) {
+                        deliveryAddressField.val(address);
+                    }
+                    invoiceAddressField.prop('readonly', isVorkasse);
+                } else {
+                    $.ajax({
+                        url: {{ path('customer_get_address')|json_encode|raw }},
+                        type: "POST",
+                        dataType: 'json',
+                        data: {'customer_id': customer_id},
+                        success: function (data) {
+                            customerAddresses[customer_id] = data;
+                            applyCustomerAddress();
+                        }
+                    });
+                }
+            }
+        }
+
+        customerChoice.change(function () {
+            applyCustomerAddress();
+        });
+
+        paymentMethodChoice.change(function () {
+            applyCustomerAddress();
+        });
+
+        $().add(deliveryAddressField).add(invoiceAddressField).change(function() {
+            $(this).data('changed', $(this).val() != '');
+        }).change();
+
+        applyCustomerAddress();
+    });
+
+</script>

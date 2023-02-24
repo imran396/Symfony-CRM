@@ -1,0 +1,39 @@
+<div class="block">
+    <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Tasks{% endtrans %}</div>
+
+    <div id="widget1container" class="block-body collapse in">
+
+        <div id="tablewidget" class="block-body collapse in">
+
+
+            <table class="table">
+                <tr>
+                    <th>
+                        {% trans %}Title{% endtrans %}
+                    </th>
+                    <th>
+                        {% trans %}User{% endtrans %}
+                    </th>
+                    <th>
+                        {% trans %}Due date{% endtrans %}
+                    </th>
+                    <th>
+                        {% trans %}Status{% endtrans %}
+                    </th>
+                    <th>
+                        {% trans %}Actions{% endtrans %}
+
+                    </th>
+                </tr>
+
+                {% block loopChunk %}
+                    {% for task in tasks %}
+                        {% include 'IntranetBundle:Macroses:taskItemChunk.html.twig' %}
+                    {% endfor %}
+                {% endblock %}
+            </table>
+
+        </div>
+    </div>
+
+</div>

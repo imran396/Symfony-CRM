@@ -1,0 +1,114 @@
+Beon\IntranetBundle\Entity\Contact:
+    type: entity
+    table: Contact
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\ContactRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        firstName:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        lastName:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        phone:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        mobile:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        role:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        birthday:
+            type: date
+            nullable: true
+            comment: ''
+        notes:
+            type: text
+            nullable: true
+            fixed: false
+            comment: ''
+
+    manyToMany:
+            suppliers:
+                targetEntity: Supplier
+                inversedBy: contacts
+                joinTable:
+                    name: ContactSupplier
+                    joinColumns:
+                        contact_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+                    inverseJoinColumns:
+                        supplier_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+            cities:
+                targetEntity: City
+                inversedBy: contacts
+                joinTable:
+                    name: ContactCity
+                    joinColumns:
+                        contact_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+                    inverseJoinColumns:
+                        city_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+
+            suppliergroups:
+                targetEntity: SupplierGroup
+                inversedBy: contacts
+                joinTable:
+                    name: ContactSupplierGroup
+                    joinColumns:
+                        contact_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+                    inverseJoinColumns:
+                        suppliergroup_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+
+            customers:
+                targetEntity: Customer
+                inversedBy: contacts
+                joinTable:
+                    name: ContactCustomer
+                    joinColumns:
+                        contact_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"
+                    inverseJoinColumns:
+                        customer_id:
+                            referencedColumnName: id
+                            onDelete: "CASCADE"

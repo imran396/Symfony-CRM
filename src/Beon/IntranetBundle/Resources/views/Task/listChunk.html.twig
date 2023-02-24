@@ -1,0 +1,28 @@
+
+{% if (task is defined and task|length) or (entity is defined and entity.tasks|length) %}
+
+   {% if task|length %}
+    {% set entities = task %}
+   {% else %}
+        {% set entities = entity.tasks %}
+   {% endif %}
+
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Task{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    {% embed "IntranetBundle:Task:indexTable.html.twig" %}
+                        {% block actionsRows %}
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('task_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}

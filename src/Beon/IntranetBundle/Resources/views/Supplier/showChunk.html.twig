@@ -1,0 +1,98 @@
+{% if entity == supplier %}
+<div class="row-fluid">
+    {% endif %}
+
+    <div class="block span6">
+        <div class="block-heading" data-toggle="collapse" data-target="#widget3container">{% trans %}Supplier{% endtrans %}</div>
+        <div id="widget3container" class="block-body collapse in">
+            <h2>{{ supplier.name }}</h2>
+
+            <div id="tablewidget" class="block-body collapse in">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th>{% trans %}Id{% endtrans %}</th>
+                        <td><a href="{{ path('supplier_show', { 'id': supplier.id }) }}">{{ "PD%05d"|format(entity.id) }}</a></td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Name{% endtrans %}</th>
+                        <td>{{ supplier.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ supplier.supplierType|audienceLabel}}</th>
+                        <td>{{ supplier.audiencesize }}</td>
+                    </tr>
+                    <tr>
+                        <th>{% trans %}Type{% endtrans %}</th>
+                        <td>{{ supplier.supplierType }}</td>
+                    </tr>
+
+                    {% if supplier.supplierType is supplierPrint %}
+                        <tr>
+                            <th>{% trans %}Frequency{% endtrans %}</th>
+                            <td>{{ supplier.frequency|supplierFrequency }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Pagesize{% endtrans %}</th>
+                            <td>{{ supplier.pagesizeWidth }} × {{ supplier.pagesizeHeight }} mm ({{ supplier.pagesizeWidth *  supplier.pagesizeHeight}}  mm²)</td>
+                        </tr>
+
+                    {% endif %}
+                     <tr>
+                            <th>{% trans %}City{% endtrans %}</th>
+                            <td>{{ supplier.city }}</td>
+                        </tr>
+
+                    {% if supplier.group %}
+                        <tr>
+                            <th>{% trans %}Supplier group{% endtrans %}</th>
+                            <td><a href="{{ path('suppliergroup_show', { 'id': supplier.group.id }) }}">{{ supplier.group }}</a></td>
+                        </tr>
+                    {% endif %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            {% if entity == supplier %}
+                {% if is_granted('ROLE_SUPPLIERS') %}
+                    <div class="inline-forms">
+                        <a class="btn btn-table-actions" href="{{ path('supplier_edit', { 'id': supplier.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                        {{ form(delete_form) }}
+                    </div>
+                {% endif %}
+		<div>
+		    <a class="btn btn-table-actions" href="{{ path('campaign_new', { 'supplier': entity.id }) }}">
+			{% trans %}Create Campaign{% endtrans %}
+		    </a>
+                </div>
+                <div>
+                    <a href="{{ path('supplier') }}">
+                        {% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    {% import "IntranetBundle:Macroses:contactsMacro.html.twig" as helper %}
+    {% if campaign is defined %}
+        {% if campaign.contact %}
+            {{ helper.showContact(campaign.contact) }}
+        {% endif %}
+    {% else %}
+    	{% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+
+	    {{ upload.templateSupplier(entity,'supplier') }}
+        {{ helper.contactsList(supplier.contacts) }}
+    {% endif %}
+
+    {% if entity == supplier %}
+
+
+</div>
+
+{% endif %}

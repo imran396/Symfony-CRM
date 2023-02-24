@@ -1,0 +1,12 @@
+Hi {{ recipient }},
+
+die Kampagne "{{ entity }}" wurde von {{ denier }} ablehnt:
+
+{% if reason %}
+Grund: {{ reason }}
+
+{% else %}
+(keine Begründung)
+
+{% endif %}
+<a href="{{ link }}">{{ link }}</a>

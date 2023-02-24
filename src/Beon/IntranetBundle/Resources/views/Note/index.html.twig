@@ -1,0 +1,21 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Notes{% endtrans %}</h1>
+    <div class="btn-toolbar">
+	{% if app.request.get('monitoredUrl') %}
+		<a href="{{ path('monitoredurl') }}" class="btn"><i class="icon-plus"></i>{% trans %}Back to monitored url{% endtrans %}</a>
+	{%else%}
+	    {% if is_granted('ROLE_NOTES_NEW') %}
+		<a href="{{ path('note_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New note{% endtrans %}</a>
+	    {% endif %}
+	{%endif%}
+	
+	{{filterForm|raw}}
+	
+    </div>  
+    <div class="well">
+        {% include 'IntranetBundle:Note:indexTable.html.twig' %}
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}

@@ -1,0 +1,221 @@
+.btn-table-actions {
+    margin-bottom: 10px;
+}
+.btn-table-actions:first-letter {
+    text-transform: uppercase;
+}
+
+input, select, textarea, .linedwrap, .btn-another-value {
+    margin-bottom: 10px !important;
+}
+
+div.button-wrapper {
+    margin: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.mlt10 {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.mlb10 {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.mt10 {
+    margin-top: 10px;
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.ml13 {
+    margin-left: 13px;
+}
+.ml5 {
+    margin-left: 5px;
+}
+
+.numbered table {
+
+}
+
+.numbered table th {
+    white-space: nowrap;
+    border: none;
+}
+
+pre.numbered {
+    background: none;
+    border: none;
+}
+
+.numbered table td {
+    border: none;
+}
+
+pre.numbered, pre.numbered tr > * {
+    padding: 0;
+}
+
+pre.numbered table {
+    margin: 0;
+}
+
+.inline-forms form {
+    display: inline-block;
+    margin: 0;
+}
+
+/*.form_row{*/
+/*margin-bottom: 20px !important;*/
+/*}*/
+
+.expandedNotMultipleLabel {
+    display: inline;
+    margin: 0px 15px 0px 5px;
+}
+
+.block.span12 .input-xlarge {
+    width: 500px;
+}
+
+form#userFilter {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+form#userFilter .select2-container {
+    min-width: 200px;
+    margin-right: 10px;
+}
+
+form#customerFilter {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 14px;
+}
+form#customerFilter .select2-container {
+    min-width: 250px;
+    margin-right: 10px;
+}
+
+form#reportFilter {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 14px;
+}
+form#reportFilter .select2-container {
+    min-width: 250px;
+    margin-right: 10px;
+}
+form#cpspmReportFilter .select2-container {
+	min-width: 150px;
+    margin-right: 10px;
+}
+
+.select2-container {
+    min-width: 300px;
+}
+
+#surveyResult label {
+    display: inline-block;
+    margin-right: 3px;
+}
+
+.pagesize_width,.pagesize_height {
+    float: left;
+    width: 100px;
+}
+.pagesize_height input, .pagesize_width input {
+    width: 80px;
+}
+.floatLeft{
+    float: left;
+}
+.cross_icon {
+    padding: 2px 5px 0 0;
+}
+.cross_icon_big, .mm {
+    padding: 6px 17px 0 0;
+}
+.file-box{
+    float: left;
+}
+.has-feedback input {
+    padding-right: 25px !important;
+}
+.container-fluid {
+padding-right: 20px;
+padding-left: 20px;
+}
+
+.floatLeft{
+    float: left;
+    padding: 0;
+    margin: 0 10px 0 0;
+
+}
+
+.floatLeft label{
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+
+}
+
+tr.expedited td, tr.todo td {
+    color: red
+}
+
+.tag-toggle {
+    display: inline-block;
+    width: 16px;
+    margin-bottom: -2px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: bottom left;
+}
+
+.tag-grey {
+    background: url("/bundles/intranet/stylesheets/../images/tag_grey.png");
+}
+
+.tag-green {
+    background: url("/bundles/intranet/stylesheets/../images/tag_green.png");
+}
+
+.tag-yellow {
+    background: url("/bundles/intranet/stylesheets/../images/tag_yellow.png");
+}
+
+.tag-blue {
+    background: url("/bundles/intranet/stylesheets/../images/tag_blue.png");
+}
+
+.checkbox-toggle {
+	display:none;
+}
+
+.uploadMeta td {
+    border-top: none;
+    white-space: nowrap;
+    text-align: right;
+    padding-top: 0;
+}
+
+.modal form {
+    margin: 0;
+}
+
+#guessPrintCostOutput {
+    margin-left: 10px;
+    float: left;
+}

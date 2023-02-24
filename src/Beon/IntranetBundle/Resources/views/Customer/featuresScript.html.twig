@@ -1,0 +1,79 @@
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        var $parentSelect = $('#customer_parent');
+        var parentSelectDefault = $parentSelect.val();
+        var $parentLabel = $('[for="customer_parent"]');
+        var $parentGroup = $().add($parentSelect).add($parentLabel);
+        var $levelSelect = $('#customer_level');
+        var selectPlugin = null;
+
+        function renderFail() {
+            if (selectPlugin) {
+                $parentSelect.select2("destroy");
+            }
+            $parentGroup.hide();
+            $parentSelect.val(null);
+            removeSpinner()
+        }
+
+        function renderSelect(level, prepopulated) {
+            var requestUrl = null;
+            removeSpinner();
+
+            {% if entity.id %}
+            requestUrl = {{ url('customer_parent_for_level',{ 'id':entity.id } )|json_encode|raw }} +'/' + level;
+            {% else %}
+            requestUrl = {{ url('customer_parent_for_level')|json_encode|raw }} +'/' + level;
+            {% endif %}
+
+            $.ajax({
+                url: requestUrl,
+                dataType: 'json',
+                beforeSend: function () {
+
+                    {% image '@IntranetBundle/Resources/public/ico/ajax_loader_gray_32.gif' %}
+                    $levelSelect.after($('<img style="display:block"/>').addClass('spinner').attr({'src': '{{ asset_url }}'})[0]);
+                    {% endimage %}
+                },
+                success: function (data) {
+                    $parentSelect.html(null);
+
+                    $parentSelect.append($('<option>'));
+
+                    for (key in data) {
+                        $parentSelect.append($('<option value="' + data[key].id + '" >').text(data[key].name));
+                    }
+
+                    if (prepopulated !== null) {
+                        $parentSelect.val(prepopulated);
+                    }
+
+                    if (data && data.length) {
+                        $parentGroup.show();
+                        selectPlugin = $parentSelect.select2({allowClear: true});
+                        removeSpinner();
+                    } else {
+                        renderFail();
+                    }
+                },
+                fail: function () {
+                    renderFail();
+                }
+
+            });
+        }
+
+
+        function removeSpinner() {
+            $('.spinner').remove();
+        }
+
+        renderSelect($levelSelect.val(), parentSelectDefault);
+
+        $levelSelect.change(function () {
+            renderSelect($(this).val(), parentSelectDefault);
+        });
+
+    });
+</script>

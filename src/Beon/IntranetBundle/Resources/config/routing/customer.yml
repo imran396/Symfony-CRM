@@ -1,0 +1,68 @@
+customer:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Customer:index", level:0 }
+
+customer_level:
+    pattern:  /level/{level}
+    defaults: { _controller: "IntranetBundle:Customer:index" }
+    requirements:
+        level: ^\d+$
+
+customer_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Customer:show" }
+
+customer_new:
+    pattern:  /new/level/{level}
+    defaults: { _controller: "IntranetBundle:Customer:new" }
+    requirements:
+          level: ^\d+$
+
+customer_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:Customer:create" }
+    requirements: { _method: post }
+
+customer_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Customer:edit" }
+
+customer_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Customer:update" }
+    requirements: { _method: post|put }
+
+customer_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Customer:delete" }
+    requirements: { _method: post|delete }
+
+
+customer_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:Customer:newRelated" }
+    requirements:
+          name: ^complaint|task|monitoredurl|user$
+
+customer_parent_for_level:
+    pattern:  /{id}/parent-for-level/{level}
+    defaults: { _controller: "IntranetBundle:Customer:parentForLevel", level:0, id:0 }
+    requirements:
+          id: ^\d+$
+          level: ^\d+$
+
+customer_get_address:
+    pattern:  /customer-address
+    defaults: { _controller: "IntranetBundle:Customer:getAddress" }
+    requirements: { _method: post }
+
+customer_contact:
+    pattern: /contact-customer
+    defaults: { _controller: "IntranetBundle:Customer:contactCustomerRelation" }
+    requirements: { _method: post }
+
+customer_contact_delete:
+    pattern: /{id}/{contactId}/contact-customer-delete
+    defaults: { _controller: "IntranetBundle:Customer:contactCustomerDelete" }
+    requirements: { _method: get|delete }
+

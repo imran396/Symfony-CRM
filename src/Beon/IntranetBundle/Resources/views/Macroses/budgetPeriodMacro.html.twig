@@ -1,0 +1,48 @@
+{% macro budgetList(entities,showActions,addBudgetWithForm,span) %}
+
+    <div class="block {{ span }}">
+        <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Budget periods{% endtrans %}</div>
+        <div class="block-body">
+
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th>{% trans %}Start{% endtrans %}</th>
+                    <th>{% trans %}End{% endtrans %}</th>
+                    <th>{% trans %}Budget{% endtrans %}</th>
+                    <th>{% trans %}Actions{% endtrans %}</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for entity in entities %}
+                    <tr>
+                        <td>{% if entity.start %}{{ entity.start|date(defaultDateFormat) }}{% endif %}</td>
+                        <td>{% if entity.end %}{{ entity.end|date(defaultDateFormat) }}{% endif %}</td>
+                        <td>{{ entity.budget|number_format(0, '', '.') }} €</td>
+                        <td>
+
+                            <a class="btn btn-table-actions"
+                               href="{{ path('budgetperiod_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+
+                            {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('budgetperiod_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+           {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+            {% if addBudgetWithForm %}
+                {{ form(addBudgetWithForm) }}
+            {% endif %}
+           {% endif %}
+
+        </div>
+    </div>
+
+{% endmacro %}

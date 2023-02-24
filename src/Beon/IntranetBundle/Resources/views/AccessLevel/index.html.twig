@@ -1,0 +1,20 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Access Level{% endtrans %}</h1>
+    <div class="btn-toolbar">
+        <a href="{{ path('accesslevel_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New AccessLevel{% endtrans %}</a>
+
+        <div class="btn-group">
+        </div>
+    </div>
+    <div class="well">
+
+
+   {% include 'IntranetBundle:AccessLevel:indexTable.html.twig' %}
+
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

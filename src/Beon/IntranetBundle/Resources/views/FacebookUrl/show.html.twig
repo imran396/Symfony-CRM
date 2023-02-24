@@ -1,0 +1,54 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+        <div class="block span12">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Facebook Url{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+              <tbody>
+                <tr>
+                    <th>{% trans %}Url{% endtrans %}</th>
+                    <td><a target="_blank" href="{{ entity.url }}">{{ entity.url|truncate(50) }}</a></td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Alias{% endtrans %}</th>
+                    <td>{{ entity.alias }}</td>
+                </tr>
+                <tr>
+                    <th>{% trans %}Last post{% endtrans %}</th>
+                    <td>
+                        {% if entity.lastpost %}
+                            {{ entity.lastpost|date("d.m.Y H:i") }}
+                        {% endif %}
+                    </td>
+                </tr>
+           </tbody>
+                </table>
+                </div>
+
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('facebookurl_edit', { 'id': entity.id }) }}">
+                        {% trans %}Edit{% endtrans %}
+                    </a>
+                    {{ form(delete_form) }}
+                </div>
+
+                <div>
+                    <a href="{{ path('facebookurl') }}">
+                        {% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'IntranetBundle:FacebookUrl:logList.html.twig' %}
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+
+{% endblock %}

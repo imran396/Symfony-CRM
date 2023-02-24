@@ -1,0 +1,57 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Press release{% endtrans %}</h1>
+    
+    
+    
+    
+    <div class="btn-toolbar">
+	{% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+	    <a href="{{ path('pressrelease_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New press release{% endtrans %}</a>
+	{% endif %}
+	
+	{{filterForm|raw}}
+	
+    </div>
+    
+    
+    
+    
+    <div class="well">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs unstyled">
+            <li class="active"><a href="#draft" data-toggle="tab">{% trans %}Draft{% endtrans %}</a></li>
+            <!--<li><a href="#deleted" data-toggle="tab">Deleted</a></li>-->
+            <li><a href="#approvalEmailSent" data-toggle="tab">{% trans %}Waiting for approval{% endtrans %}</a></li>
+            <li><a href="#approved" data-toggle="tab">{% trans %}Approved{% endtrans %}</a></li>
+            <li><a href="#submitted" data-toggle="tab">{% trans %}Submitted{% endtrans %}</a></li>
+            <li><a href="#deleted" data-toggle="tab">{% trans %}Aborted{% endtrans %}</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% import "IntranetBundle:Pressrelease:indexTabPaneMacro.html.twig" as tabs %}
+            {{ tabs.pane(draft,'draft','active') }}
+            {{ tabs.pane(deleted,'deleted','') }}
+            {{ tabs.pane(approvalEmailSent,'approvalEmailSent','') }}
+            {{ tabs.pane(approved,'approved','') }}
+            {{ tabs.pane(submitted,'submitted','') }}
+            {{ tabs.pane(deleted,'deleted','') }}
+        </div>
+    </div>
+
+
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+
+    {{ paginator.pager(draftPagesCount,1,'draft') }}
+    {{ paginator.pager(deletedPagesCount,1,'deleted') }}
+    {{ paginator.pager(approvalEmailSentdPagesCount,1,'approvalEmailSent') }}
+    {{ paginator.pager(approvedPagesCount,1,'approved') }}
+    {{ paginator.pager(submittedPagesCount,1,'submitted') }}
+    {{ paginator.pager(deletedPagesCount,1,'deleted') }}
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+
+
+{% endblock content %}

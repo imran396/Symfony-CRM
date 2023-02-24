@@ -1,0 +1,24 @@
+{% macro template(entity,name,uploadDeleteForms,uploadFileForm) %}
+
+    {% embed 'IntranetBundle:Macroses:uploadList.html.twig' %}
+
+    {% endembed %}
+
+{% endmacro %}
+
+{% macro templateSupplier(entity,name,uploadDeleteForms,uploadFileForm) %}
+
+    {% embed 'IntranetBundle:Macroses:uploadList.html.twig' %}
+        {% block loopChunk %}
+            {% for upload in entity.uploads %}
+                {% include 'IntranetBundle:Macroses:uploadItemChunk.html.twig' %}
+            {% endfor %}
+         {% if upload is defined %}
+            {% for upload in entity.group.uploads %}
+                {% include 'IntranetBundle:Macroses:uploadItemChunk.html.twig' %}
+            {% endfor %}
+         {% endif %}
+        {% endblock %}
+    {% endembed %}
+
+{% endmacro %}

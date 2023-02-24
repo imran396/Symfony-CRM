@@ -1,0 +1,7 @@
+{% macro pane(entities,paneid,paneclass) %}
+
+    <div class="tab-pane {{ paneclass }}" id="{{ paneid }}">
+        {% include "IntranetBundle:Complaint:indexTable.html.twig" %}
+    </div>
+
+{% endmacro %}

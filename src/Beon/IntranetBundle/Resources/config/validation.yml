@@ -1,0 +1,41 @@
+Beon\IntranetBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+
+Beon\IntranetBundle\Entity\Campaign:
+       getters:
+             startLess:
+                   - "True": { message: "Start date should be less than end" }
+
+
+Beon\IntranetBundle\Entity\User:
+       constraints:
+          - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: name
+       getters:
+             customerValid:
+                   - "True": { message: "Customer is not set" }
+       properties:
+               name:
+                   - NotBlank: ~
+               password:
+                   - NotBlank: ~
+               email:
+                   - Email:
+                           message: The email "{{ value }}" is not a valid email.
+#                           checkMX: true
+
+
+
+Beon\IntranetBundle\Entity\FacebookUrl:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: alias
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: url
+
+Beon\IntranetBundle\Entity\Customer:
+       getters:
+             validLevelAndParent:
+                   - "True": { message: "Cobination child of and level is not valid" }
+
+Beon\IntranetBundle\Entity\Note:
+    constraints:
+        - Callback: [validate]

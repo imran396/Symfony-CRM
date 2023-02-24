@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>EMAT by beon-communications</title>
+    <base href="{{ path('beon_homepage') }}"/>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    
+ {% block stylesheet %}
+    {% stylesheets filter='beon_css_rewriter_filter'
+    '@IntranetBundle/Resources/public/lib/bootstrap/css/bootstrap.css'
+    '@IntranetBundle/Resources/public/stylesheets/theme.css'
+    '@IntranetBundle/Resources/public/lib/font-awesome/css/font-awesome.css'
+    '@IntranetBundle/Resources/public/stylesheets/myelements.css'
+    '@IntranetBundle/Resources/public/stylesheets/jquery-linedtextarea.css'
+    '@IntranetBundle/Resources/public/stylesheets/common.css'
+    '@IntranetBundle/Resources/public/stylesheets/select2.css'
+    '@IntranetBundle/Resources/public/lib/bootstrapvalidator/css/bootstrapValidator.css'
+    '@IntranetBundle/Resources/public/lib/jstree/themes/default/style.css'
+     %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+    
+    
+    {% javascripts
+    '@IntranetBundle/Resources/public/lib/jquery-1.11.1.min.js'
+    '@IntranetBundle/Resources/public/lib/jquery-linedtextarea.js'
+    '@IntranetBundle/Resources/public/lib/bootstrap/js/bootstrap.min.js'
+    '@IntranetBundle/Resources/public/lib/select2.min.js'
+    '@IntranetBundle/Resources/public/lib/jstree/jstree.js'
+    '@IntranetBundle/Resources/public/lib/bootstrapvalidator/js/bootstrapValidator.js'
+    '@IntranetBundle/Resources/public/lib/jquery.messyCode.js'
+    '@IntranetBundle/Resources/public/shared/js/modernizr.com/Modernizr-2.5.3.forms.js'
+     %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    <script type="text/javascript" src="http://www.modernizr.com/downloads/modernizr-latest.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery.ui.all.css" />
+   
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 12]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    {% block stylesheets %}{% endblock %}
+
+    <!-- Needed for Validation --> 
+    <script type="text/javascript" src="{{ asset('bundles/intranet/shared/js/html5Forms.js') }}" data-webforms2-support="date" data-webforms2-force-js-validation="true" data-lang="qq"></script>   
+</head>
+
+<!--[if lt IE 7 ]>
+<body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<body class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<body class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>
+<body class="ie ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body>
+
+<!--<![endif]-->
+
+{% block body %}
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            {%   if app.user.displayName  is defined %}
+            <ul class="nav pull-right">
+
+                <li id="fat-menu" class="dropdown">
+                    <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="icon-user"></i> {{ app.user.displayName }}
+                        <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu">
+                        {#<li><a tabindex="-1" href="#">Settings</a></li>#}
+                        {#<li class="divider"></li>#}
+                        <li><a tabindex="-1" href="logout">{% trans %}Logout{% endtrans %}</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+            {% endif %}
+            
+            <a class="brand" href="/"><span class="first">EMAT</span> <span class="second">by beon-communications</span></a>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            {{ flashMessage }}
+        </div>
+    {% endfor %}
+    <div class="row-fluid">
+
+        <div class="span3">
+            <div class="sidebar-nav">
+                <div class="nav-header" data-toggle="collapse" data-target="#dashboard-menu">
+                    <i class="icon-dashboard"></i>{% trans %}Menu{% endtrans %}
+                </div>
+                <ul id="dashboard-menu" class="nav nav-list collapse in">
+                    {% if is_granted('ROLE_CUSTOMER_DASHBOARD') %}
+                        <li><a href="{{ path('beon_homepage') }}">{% trans %}Dashboard{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CUSTOMER_DASHBOARD') %}
+                        <li><a href="{{ path('customer_show', { 'id': customerId }) }}">{% trans %}Customer data{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_USERS') %}
+                        <li><a href="{{ path('accesslevel') }}">{% trans %}Access level{% endtrans %}</a></li>
+                        <li><a href="{{ path('user') }}">{% trans %}Users{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CAMPAIGNS') or is_granted('ROLE_CAMPAIGNS_CUSTOMER') %}
+                        <li><a href="{{ path('campaign') }}">{% trans %}Campaign{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_PRESSRELEASES') or is_granted('ROLE_PRESSRELEASES_CUSTOMER') %}
+                        <li><a href="{{ path('pressrelease') }}">{% trans %}Press release{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_SUPPLIERS') %}
+                        <li><a href="{{ path('supplier') }}">{% trans %}Supplier{% endtrans %}</a></li>
+                        <li><a href="{{ path('suppliergroup') }}">{% trans %}Supplier groups{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CONTACTS') %}
+                        <li><a href="{{ path('contact') }}">{% trans %}Contacts{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_NOTES_ALL') %}
+                        <li><a href="{{ path('note') }}">{% trans %}Note{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_FACEBOOKURLS') %}
+                        <li><a href="{{ path('facebookurl') }}">{% trans %}Facebook Url{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_FACEBOOKURLS') %}
+                        <li><a href="{{ path('customerfacebookurl') }}">{% trans %}Stakeholder{% endtrans %} => {% trans %}Facebook Url{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_MONITOREDURLS') %}  
+                        <li><a href="{{ path('monitoredurl') }}">{% trans %}Monitored Url{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_SURVEYRESULTS') %}  
+                        <li><a href="{{ path('surveyresult') }}">{% trans %}Survey results{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_COMPLAINTS') %}  
+                        <li><a href="{{ path('complaint') }}">{% trans %}Complaint{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_UPLOADS_LIST_ALL') %}  
+                        <li><a href="{{ path('upload') }}">{% trans %}Upload{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_TIMETRACKINGS') or is_granted('timetrackings_own') %}  
+                        <li><a href="{{ path('timetracking') }}">{% trans %}Timetracking{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CITIES') %}  
+                        <li><a href="{{ path('city') }}">{% trans %}City{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_TASKS') or is_granted('ROLE_TASKS_CUSTOMER') or is_granted('ROLE_TASKS_GROUPS') %}  
+                        <li><a href="{{ path('task') }}">{% trans %}Tasks{% endtrans %}</a></li>
+                    {% endif %}
+
+                    {% if is_granted('ROLE_CONFIG') %}
+                        <li><a href="{{ path('configvalue') }}">{% trans %}Config{% endtrans %}</a></li>
+                    {% endif %}
+                    {% if is_granted('ROLE_ENUMS_EDIT') %}
+                        <li><a href="{{ path('enumvalue') }}">{% trans %}Enum Value{% endtrans %}</a></li>
+                    {% endif %}
+
+                </ul>
+
+            </div>
+            {% if is_granted('ROLE_STAKEHOLDERS_LIST') %}
+                <div class="sidebar-nav">
+                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-stakeholders"><i
+                                class="icon-dashboard"></i>{% trans %}Stakeholders{% endtrans %}
+                    </div>
+                    <ul id="dashboard-stakeholders" class="nav nav-list collapse in">
+
+                        {% for key,level in CUSTOMER_LEVELS %}
+                            <li><a href="{{ path('customer_level',{'level':key}) }}">{{ (level~'s')|trans }}</a></li>
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_REPORTS') %}
+                <div class="sidebar-nav">
+                    <div class="nav-header" data-toggle="collapse" data-target="#dashboard-report">
+                        <i class="icon-dashboard"></i>Reports
+                    </div>
+                    <ul id="dashboard-report" class="nav nav-list collapse in">
+                        {% if is_granted('ROLE_REPORTS_SURVEY') %}
+                            <li><a href="{{ path('report_survey_analysis') }}">{% trans %}Survey Analysis Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_TIMETRACKING') %}
+                            <li><a href="{{ path('report_time_track') }}">{% trans %}Time Tracking Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_MISSINGTT') %}
+                            <li><a href="{{ path('report_missingtt') }}">{% trans %}Missing Time Trackings Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_CAMPAIGNSAVINGS') %}
+                            <li><a href="{{ path('report_campaign_saving') }}">{% trans %}Campaign Savings Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_FACEBOOK') %}
+                            <li><a href="{{ path('report_facebook') }}">{% trans %}Facebook Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_CPSPM') %}
+                            <li><a href="{{ path('report_cpspm') }}">{% trans %}CPSPM Report{% endtrans %}</a></li>
+                        {% endif %}
+                        {% if is_granted('ROLE_REPORTS_VISIT') %}
+                            <li><a href="{{ path('report_visit') }}">{% trans %}Visit Report{% endtrans %}</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="span9">
+
+            {% block content %}
+                <h1 class="page-title">{% trans %}Dashboard{% endtrans %}</h1>
+
+
+                <div class="row-fluid">
+
+
+                    {% block customerDashboard %}
+                    {% endblock %}
+
+
+                </div>
+            {% endblock content %}
+
+
+        </div>
+
+
+        <footer>
+            &nbsp;
+        </footer>
+
+
+    </div>
+
+
+    {% endblock %}
+
+
+    <div class="modal small hide fade" id="deleteModal" tabindex="-1" role="dialog"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>{% trans %}Delete Confirmation{% endtrans %}</h3>
+        </div>
+        <div class="modal-body">
+            <p class="error-text"><i class="icon-warning-sign modal-icon"></i>{% trans %}Are you sure you want to delete?{% endtrans %}</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+            <button class="btn btn-danger" data-dismiss="deleteAction">{% trans %}Delete{% endtrans %}</button>
+        </div>
+    </div>
+
+    <div class="modal small hide fade" id="dbEnumModal" tabindex="-1" role="dialog"
+         aria-hidden="true" style="display: none;">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>{% trans %}Another value..{% endtrans %}</h3>
+        </div>
+        <div class="modal-body">
+            <p><i class="modal-icon mt20"></i>
+                <textarea id="amendDbEnumValue" placeholder="{% trans %}Enter a new value{% endtrans %}"></textarea>
+                {% if app.user and is_granted('ROLE_ENUM_MAKE_REUSABLE') %}  
+                    <label><input type="checkbox" id="amendDbEnumReuse" /> {% trans %}Make this value available for reuse{% endtrans %}</label>
+                {% endif %}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+            <button class="btn" data-dismiss="amendDbEnumAction">{% trans %}Ok{% endtrans %}</button>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var errors = {{ app.session.flashbag.get('error')|json_encode|raw }};
+        var error = errors.pop()
+
+        if (error) {
+            alert(error);
+        }
+
+        function confirmation() {
+             return confirm('{% trans %}Are you sure? You might loose unsaved changes.{% endtrans %}');
+        }
+	
+	    var disallowedFileTypes = new Array();
+	    {% for disallowedFileType in disallowedFileTypes %}
+	        disallowedFileTypes.push("{{ disallowedFileType }}");
+	    {%endfor%}
+	
+	    var matched, browser;
+	    jQuery.uaMatch = function( ua ) {
+	        ua = ua.toLowerCase();
+
+	        var match = /(chrome)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(webkit)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(opera)(?:.*version|)[ \/]([\w.]+)/.exec( ua ) ||
+		    /(msie) ([\w.]+)/.exec( ua ) ||
+		    ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec( ua ) ||
+		    [];
+
+	        return {
+		    browser: match[ 1 ] || "",
+		    version: match[ 2 ] || "0"
+	        };
+	    };
+	    matched = jQuery.uaMatch( navigator.userAgent );
+	    browser = {};
+	    if ( matched.browser ) {
+	        browser[ matched.browser ] = true;
+	        browser.version = matched.version;
+	    }
+
+	    // Chrome is Webkit, but Webkit is also Safari.
+	    if ( browser.chrome ) {
+	        browser.webkit = true;
+	    } else if ( browser.webkit ) {
+	        browser.safari = true;
+	    }
+	    jQuery.browser = browser;
+	
+	    $(document).ready(function() {
+		    var fileUploadedCount = 1;
+		    var errorMsgInvalidFileType = "{% trans %}Invalid file type{% endtrans %}";
+		
+		    $(".fileOnClick").click(function() {
+                var parent = $(this).parent();
+			    var fileData = $(".fileUploadDiv", parent).html();
+			    fileData = fileData.replace(new RegExp('default','g'),fileUploadedCount);
+			    fileData = fileData.replace(new RegExp(errorMsgInvalidFileType,'g'),'');
+			    $(".fileGetUploadDiv", parent).append(fileData);
+			    fileUploadedCount++;
+		    });		
+		
+		    $('.multipleFileWidget').on("change", ".validateFileType", function () { 
+		        var filename = $(this).val();
+		        var extension = filename.replace(/^.*\./, '');	      
+		        
+		        if (jQuery.inArray(extension, disallowedFileTypes)!==-1) {	
+			        $(this).val('');
+			        $("#error-"+this.id).html(errorMsgInvalidFileType);
+			        $("#error-"+this.id).show();
+		        } else {
+			        $("#error-"+this.id).html("");
+			        $("#error-"+this.id).hide();
+		        }
+		    });
+		
+		    $(".reloadPage").click(function() {	  
+		        window.location.href=window.location.href;
+		    });
+	    });
+    </script>
+    
+   {% block javascripts %}
+   {% endblock %}
+</body>
+</html>

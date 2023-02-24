@@ -1,0 +1,74 @@
+task:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Task:index" }
+
+task_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Task:show" }
+
+task_new:
+    pattern:  /new/{duplicateTaskId}
+    defaults: { _controller: "IntranetBundle:Task:new", duplicateTaskId:false }
+
+task_create:
+    pattern:  /create/{duplicateTaskId}
+    defaults: { _controller: "IntranetBundle:Task:create", duplicateTaskId:false }
+    requirements: { _method: post }
+
+task_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Task:edit" }
+
+task_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Task:update" }
+    requirements: { _method: post|put }
+
+task_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Task:delete" }
+    requirements: { _method: post|delete }
+
+task_approve:
+    pattern:  /{id}/approve
+    defaults: { _controller: "IntranetBundle:Task:approve" }
+
+task_send_approval_email:
+    pattern:  /{id}/send-approval-email
+    defaults: { _controller: "IntranetBundle:Task:sendApprovalEmail" }
+
+task_notify:
+    pattern:  /{id}/notify
+    defaults: { _controller: "IntranetBundle:Task:notify" }
+
+
+task_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:Task:newRelated" }
+    requirements:
+          name: ^note|timetracking$
+
+task_deny:
+    pattern:  /{id}/deny
+    defaults: { _controller: "IntranetBundle:Task:deny" }
+    
+task_guess_printcost:
+    pattern:  /guessprintcost
+    defaults: { _controller: "IntranetBundle:Task:guessPrintCost" }
+    requirements: { _method: post }
+
+affilation_type_task_duplicate:
+    pattern:  /{id}/duplicate-down/{type}
+    defaults: { _controller: "IntranetBundle:Task:duplicateDown" }
+    requirements:
+          type: ^all|current$
+
+task_duplicate:
+    pattern:  /{id}/duplicate
+    defaults: { _controller: "IntranetBundle:Task:duplicate" }
+    requirements: { _method: post }
+
+task_submit_files:
+    pattern:  /submit-files
+    defaults: { _controller: "IntranetBundle:Task:submitFiles" }
+    requirements: { _method: post }

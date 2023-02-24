@@ -1,0 +1,24 @@
+{{ currentItem.getLabel() }}
+{% set sums = currentItem.getSums() %}
+<div style="float: right; margin-right: 20px" title="gespart: {{ sums['savings_percent'] }} %">
+    {{ sums['budget']|number_format(2, ',', '.') }} €
+    {% if sums['budget'] < sums['regularPrice'] %}
+        statt {{ sums['regularPrice']|number_format(2, ',', '.') }} €
+    {% endif %}
+</div>
+<ul>
+    {% for campaign in currentItem.getCampaigns() %}
+        <li class="data">
+            {{ campaign }} 
+            <div style="float: right; ; margin-right: 10px" title="gespart: {{ campaign.discountPercent }} %">
+                {{ campaign.budget|number_format(2, ',', '.') }} €
+	            {% if campaign.budget < campaign.regularPrice %}
+                    statt {{ campaign.regularPrice|number_format(2, ',', '.') }} €
+	            {% endif %}
+            </div>
+	    </li>
+    {% endfor %}
+    {% for child in currentItem.getChildren() %}
+        <li>{% include 'IntranetBundle:CampaignSavingReport:hierarchyItem.html.twig' with {'currentItem': child} %}</li>
+    {% endfor %}
+</ul>

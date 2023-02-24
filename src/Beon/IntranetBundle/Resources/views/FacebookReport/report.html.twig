@@ -1,0 +1,41 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+<h1 class="page-title">{%trans%}Facebook Report{%endtrans%}</h1> 
+<div class="clear">&nbsp;</div>
+{{ form_start(form,{'attr':{'id':'timeTrackReportFilter'} }) }}
+    <div class="span3 date-form">{{ form_widget(form.fromDate) }}</div>	
+    <div class="span3 date-form">{{ form_widget(form.toDate) }}</div>
+    <div class="span3">{{ form_widget(form.generate) }} </div>
+{{ form_end(form) }}
+
+<div class="clear">&nbsp;</div>
+	<div class="well">
+{% if data %}
+	
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>{%trans%}Facebook URL{%endtrans%}</th>
+					<th>{%trans%}Stake holder{%endtrans%}</th>
+					<th>{%trans%}Number of like{%endtrans%}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for row in data %}
+					<tr>
+						<td>{{loop.index}}</td>
+						<td>{{row[0].getUrl}}</td>
+						<td>{{row[0].customerfacebookurls[0].customer.name}}</td>
+						<td>{{row['max_likes']}} (+&thinsp;{{row['max_likes'] - row['min_likes']}})</td>
+					</tr>
+				{%endfor%} 
+				
+			</tbody>
+		</table>
+	
+{% endif %}
+</div>
+{% endblock content %}

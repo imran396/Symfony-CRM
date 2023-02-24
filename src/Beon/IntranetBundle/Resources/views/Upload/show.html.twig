@@ -1,0 +1,90 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Upload{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+
+                        <tr>
+                            <th>{% trans %}File name{% endtrans %}</th>
+                            <td>{% if entity.fsFilename %}<a
+                                    href="{{ path('upload_download_public',{id:entity.id,fsFilename:entity.fsFilename}) }}">{{ entity.filename }}</a>
+                                {% else %}
+                                    {{ entity.filename }}
+                                {% endif %}</td>
+                        </tr>
+                        {% if entity.customer %}
+                        <tr>
+                            <th>{% trans %}Stakeholder{% endtrans %}</th>
+                            <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.task %}
+                        <tr>
+                            <th>{% trans %}Task{% endtrans %}</th>
+                            <td><a href="{{ path('task_show', { 'id': entity.task.id }) }}">{{ entity.task }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.campaign %}
+                        <tr>
+                            <th>{% trans %}Campaign{% endtrans %}</th>
+                            <td><a href="{{ path('campaign_show', { 'id': entity.campaign.id }) }}">{{ entity.campaign }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.pressrelease %}
+                        <tr>
+                            <th>{% trans %}Press release{% endtrans %}</th>
+                            <td><a href="{{ path('pressrelease_show', { 'id': entity.pressrelease.id }) }}">{{ entity.pressrelease }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.note %}
+                        <tr>
+                            <th>{% trans %}Note{% endtrans %}</th>
+                            <td><a href="{{ path('note_show', { 'id': entity.note.id }) }}">{{ entity.note.text|truncate(100) }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.supplier %}
+                        <tr>
+                            <th>{% trans %}Supplier{% endtrans %}</th>
+                            <td><a href="{{ path('supplier_show', { 'id': entity.supplier.id }) }}">{{ entity.supplier }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.supplierGroup %}
+                        <tr>
+                            <th>{% trans %}Supplier Group{% endtrans %}</th>
+                            <td><a href="{{ path('suppliergroup_show', { 'id': entity.supplierGroup.id }) }}">{{ entity.supplierGroup }}</a></td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans %}File size{% endtrans %}</th>
+                            <td>{% if entity.size %}{{ entity.size|formatBytes }}{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Created at{% endtrans %}</th>
+                            <td>{% if entity.createdat %}{{ entity.createdat|date(defaultDateTimeFormat) }}{% endif %}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                 <div class="inline-forms ml13">
+                    {% if is_granted('ROLE_UPLOADS_EDIT') %}
+                        {{ form(delete_form) }}                
+                        <a class="btn btn-table-actions"  href="{{ path('upload_edit', { 'id': entity.id }) }}"> {% trans %}edit{% endtrans %}</a>
+                    {% endif %}                  
+                </div>
+                <div class="ml13">
+                       <a href="{{ path('upload') }}">
+                            {% trans %}Back to the list{% endtrans %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

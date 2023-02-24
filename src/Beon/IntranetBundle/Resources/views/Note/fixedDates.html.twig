@@ -1,0 +1,30 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Text{% endtrans %}</th>
+        <th>{% trans %}Date{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        {% if entity is note and (is_granted('ROLE_NOTES_INTERNAL') or not (entity.internalUseOnly is defined and entity.internalUseOnly == true)) %}
+            <tr>
+                <td>{{ entity.text|truncate(100) }}</td>
+                <td>{{ entity.date1|date(defaultDateFormat) }}{% if entity.date2 %} &ndash; {{ entity.date2|date(defaultDateFormat) }}{% endif %}</td>
+                <td>
+                    <a class="btn btn-table-actions" href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                </td>
+            </tr>
+        {% elseif entity is project %}
+            <tr>
+                <td>{{ entity.name|truncate(100) }}</td>
+                <td>{{ entity.contractstart|date(defaultDateFormat) }}{% if entity.contractend %} &ndash; {{ entity.contractend|date(defaultDateFormat) }}{% endif %}</td>
+                <td>
+                    <a class="btn btn-table-actions" href="{{ path('customer_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+</table>

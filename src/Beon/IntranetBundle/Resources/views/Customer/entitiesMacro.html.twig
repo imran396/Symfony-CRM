@@ -1,0 +1,52 @@
+{% macro entitiesIndex(entities, level) %}
+
+    <table class="table">
+        <thead>
+        <tr>
+            {% if level == 2 or level == 4 %}
+            <th>{% trans %}Id{% endtrans %}</th>
+            {% elseif level > 2 %}
+            <th>{% trans %} Customer{% endtrans %}</th>
+            {% endif %}
+            <th>{% trans %}Name{% endtrans %}</th>
+            {% if level == 2 %}
+            <th>{% trans %}Address{% endtrans %}</th>
+            {% endif %}
+            {% if level == 4 %}
+            <th>{% trans %}Discount info{% endtrans %}</th>
+            {% endif %}
+            <th>{% trans %}Actions{% endtrans %}</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for entity in entities %}
+            <tr>
+                {% if level == 2 %}
+                <td style="width: 80px;">{{ "KU%05d"|format(entity.id) }}</td>
+                {% elseif level == 4 %}
+                <td style="width: 80px;">{{ "KO%05d"|format(entity.id) }}</td>
+                {% elseif level > 2 %}
+                <td>{{ entity.parent and entity.parent.name ? entity.parent.name : 'None' }}</td>
+                {% endif %}
+                <td>{{ entity.name }}</td>
+                {% if level == 2 %}
+                <td>{{ entity.address }}</td>
+                {% endif %}
+                {% if level == 4 %}
+                <td>{{ entity.discountInfo|truncate(30) }}</td>
+                {% endif %}
+                <td>
+                    <a class="btn btn-table-actions"
+                       href="{{ path('customer_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                    {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+                        <a class="btn btn-table-actions"
+                           href="{{ path('customer_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endmacro %}

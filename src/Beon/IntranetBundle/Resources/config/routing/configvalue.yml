@@ -1,0 +1,22 @@
+configvalue:
+    path:     /
+    defaults: { _controller: "IntranetBundle:ConfigValue:index" }
+
+configvalue_show:
+    path:     /{id}/show
+    defaults: { _controller: "IntranetBundle:ConfigValue:show" }
+
+
+configvalue_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "IntranetBundle:ConfigValue:edit" }
+
+configvalue_update:
+    path:     /{id}/update
+    defaults: { _controller: "IntranetBundle:ConfigValue:update" }
+    requirements: { _method: post|put }
+
+configvalue_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "IntranetBundle:ConfigValue:delete" }
+    requirements: { _method: post|delete }

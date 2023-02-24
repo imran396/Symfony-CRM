@@ -1,0 +1,48 @@
+{% macro pager(pagesCount,currentPage,id) %}
+
+    {% if not currentPage %}
+        {% set currentPage = 1%}
+    {% endif %}
+
+    {% if pagesCount>1 %}
+        <div {% if id %}id="pager-{{ id }}" style="display: none"{% endif %} class="pagination">
+            <ul class="unstyled">
+
+                <li class="prev-disabled"
+                        {% if currentPage != 1 %}
+                            style="display: none"
+                        {% endif %}
+                        ><span>{% trans %}Prev{% endtrans %}</span></li>
+                <li class="prev-enabled"
+                        {% if currentPage == 1 %}
+                            style="display: none"
+                        {% endif %}
+                        ><a href="{{ app.request.requesturi }}#page-prev">{% trans %}Prev{% endtrans %}</a></li>
+
+
+                {% for page in 1..pagesCount %}
+
+                    {% if currentPage == page %}
+                        <li class="active"><a href="{{ app.request.requesturi }}#page-{{ page-1 }}">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="{{ app.request.requesturi }}#page-{{ page-1 }}">{{ page }}</a></li>
+                    {% endif %}
+
+                {% endfor %}
+
+
+                <li class="next-disabled"
+                        {% if currentPage != pagesCount %}
+                            style="display: none"
+                        {% endif %}
+                        ><span>{% trans %}Next{% endtrans %}</span></li>
+
+                <li class="next-enabled"
+                        {% if currentPage == pagesCount %}
+                            style="display: none"
+                        {% endif %}
+                        ><a href="{{ app.request.requesturi }}page-next">{% trans %}Next{% endtrans %}</a></li>
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}

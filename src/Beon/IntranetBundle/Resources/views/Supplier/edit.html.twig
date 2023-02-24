@@ -1,0 +1,59 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+{% form_theme edit_form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{% trans %}Supplier edit{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+                {{ form_start(edit_form, {'attr':{'class':'form-horizontal' }} ) }}
+                {{ form_errors(edit_form) }}
+		
+		{{ form_row(edit_form.name) }}
+               <div id="supplier_pagesize">
+                    <label for="supplier_pagesize" style="display: block; ">{% trans %}Pagesize{% endtrans %}</label>
+                    <div class="pagesize_width">
+                        {{ form_errors(edit_form.pagesizeWidth) }}
+                        {{ form_widget(edit_form.pagesizeWidth) }}
+                    </div>
+                    <div class="floatLeft cross_icon"><span class="icon-remove"></span></div>
+                    <div class="pagesize_height">
+                        {{ form_errors(edit_form.pagesizeHeight) }}
+                        {{ form_widget(edit_form.pagesizeHeight) }}
+                    </div>
+                    <div class="floatLeft mm">mm</div>
+                    <div style="clear:both;"></div>
+                </div>
+
+                {{ form_end(edit_form) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a onclick="return confirmation()" class="btn btn-table-actions" href="{{ path('supplier') }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                        <a onclick="return confirmation()" class="btn btn-table-actions"  href="{{ path('supplier_show', { 'id': entity.id }) }}"> {% trans %}show{% endtrans %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'supplier',uploadDeleteForms,upload_file_form) }}
+
+        {% import "IntranetBundle:Macroses:contactsMacro.html.twig" as helper %}
+
+        {{ helper.contactsList(entity.contacts,addSupplierForm) }}
+
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {% include 'IntranetBundle:Supplier:supplierScript.html.twig' %}
+
+
+{% endblock %}

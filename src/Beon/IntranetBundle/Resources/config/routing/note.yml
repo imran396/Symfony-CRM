@@ -1,0 +1,27 @@
+note:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Note:index", monitoredUrl:false  }
+note_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Note:show" }
+note_new:
+    pattern:  /new/note/{monitoredUrl}
+    defaults: { _controller: "IntranetBundle:Note:new", monitoredUrl:false }
+note_create:
+    pattern:  /create/note/{monitoredUrl}
+    defaults: { _controller: "IntranetBundle:Note:create", monitoredUrl:false }
+    requirements: { _method: post }
+note_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Note:edit" }
+note_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Note:update" }
+    requirements: { _method: post|put }
+note_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Note:delete" }
+    requirements: { _method: post|delete }
+note_list:
+    pattern:  list/{monitoredUrl}
+    defaults: { _controller: "IntranetBundle:Note:list" }

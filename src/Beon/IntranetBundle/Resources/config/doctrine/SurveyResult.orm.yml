@@ -1,0 +1,83 @@
+Beon\IntranetBundle\Entity\SurveyResult:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\SurveyResultRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        date:
+            type: date
+            nullable: true
+        timeIn:
+              type: string
+              nullable: true
+              length: 255
+              fixed: false
+        timeOut:
+              type: string
+              nullable: true
+              length: 255
+              fixed: false
+        frequency:
+            type: smallint #(min: 1, max: 3)
+            nullable: true
+        welcome:
+            type: smallint #(min: 1, max: 3)
+            nullable: true
+        drinks:
+            type: smallint #(min: 1, max: 4)
+            nullable: true
+        drinksValue:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        drinksWait:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        food:
+            type: smallint #(min: 1, max: 4)
+            nullable: true
+        foodValue:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        foodWait:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        service:
+            type: smallint #(min: 1, max: 4)
+            nullable: true
+        music:
+            type: smallint #(min: 1, max: 3)
+            nullable: true
+        atmosphere:
+            type: smallint #(min: 1, max: 4)
+            nullable: true
+        happyHour:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        enchiladaHour:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        casinoMexicano:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        ladiesNight:
+            type: smallint #(min: 1, max: 2)
+            nullable: true
+        overall:
+            type: smallint #(min: 1, max: 6)
+            nullable: true
+    manyToOne:
+        customer:
+          targetEntity: Customer
+          inversedBy: campaigns
+          joinColumn:
+              nullable: false
+              onDelete: "CASCADE"
+              name: customer_id
+              referencedColumnName: id
+    lifecycleCallbacks: {  }

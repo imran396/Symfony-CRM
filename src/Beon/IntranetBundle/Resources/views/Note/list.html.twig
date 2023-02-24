@@ -1,0 +1,26 @@
+<a href="javascript:void(0)">Create New Note</a>
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Text{% endtrans %}</th>
+        <th>{% trans %}Created at{% endtrans %}</th>
+        <th>{% trans %}User{% endtrans %}</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for entity in monitoredUrlEntities %}
+	<tr>
+	    <td>
+		<span title="{{ entity.text }}">
+		    {{ entity.text|truncate(100) }}
+		</span>
+	    </td>
+	    <td>
+		{% if entity.createdat %}{{ entity.createdat|date( defaultDateTimeFormat) }}{% endif %}
+	    </td>
+	    <td>{{ entity.user }}</td>
+	</tr>
+    {% endfor %}
+    </tbody>
+</table>

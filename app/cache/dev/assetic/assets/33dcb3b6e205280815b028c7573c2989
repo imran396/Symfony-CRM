@@ -1,0 +1,153 @@
+#line-chart {
+		height: 300px;
+		width: 800px;
+		margin: 0px auto;
+		margin-top: 1em;
+	}
+	.brand {
+		font-family: georgia, serif;
+	}
+	.brand .first {
+		color: #ccc;
+		font-style: italic;
+	}
+	.brand .second {
+		color: #fff;
+		font-weight: bold;
+	}
+	.clear {
+		clear:both;
+	}
+	.export-main form {
+		margin:0;
+	}
+	.export-main form button {
+		margin:0;
+	}
+	.form-main {
+		clear:both;
+		float:left;
+		margin:10px 0;
+		width:100%;
+	}	
+	.form-main:first-child {
+		margin-top:20px;
+	}
+	.form-main label, #supplier_pagesize label {
+	      float:left;
+	      width:20%;
+	}
+	.pagesize_width input, .pagesize_height input {
+	      border-radius:4px;
+	      -moz-border-radius:4px;
+	}
+	.form-main select, .form-main .select2-container {
+	      float:left;
+	      width:32%;
+	      margin-bottom:0 !important;
+	}
+    .form-main textarea, .form-main > input {
+	      float:left;
+	      width:30.5%;
+	      margin-bottom:0 !important;
+	      border-radius:4px;
+	      -moz-border-radius:4px;
+	}
+	.form-main .error-div {
+		margin:0 0 0 20%;
+		clear:both;
+	}
+	.form-main .error-div ul {
+		margin:0;
+		padding:0;
+	}
+	.form-main .error-div ul li {
+		list-style:none;
+		float:left;
+		margin-top:2px;
+		color:red;
+		font-size:12px;
+	}
+	.form-main .file-type {
+		float:left;
+		width:32%;
+		margin:-4px 0 0 -4px;
+	}	
+	.form-main .file-type div {
+		width:100%;
+		clear:both;
+	}
+	.form-main .file-type div input[type="file"] {
+		width:100%;
+	}
+	.form-main #fileOnClick {
+		margin:4px 0 0 3px;
+		font-size:12px;
+	}
+	.radio-main {
+		clear:both;
+	}
+	.radio-main label:first-child {
+		width:20% !important;
+	}
+	.radio-main .form-main {
+		float:left;
+	}
+	.radio-main .form-main input[type="radio"] {
+		float:left;
+		margin:0 7px 0 0;
+	}
+	.radio-main .form-main label {
+		width:16%;
+		float:left;
+		margin:0 0 5px 0 !important;
+	}
+	.radio-main .form-main div {
+		width:79%;
+		float:left;
+	}
+	.form-main .btn {
+		margin-bottom:0 !important;
+        margin-left: 10px;
+	}
+	#campaign_sizeOfAds {
+		float:left;
+	}
+	#campaign_sizeOfAds .form-main {
+		float:left;
+		width:40%;
+		margin:0;
+	}
+	#campaign_sizeOfAds .form-main input, #campaign_sizeOfAds .pagesize_height input {
+		width:90%;
+	}
+	#campaign_sizeOfAds .mm {
+		padding:3px 0 0 10px;
+	}
+	.linedwrap {
+		float:left;
+		border-radius:4px;
+		-moz-border-radius:4px;
+	}
+	.file-upload-error {
+		font-size:13px;
+		color:red;
+		padding-left:4px !important;
+		font-weight:normal;
+	}
+	.csstransitions div.date-calendar-dialog.date-open {
+		z-index:50;
+	}
+	.date-form span .date-datepicker-button {
+	  font-size:12px;
+	  width:100%;
+	  padding:5px 0;	  
+	}
+	.position-r {
+	  position:relative;
+	  float:left;
+	}
+	.date-form .searchSelect {
+	  width:100%;
+	  margin:4px 0;
+	}

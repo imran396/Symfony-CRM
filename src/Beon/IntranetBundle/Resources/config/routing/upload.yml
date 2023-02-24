@@ -1,0 +1,53 @@
+upload:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Upload:index" }
+
+upload_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Upload:show" }
+
+upload_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:Upload:new" }
+
+upload_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:Upload:create" }
+    requirements: { _method: post }
+
+upload_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Upload:edit" }
+
+upload_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Upload:update" }
+    requirements: { _method: post|put }
+
+upload_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Upload:delete" }
+    requirements: { _method: post|delete }
+
+upload_download:
+    pattern:  /{id}/{fileName}
+    defaults: { _controller: "IntranetBundle:Upload:download" }
+
+upload_download_public:
+    pattern:  /public/{id}/{fsFilename}
+    defaults: { _controller: "IntranetBundle:Upload:downloadPublic" }
+
+upload_toggle_group_flag:
+    pattern:  /upload-toggle-group-flag
+    defaults: { _controller: "IntranetBundle:Upload:toggleGroupFlag" }
+    requirements: { _method: post }
+
+external_upload:
+    pattern:  /{type}/{id}/{hashCode}
+    defaults: { _controller: "IntranetBundle:Upload:externalUpload" }
+    requirements: { _method: post|get }
+
+mailgun_upload:
+    pattern:  /mailgunCv47biGbOdv0
+    defaults: { _controller: "IntranetBundle:Upload:mailgun" }
+    requirements: { _method: post|get }

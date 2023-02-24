@@ -1,0 +1,34 @@
+Beon\IntranetBundle\Entity\CustomerFacebookUrl:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\CustomerFacebookUrlRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        isOwn:
+            type: boolean
+            column: is_own
+
+    manyToOne:
+        facebookUrl:
+          targetEntity: FacebookUrl
+          inversedBy: customerfacebookurls
+          joinColumn:
+              nullable: false
+              name: url_id
+              referencedColumnName: id
+              onDelete: "CASCADE"
+
+        customer:
+          targetEntity: Customer
+          inversedBy: customerfacebookurls
+          joinColumn:
+              nullable: false
+              name: customer_id
+              referencedColumnName: id
+              onDelete: "CASCADE"
+    lifecycleCallbacks: {  }

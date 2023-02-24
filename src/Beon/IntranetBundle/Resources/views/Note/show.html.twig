@@ -1,0 +1,112 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    {% if was_success and is_granted('ROLE_NOTES_NEW') %}
+        <div class="btn-toolbar">
+		    <a href="{{ path('note_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New note{% endtrans %}</a>
+        </div>  
+    {% endif %}
+
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Note{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        {% if entity.type %}
+                        <tr>
+                            <th style="min-width: 100px;">{% trans %}Type{% endtrans %}</th>
+                            <td>{{ entity.type }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th style="min-width: 100px;">{% trans %}Text{% endtrans %}</th>
+                            <td>{{ entity.text|nl2br }}</td>
+                        </tr>
+                        {% if entity.date1 %}
+                        <tr>
+                            <th style="min-width: 100px;">{% trans %}Date{% endtrans %}</th>
+                            <td>{{ entity.date1|date( defaultDateFormat) }}{% if entity.date2 %} &mdash; {{ entity.date2|date( defaultDateFormat) }}{% endif %}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>{% trans %}Created at{% endtrans %}</th>
+                            <td>{{ entity.createdat|date( defaultDateTimeFormat) }}</td>
+                        </tr>
+                        {% if entity.user %}
+                        <tr>
+                            <th>{% trans %}User{% endtrans %}</th>
+                            <td><a href="{{ path('user_show', { 'id': entity.user.id }) }}">{{ entity.user.displayName }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.customer %}
+                        <tr>
+                            <th>{% trans %}Stakeholder{% endtrans %}</th>
+                            <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.campaign %}
+                        <tr>
+                            <th>{% trans %}Campaign{% endtrans %}</th>
+                            <td><a href="{{ path('campaign_show', { 'id': entity.campaign.id }) }}">{{ entity.campaign }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.pressrelease %}
+                        <tr>
+                            <th>{% trans %}Press release{% endtrans %}</th>
+                            <td><a href="{{ path('pressrelease_show', { 'id': entity.pressrelease.id }) }}">{{ entity.pressrelease }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.task %}
+                        <tr>
+                            <th>{% trans %}Task{% endtrans %}</th>
+                            <td><a href="{{ path('task_show', { 'id': entity.task.id }) }}">{{ entity.task }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.complaint %}
+                        <tr>
+                            <th>{% trans %}Complaint{% endtrans %}</th>
+                            <td><a href="{{ path('complaint_show', { 'id': entity.complaint.id }) }}">{{ entity.complaint }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.monitoredurl %}
+                        <tr>
+                            <th>{% trans %}Monitored Url{% endtrans %}</th>
+                            <td><a href="{{ path('monitoredurl_show', { 'id': entity.monitoredurl.id }) }}">{{ entity.monitoredurl }}</a></td>
+                        </tr>
+                        {% endif %}
+                        {% if entity.supplier %}
+                        <tr>
+                            <th>{% trans %}Supplier{% endtrans %}</th>
+                            <td><a href="{{ path('supplier_show', { 'id': entity.supplier.id }) }}">{{ entity.supplier }}</a></td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if is_granted('ROLE_NOTES_ALL') %}
+                    <div class="inline-forms">
+                        <a class="btn btn-table-actions" href="{{ path('note_edit', { 'id': entity.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                        {{ form(delete_form) }}
+                    </div>
+
+                    <div>
+                        <a href="{{ path('note') }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'note') }}
+
+
+    </div>
+
+{% endblock %}

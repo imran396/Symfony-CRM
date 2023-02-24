@@ -1,0 +1,14 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Config{% endtrans %}</h1>
+
+    <div class="well">
+
+
+   {% include 'IntranetBundle:ConfigValue:indexTable.html.twig' %}
+
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

@@ -1,0 +1,55 @@
+supplier:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Supplier:index" }
+
+supplier_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Supplier:show" }
+
+supplier_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:Supplier:new" }
+
+supplier_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:Supplier:create" }
+    requirements: { _method: post }
+
+supplier_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Supplier:edit" }
+
+supplier_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Supplier:update" }
+    requirements: { _method: post|put }
+
+supplier_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Supplier:delete" }
+    requirements: { _method: post|delete }
+
+supplier_get_supplier_data:
+    pattern:  /supplier-data
+    defaults: { _controller: "IntranetBundle:Supplier:getSupplierData" }
+    requirements: { _method: post }
+
+supplier_get_type:
+    pattern:  /supplier-type
+    defaults: { _controller: "IntranetBundle:Supplier:getSupplierType" }
+    requirements: { _method: post }
+
+supplier_offer:
+    pattern:  /offer
+    defaults: { _controller: "IntranetBundle:Supplier:offer" }
+    requirements: { _method: post|get }
+
+supplier_contact:
+    pattern: /contact-supplier
+    defaults: { _controller: "IntranetBundle:Supplier:contactSupplierRelation" }
+    requirements: { _method: post }
+
+supplier_contact_delete:
+    pattern: /{id}/{contactId}/contact-supplier
+    defaults: { _controller: "IntranetBundle:Supplier:supplierContactDelete" }
+    requirements: { _method: get|delete }

@@ -1,0 +1,105 @@
+Beon\IntranetBundle\Entity\Upload:
+    type: entity
+    table: Upload
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\UploadRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        filename:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: fileName
+        isInvoice:
+            type: boolean
+            column: is_invoice
+        fsFilename:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: fsFileName
+        mimeType:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column:  mimeType
+        size:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+            column:  size
+        createdat:
+            type: datetime
+            nullable: true
+            comment: ''
+            column: createdAt
+        groupFlag41:
+            type: boolean
+        groupFlag42:
+            type: boolean
+        submitFlag:
+            type: boolean
+    manyToOne:
+        note:
+          targetEntity: Note
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "SET NULL"
+              name: note_id
+              referencedColumnName: id
+        pressrelease:
+          targetEntity: Pressrelease
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "SET NULL"
+              name: pressrelease_id
+              referencedColumnName: id
+        campaign:
+          targetEntity: Campaign
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "CASCADE"
+              name: campaign_id
+              referencedColumnName: id
+        customer:
+          targetEntity: Customer
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "SET NULL"
+              name: customer_id
+              referencedColumnName: id
+        supplier:
+          targetEntity: Supplier
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "SET NULL"
+              name: supplier_id
+              referencedColumnName: id
+        supplierGroup:
+          targetEntity: SupplierGroup
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "SET NULL"
+              name: supplierGroup_id
+              referencedColumnName: id
+        task:
+          targetEntity: Task
+          inversedBy: uploads
+          joinColumn:
+              onDelete: "CASCADE"
+              name: task_id
+              referencedColumnName: id
+    lifecycleCallbacks: {  }

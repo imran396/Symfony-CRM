@@ -1,0 +1,28 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+        <th>{% trans %}Stakeholder{% endtrans %}</th>
+        <th>{% trans %}Facebook Url{% endtrans %}</th>
+        <th>{% trans %}Isown{% endtrans %}</th>
+        <th>{% trans %}Actions{% endtrans %}</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.customer.name }}</td>
+            <td><a target="_blank" href="{{ entity.facebookUrl.url }}">{{ entity.facebookUrl.url|truncate(50) }}</a></td>
+            <td>{{ entity.isOwn|bool }}</td>
+            <td>
+                <a class="btn btn-table-actions"
+                   href="{{ path('customerfacebookurl_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+                    <a class="btn btn-table-actions"
+                       href="{{ path('customerfacebookurl_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+<h1 class="page-title">{% trans %}Missing Time Trackings Report{% endtrans %}</h1>
+
+<div class="well">
+    <table class="table">
+        <tr>
+            <th>Task</th>
+            <th>Nicht-Druckkosten</th>
+            <th>Druckkosten</th>
+        </tr>
+        {% for row in report %}
+        <tr>
+            <td><a href="{{ path('task_show', { 'id': row.task.id }) }}">{{ row.task }}</a></td>
+            <td>{{ row.graphics|bool|trans }}</td>
+            <td>{{ row.print|bool|trans }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock content %}
+

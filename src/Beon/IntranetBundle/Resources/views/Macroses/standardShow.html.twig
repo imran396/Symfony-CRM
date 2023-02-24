@@ -1,0 +1,47 @@
+<div class="row-fluid">
+    <div class="block span6">
+        <div class="block-heading" data-toggle="collapse"
+             data-target="#widget1container">{% block header %}{% endblock %}</div>
+        <div id="widget1container" class="block-body collapse in">
+
+             <div id="tablewidget" class="block-body collapse in">
+                <table class="table table-bordered">
+                    {% block tableBody %}
+                    {% endblock %}
+                </table>
+
+                {% block buttons %}
+
+
+                {% endblock %}
+             </div>
+
+             <div class="inline-forms ml13">
+                    {% if hide_edit is not defined or not hide_edit %}
+                        <a class="btn btn-table-actions" href="{{ path( entityName~'_edit', { 'id': entity.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                    {% endif %}
+                    {% if hide_delete is not defined or not hide_delete %}
+                        {{ form(delete_form) }}
+                    {% endif %}
+             </div>
+
+             <div class="ml13">
+                    <a href="{{ path(entityName) }}">
+                        {% trans %}Back to the list{% endtrans %}
+                    </a>
+             </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+{% block extraRows %}
+
+
+{% endblock %}
+
+

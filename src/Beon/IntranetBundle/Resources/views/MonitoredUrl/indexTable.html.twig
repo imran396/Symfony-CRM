@@ -1,0 +1,39 @@
+<table id="indexTable" class="table">
+    <thead>
+    <tr>
+
+        <th>{% trans %}Url{% endtrans %}</th>
+        <th>{% trans %}Customer{% endtrans %}</th>
+        <th>{% trans %}Lastcheck{% endtrans %}</th>
+       {% block actionsHeader %}
+        <th>{% trans %}Actions{% endtrans %}</th>
+       {% endblock %}
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for entity in entities %}
+
+        <tr>
+            <td><a target="_blank" href="{{ entity.url }}">{{ entity.url|truncate(50) }}</a></td>
+            <td>{{ entity.customer }}</td>
+            <td>{% if entity.lastCheck %}{{ entity.lastCheck|date('d.m.Y H:i') }}{% endif %}</td>
+
+            {% block actionsRows %}
+                <td>
+                    <div class="inline-forms">
+                        <a class="btn btn-table-actions markdone" href="{{ path('monitoredurl_postednow', { 'id': entity.id }) }}">{% trans %}mark done{% endtrans %}</a>
+                        {% if is_granted('ROLE_COMPLAINTS') %}
+                            <a class="btn btn-table-actions" href="{{ path('monitoredurl_new_related', { 'id': entity.id, 'name':'complaint' }) }}">{% trans %}Create complaint{% endtrans %}</a>
+                        {% endif %}
+                        <a class="btn btn-table-actions" href="{{ path('monitoredurl_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                        {% if is_granted('ROLE_MONITORED_URLS') %}
+                            <a class="btn btn-table-actions" href="{{ path('monitoredurl_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+                        {% endif %}
+                    </div>
+                </td>
+            {% endblock %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

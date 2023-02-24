@@ -1,0 +1,81 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Budget period{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        <tbody>
+                        <tr>
+                            <th>{% trans %}Customer{% endtrans %}</th>
+                            <td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Start{% endtrans %}</th>
+                            <td>{{ entity.start|date(defaultDateFormat) }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}End{% endtrans %}</th>
+                            <td>{{ entity.end|date(defaultDateFormat) }}</td>
+                        </tr>
+                        <tr>
+                            <th>{% trans %}Budget{% endtrans %}</th>
+                            <td>{{ entity.budget|number_format(0, ',', '.') }} €</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                {% if is_granted('ROLE_BUDGETPERIOD_ALL') %}
+                <div class="inline-forms">
+                    <a class="btn btn-table-actions" href="{{ path('budgetperiod_edit', { 'id': entity.id }) }}">{% trans %}Edit{% endtrans %}</a>
+                    {{ form(delete_form) }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </div>
+    {% if (piechart) %}
+        {% include 'IntranetBundle:BudgetPeriod:_budgetpiechart.html.twig' %}
+    {% endif %}
+    
+    {% if (ttMonths) %}
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Timetracking{% endtrans %}</div>
+            <div id="widget2container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th colspan="2"></th>
+                          {% for name in ttMonths %}
+                          <th>{{ name }}</th>
+                          {% endfor %}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for tariff, months in ttData %}
+                        <tr>
+                          {% if tariff|ttCategory %}
+                          <td style="padding: 11px 0 0 6px; width: 25px" title="{{ tariff|ttCategory }}"><div style="border:1px solid #ccc;padding:1px;width: 14px;"><div style="width:4px;height:0;border:5px solid {{ tariff|ttCategoryColor }};overflow:hidden"></div></div></td>
+                          {% else %}
+                          <td style="width: 15px"></td>
+                          {% endif %}
+                          <td>{{ tariff|ttTariff|default('Ohne Tarif') }}</td>
+                          {% for month in ttMonths|keys %}
+                          <td>{%if months[month] is defined %}{{ months[month]|ttTotal(tariff) }}{% endif %}</td>
+                          {% endfor %}
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

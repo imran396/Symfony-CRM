@@ -1,0 +1,72 @@
+{% for key,currentBudget in piechart %}
+    <div class="block">
+        <p class="block-heading" data-toggle="collapse" data-target="#chart-container1">
+           {% trans %} Budget{% endtrans %} {% if currentBudget.2.start %}{{ currentBudget.2.start|date(defaultDateFormat) }}{% endif %} &ndash; {% if currentBudget.2.end %}{{ currentBudget.2.end|date(defaultDateFormat) }}{% endif %}: {{ currentBudget.2.budget|number_format(0, '', '.') }}</p>
+
+
+        <div class="chart_container1" class="block-body collapse in">
+            <div id="piecontainer{{ key }}" class="line-chart "></div>
+ {% if currentBudget.1 < 0 %}
+
+         <div style="padding: 10px;"> <i style="color: red;font-size: 24px; padding-right: 5px;" class="icon-warning-sign"></i>{% trans %}Period is over budget by{% endtrans %} {{ currentBudget.1|split('-')[1]|number_format(0, '', '.') }} ({{ ((currentBudget.1|split('-')[1]*100)/(currentBudget.1|split('-')[1]+ currentBudget.2.budget))| number_format(2) }} %)</div>
+{% endif %}
+        </div>
+    </div>
+{% endfor %}
+
+{% block stylesheets %}
+    {% stylesheets '@IntranetBundle/Resources/public/lib/flot/flot.css' filter='beon_css_rewriter_filter' %}
+    <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+    {% endstylesheets %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {% javascripts
+    '@IntranetBundle/Resources/public/lib/flot/jquery.flot.js'
+    '@IntranetBundle/Resources/public/lib/flot/jquery.flot.pie.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+    jQuery(document).ready(function($) {
+        var legendFormatter = function(label, series) {
+            return label + ": " + series.data[0][1] + " &euro;";
+            //return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + label + "<br/>" + Math.round(series.percent) + "% (" + series.data[0][1] + " &euro;)</div>";
+        }
+
+        var labelFormatter = function(label, series) {
+            return "<div style='font-size:8pt; text-align:center; padding:2px; color:white;'>" + series.label + "<br/>" + Math.round(series.percent) + " %</div>";
+        }
+
+        var getPieChart = function(data, placeholder) {
+            if (data) {
+                $.plot(placeholder, data, {
+                    series: {
+                        pie: {
+                            show: true,
+                            radius: 1,
+                            label: {
+                                show: true,
+                                radius: 3 / 4,
+                                formatter: labelFormatter,
+                                background: {
+                                    opacity: 0.8
+                                }
+                            }
+                        }
+                    },
+                    legend: {
+                        show: true,
+                        labelFormatter: legendFormatter,
+                    }
+                });
+            }
+        };
+
+        {% for key, currentBudget in  piechart  %}
+            getPieChart({{ currentBudget.0 | json_encode | raw }}, $("#piecontainer{{ key }}"));
+        {% endfor %}
+     });
+    </script>
+{% endblock %}

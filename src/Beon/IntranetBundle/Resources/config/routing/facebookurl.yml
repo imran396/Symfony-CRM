@@ -1,0 +1,34 @@
+facebookurl:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:FacebookUrl:index" }
+
+facebookurl_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:FacebookUrl:show" }
+
+facebookurl_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:FacebookUrl:new" }
+
+facebookurl_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:FacebookUrl:create" }
+    requirements: { _method: post }
+
+facebookurl_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:FacebookUrl:edit" }
+
+facebookurl_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:FacebookUrl:update" }
+    requirements: { _method: post|put }
+
+facebookurl_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:FacebookUrl:delete" }
+    requirements: { _method: post|delete }
+
+facebookurl_postednow:
+    pattern:  /{id}/postednow
+    defaults: { _controller: "IntranetBundle:FacebookUrl:postedNow" }

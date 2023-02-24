@@ -1,0 +1,119 @@
+<h3>{% trans %}Supplier offer information{% endtrans %}</h3>
+<div>
+    {% trans %}Customer name{% endtrans %}:  {{ data.customerName }}
+</div>
+<div>
+    {% trans %}Supplier name{% endtrans %}:  {{ data.supplierName }}
+</div>
+<div>
+    {% trans %}Contact firstname{% endtrans %}:  {{ data.contactFirstname }}
+</div>
+<div>
+    {% trans %}Contact lastname{% endtrans %}:  {{ data.contactLastname }}
+</div>
+<div>
+    {% trans %}Contact position{% endtrans %}:  {{ data.contactPosition }}
+</div>
+{% if(data.contactPhone is defined and data.contactPhone is not empty ) %}
+    <div>
+        {% trans %}Contact phone{% endtrans %}:  {{ data.contactPhone }}
+    </div>
+{% endif %}
+
+<div>
+    {% trans %}Contact email{% endtrans %}:  {{ data.contactEmail }}
+</div>
+
+{% if(data.notes is defined and data.notes is not empty ) %}
+    <div>
+        {% trans %}Notes{% endtrans %}:  {{ data.notes }}
+    </div>
+{% endif %}
+
+{% if(data.offerValidTill is defined and data.offerValidTill is not empty ) %}
+    <div>
+        {% trans %}Offer valid till{% endtrans %}:  {{ data.offerValidTill|date(defaultDateFormat) }}
+    </div>
+{% endif %}
+
+{% if(data.offerValidTill is defined and data.offerValidTill is not empty) %}
+    <div>
+        {% trans %}Offer Period Start{% endtrans %}:  {{ data.offerPeriodStart|date(defaultDateFormat) }}
+    </div>
+{% endif %}
+
+{% if(data.offerValidTill is defined and data.offerValidTill is not empty ) %}
+    <div>
+        {% trans %}Offer Period End{% endtrans %}:  {{ data.offerPeriodEnd|date(defaultDateFormat) }}
+    </div>
+{% endif %}
+{% if(data.price is defined and data.price is not empty) %}
+    <div>
+        {% trans %}Price{% endtrans %}:  {{ data.price|number_format(2, ',', '.') }}
+    </div>
+{% endif %}
+{% if(data.priceRegular is defined and data.priceRegular is not empty) %}
+    <div>
+        {% trans %}Regular Price{% endtrans %}:  {{ data.priceRegular|number_format(2, ',', '.') }}
+    </div>
+{% endif %}
+{% if(data.numberOfSeconds is defined and data.numberOfSeconds is not empty) %}
+    <div>
+        {% trans %}Number Of seconds{% endtrans %}:  {{ data.numberOfSeconds }}
+    </div>
+{% endif %}
+
+{% if(data.visitors is defined and data.visitors is not empty) %}
+    <div>
+        {% trans %}Visitors{% endtrans %}:  {{ data.visitors|number_format(0, ',', '.') }}
+    </div>
+{% endif %}
+
+{% if(data.readers is defined and data.readers is not empty) %}
+    <div>
+        {% trans %}Readers{% endtrans %}:  {{ data.readers|number_format(0, ',', '.') }}
+    </div>
+{% endif %}
+{% if(data.viewers is defined and data.viewers is not empty) %}
+    <div>
+        {% trans %}Viewers{% endtrans %}:  {{ data.viewers|number_format(0, ',', '.') }}
+    </div>
+{% endif %}
+{% if(data.listeners is defined and data.listeners is not empty) %}
+    <div>
+        {% trans %}Listeners{% endtrans %}:  {{ data.listeners|number_format(0, ',', '.') }}
+    </div>
+{% endif %}
+{% if(data.numberOfAds is defined and data.numberOfAds is not empty) %}
+    <div>
+        {% trans %}Numbers Of Ads{% endtrans %}:  {{ data.numberOfAds }}
+    </div>
+{% endif %}
+
+{% if(data.adsizeHeight is defined and data.adsizeHeight is not empty and data.adsizeWidth is defined and data.adsizeWidth is not empty) %}
+    <div>
+       {% trans %}Size of ads{% endtrans %}:  {{ data.adsizeWidth }} × {{ data.adsizeHeight }} mm ({{ data.adsizeWidth *  data.adsizeHeight}}  mm²)
+    </div>
+{% endif %}
+{% if(data.audienceSize is defined and data.audienceSize is not empty) %}
+    <div>
+        {% trans %}Audience size{% endtrans %}:  {{ data.audienceSize }}
+    </div>
+{% endif %}
+
+<div>
+    {% trans %}Included services{% endtrans %}:  {% if data.includedServices is constant(CampaignIncludedServicesEnum~'OTHER') %}{{ data.includedServicesOther }}{% else %}{{ data.includedServices|includedServices }}{% endif %}
+</div>
+
+
+{% if uploads is defined and uploads is not empty %}
+    <h3>{% trans %}Uploads{% endtrans %}</h3>
+    {% for upload in uploads %}
+        <div><a href="{{ app.request.getSchemeAndHttpHost() }}{{ path('upload_download', { 'id': upload.id, 'fileName': upload.name }) }}" target="_blank">{{ upload.name }}</a></div>
+    {% endfor %}
+{% endif %}
+
+<div>
+    <h3>{% trans %}To create a campaign based on this offer, please click the following link{% endtrans %}</h3>
+    <a type="button" target="_blank" href="{{ app.request.getSchemeAndHttpHost() }}{{ path('campaign_new') }}?{{queryString}}">{% trans %}Create campaign{% endtrans %} </a>
+</div>

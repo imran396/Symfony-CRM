@@ -1,0 +1,43 @@
+{% macro citiesList(cities,contactId,addCityForm) %}
+
+  <div class="row-fluid">
+    <div class="block">
+        <div class="block-heading" data-toggle="collapse" data-target="#cityewidget">{% trans %}Cities{% endtrans %}</div>
+        <div class="block-body" id="cityewidget" class="block-body collapse in">
+        {% if cities|length %}
+            <table class="table" >
+              <thead>
+                <tr>
+                    <th>{% trans %}Name{% endtrans %}</th>
+                </tr>
+              </thead>
+                <tbody>
+                {% for city in cities %}
+                    <tr>
+                        <td>{{ city.name }}</td>
+                        {% if is_granted('ROLE_SUPPLIERS') %}
+                            <td><a onclick="return confirm('Are you sure?')" class="btn btn-table-actions"
+                                   href="{{ path('city_contact_delete',{'id':city.id,'contactId':contactId}) }}">{% trans %}Delete{% endtrans %}</a>
+                       <a class = "btn btn-table-actions"  href="{{ path('city_show', { 'id': city.id }) }}">{% trans %} show{% endtrans %}</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+            <div id="cityContactForm" style="display: none">
+                <div id="addCity">
+                    {% if addCityForm %}
+                     {{ form(addCityForm) }}
+            {% endif %}
+                </div>
+            </div>
+            <a class="btn btn-table-actions" href="javascript:void(0);" id="cityContact">{% trans %}Add City{% endtrans %}</a>
+        </div>
+
+
+        </div>
+    </div>
+
+{% endmacro %}

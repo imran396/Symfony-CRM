@@ -1,0 +1,30 @@
+Beon\IntranetBundle\Entity\FacebookLikecount:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\FacebookLikecountRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+
+        date:
+            type: date
+        likecount:
+            type: integer
+        isPosted:
+            type: boolean
+            column: is_posted
+
+    manyToOne:
+        facebookUrl:
+          targetEntity: FacebookUrl
+          inversedBy: facebooklikecounts
+          joinColumn:
+              name: url_id
+              referencedColumnName: id
+              onDelete: "SET NULL"
+
+    lifecycleCallbacks: {  }

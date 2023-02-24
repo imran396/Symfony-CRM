@@ -1,0 +1,25 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+{% form_theme form 'IntranetBundle:Form:cp_form_theme.html.twig' %}
+  <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget"> {% trans %}City creation{% endtrans %}</div>
+
+            <div id="widget1container" class="block-body collapse in">
+                {{ form(form, {'attr':{'class':'form-horizontal' }} ) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path('city') }}">
+                             {% trans %}Back to the list{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

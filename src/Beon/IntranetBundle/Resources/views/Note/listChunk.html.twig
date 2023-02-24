@@ -1,0 +1,22 @@
+{% if entity.notes|length %}
+    {% set entities = entity.notes %}
+
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Notes{% endtrans %}</div>
+            <div id="widget1container" class="block-body collapse in">
+                <div id="tablewidget" class="block-body collapse in">
+                    {% embed "IntranetBundle:Note:indexTable.html.twig" %}
+                        {% block actionsRows %}
+                            <td>
+                                <a class="btn btn-table-actions"
+                                   href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                            </td>
+                        {% endblock %}
+                    {% endembed %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endif %}

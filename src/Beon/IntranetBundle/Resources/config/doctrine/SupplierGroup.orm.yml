@@ -1,0 +1,47 @@
+Beon\IntranetBundle\Entity\SupplierGroup:
+     type: entity
+     table: SupplierGroup
+     repositoryClass: Beon\IntranetBundle\Entity\Repository\SupplierGroupRepository
+     id:
+         id:
+             type: integer
+             nullable: false
+             unsigned: true
+             comment: ''
+             id: true
+             generator: { strategy: AUTO }
+     fields:
+          name:
+              type: string
+              nullable: true
+              length: 255
+              fixed: false
+          frameworkContract:
+              type: boolean
+          discount:
+              type: integer
+          bonusInKind:
+              type: text
+              nullable: true
+              length: null
+              fixed: false
+              comment: ''
+          notes:
+              type: text
+              nullable: true
+              length: null
+              fixed: false
+              comment: ''
+
+     manyToMany:
+        contacts:
+            targetEntity: Contact
+            mappedBy: suppliergroups
+
+     oneToMany:
+          suppliers:
+              targetEntity: Supplier
+              mappedBy: group
+          uploads:
+              targetEntity: Upload
+              mappedBy: supplierGroup

@@ -1,0 +1,62 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block stylesheets %}
+     {{ parent() }}
+     {% stylesheets '@IntranetBundle/Resources/public/lib/flot/flot.css' filter='beon_css_rewriter_filter' %}
+     <link rel="stylesheet" type="text/css" href="{{ asset_url }}">
+     {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+     {{ parent() }}
+     {% javascripts
+     '@IntranetBundle/Resources/public/lib/flot/jquery.flot.js'
+     '@IntranetBundle/Resources/public/lib/flot/jquery.flot.pie.js'
+     '@IntranetBundle/Resources/public/lib/flot/jquery.flot.time.js'
+     '@IntranetBundle/Resources/public/lib/flot/jquery.flot.dashes.js' %}
+     <script type="text/javascript" src="{{ asset_url }}"></script>
+     {% endjavascripts %}
+
+     <script type="text/javascript">
+
+         $(function () {
+             var fblogdata = {{ (fblog is defined) ? fblog | raw  : '[]' }};
+
+             $.plot("#facebookLog", fblogdata, {
+                 xaxis: { mode: "time" },
+                 legend: { position: "nw" }
+             });
+         });
+
+     </script>
+{% endblock %}
+
+{% block customerDashboard %}
+  {% if customerName %}
+    {% if is_granted('ROLE_BUDGETCHART') %}
+        <div class="row-fluid">
+            {% if (piechart) %}
+                {% include 'IntranetBundle:BudgetPeriod:_budgetpiechart.html.twig' %}
+            {% endif %}
+
+            {% if (budgets) %}
+                {% include 'IntranetBundle:Dashboard:_budget.html.twig' %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% include "IntranetBundle:Customer:dateNotesRow.html.twig" %}
+
+    {% if unifiedData %}
+        <div class="row-fluid">
+            {% include 'IntranetBundle:Dashboard:_unifiedlist.html.twig' %}
+        </div>
+    {% endif %}
+
+    {% if fblog !='[]' %}
+        <div class="row-fluid">
+            {% include 'IntranetBundle:Dashboard:_fblog.html.twig' %}
+        </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

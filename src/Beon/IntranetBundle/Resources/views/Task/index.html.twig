@@ -1,0 +1,84 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Task list{% endtrans %}</h1>
+
+    <div class="btn-toolbar">
+        {% if is_granted('ROLE_TASKS_NEW') %}
+            <a href="{{ path('task_new') }}" class="btn" style="margin-right: 50px"><i class="icon-plus"></i> {% trans %}New task{% endtrans %}</a>
+        {% endif %}
+        <div class="btn-group">
+            {{ form_start(userChoiceForm,{'attr':{'id':'userFilter'} }) }}
+            {{ form_widget(userChoiceForm.user,{ 'attr':{'placeholder':'Select a user'|trans} }) }}
+            {{ form_widget(userChoiceForm.stakeholder,{ 'attr':{'placeholder':'Select a stakeholder'|trans} }) }}
+            {{ form_widget(userChoiceForm.submit) }}
+            {{ form_widget(userChoiceForm.clear) }}
+            {{ form_end(userChoiceForm) }}
+        </div>
+
+    </div>
+
+    <div class="well">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs unstyled">
+            <li class="active"><a href="#notStarted" data-toggle="tab">{{ constant(TaskStatusEnum~'NOT_STARTED')|taskStatus }}</a></li>
+            <li><a href="#inProgress" data-toggle="tab">{{ constant(TaskStatusEnum~'IN_PROGRESS')|taskStatus }}</a></li>
+            {% if internalWaitPagesCount > 0 %}
+            <li><a href="#internalWait" data-toggle="tab">{% trans %}Waiting for internal approval{% endtrans %}</a></li>
+            {% endif %}
+            {% if externalWaitPagesCount > 0 %}
+            <li><a href="#externalWait" data-toggle="tab">{% trans %}Waiting for external approval{% endtrans %}</a></li>
+            {% endif %}
+            {% if thirdPartyWaitPagesCount > 0 %}
+            <li><a href="#thirdPartyWait" data-toggle="tab">{% trans %}Waiting for third party{% endtrans %}</a></li>
+            {% endif %}
+            {% if approvedPagesCount > 0 %}
+            <li><a href="#approved" data-toggle="tab">{% trans %}Approved{% endtrans %}</a></li>
+            {% endif %}
+            {% if printingPagesCount > 0 %}
+            <li><a href="#printing" data-toggle="tab">{{ constant(TaskStatusEnum~'PRINTING')|taskStatus }}</a></li>
+            {% endif %}
+            <li><a href="#done" data-toggle="tab">{{ constant(TaskStatusEnum~'DONE')|taskStatus }}</a></li>
+            {% if abortedPagesCount > 0 %}
+            <li><a href="#aborted" data-toggle="tab">{{ constant(TaskStatusEnum~'ABORTED')|taskStatus }}</a></li>
+            {% endif %}
+        </ul>
+
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            {% import "IntranetBundle:Task:indexTabPaneMacro.html.twig" as tabs %}
+            {{ tabs.pane(notStarted,'notStarted','active') }}
+            {{ tabs.pane(inProgress,'inProgress','') }}
+            {{ tabs.pane(internalWait,'internalWait','') }}
+            {{ tabs.pane(externalWait,'externalWait','') }}
+            {{ tabs.pane(thirdPartyWait,'thirdPartyWait','') }}
+            {{ tabs.pane(approved,'approved','') }}
+            {{ tabs.pane(printing,'printing','') }}
+            {{ tabs.pane(done,'done','') }}
+            {{ tabs.pane(aborted,'aborted','') }}
+
+        </div>
+
+
+    </div>
+
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+
+    {{ paginator.pager(notStartedPagesCount,1,'notStarted') }}
+    {{ paginator.pager(inProgressPagesCount,1,'inProgress') }}
+    {{ paginator.pager(internalWaitPagesCount,1,'internalWait') }}
+    {{ paginator.pager(externalWaitPagesCount,1,'externalWait') }}
+    {{ paginator.pager(thirdPartyWaitPagesCount,1,'thirdPartyWait') }}
+    {{ paginator.pager(approvedPagesCount,1,'approved') }}
+    {{ paginator.pager(printingPagesCount,1,'printing') }}
+    {{ paginator.pager(donePagesCount,1,'done') }}
+    {{ paginator.pager(abortedPagesCount,1,'aborted') }}
+
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+
+{% endblock %}

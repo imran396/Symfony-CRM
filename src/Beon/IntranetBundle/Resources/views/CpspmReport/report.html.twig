@@ -1,0 +1,48 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+<h1 class="page-title">{% trans %}CPSPM Report{% endtrans %}</h1>
+
+{{ form_start(form,{'attr':{'id':'cpspmReportFilter'} }) }}
+    {{ form_widget(form.fromDate) }}
+    {{ form_widget(form.toDate) }}
+    {{ form_widget(form.city ,{ 'attr':{'placeholder':'Select a city'|trans}} ) }}
+    {{ form_widget(form.type ,{ 'attr':{'placeholder':'Select a supplier type'|trans}}) }}
+    <span id="frequencyDiv"> {{ form_widget(form.frequency ,{ 'attr':{'placeholder':'Select a frequency'|trans}}) }}</span>
+    {{ form_widget(form.generate) }}
+{{ form_end(form) }}
+
+
+<div class="clear">&nbsp;</div>
+
+<div class="well">
+    {% if data is null %}
+        <p></p>
+    {% elseif data.data is empty %}
+        <p>No records found.</p>
+    {% else %}
+        <div id="tablewidget" class="block-body collapse in">
+        {% include 'IntranetBundle:CpspmReport:reportTable.html.twig' %} 
+        </div>
+    {% endif %}
+    {# <pre>{{ dump(data) }}</pre> #}
+</div>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        if( jQuery('#CpspmReportForm_type').val() != {{ printType }} )
+            jQuery('#frequencyDiv').hide();
+    })
+
+    jQuery('#CpspmReportForm_type').on('change', function(){
+        
+        if ( jQuery(this).val() == {{ printType }} )
+        {
+            jQuery('#frequencyDiv').show();
+        }else
+        {
+            jQuery('#frequencyDiv').hide();
+        }
+    });
+</script>
+{% endblock content %}
+

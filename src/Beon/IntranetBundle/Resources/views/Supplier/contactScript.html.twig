@@ -1,0 +1,173 @@
+<script type="text/javascript">
+    (function ($) {
+        var offerTypeSelect = $('#form_offerType');
+        var includedServicesSelect = $('#form_includedServices');
+        var printGroup = $('#form_numberOfAds, #form_readers').parent().parent();
+        var printAddSize = $('#supplier_pagesize');
+        var radioAndTvGroup = $('#form_numberOfSeconds').parent().parent();
+        var tv = $('#form_viewers').parent().parent();
+        var online = $('#form_visitors').parent().parent();
+        var radio = $('#form_listeners').parent().parent();
+        var other = $('#form_audienceSize').parent().parent();
+        var includedServicesOther = $('#form_includedServicesOther').parent().parent();
+
+        offerTypeSelect.change(function () {
+            if (offerTypeSelect.val() == {{ constant(SupplierTypesEnum~'OnlineType') }}) {
+                online.show();
+                radioAndTvGroup.hide();
+                printGroup.hide();
+                printAddSize.hide();
+                tv.hide();
+                radio.hide();
+                other.hide();
+            } else if (offerTypeSelect.val() == {{ constant(SupplierTypesEnum~'RadioType') }}) {
+                online.hide();
+                radioAndTvGroup.show();
+                printGroup.hide();
+                printAddSize.hide();
+                tv.hide();
+                radio.show();
+                other.hide();
+            } else if (offerTypeSelect.val() == {{ constant(SupplierTypesEnum~'PrintType') }}) {
+                online.hide();
+                radioAndTvGroup.hide();
+                printAddSize.show();
+                printGroup.show();
+                tv.hide();
+                radio.hide();
+                other.hide();
+            } else if (offerTypeSelect.val() == {{ constant(SupplierTypesEnum~'TvType') }}) {
+                online.hide();
+                radioAndTvGroup.show();
+                printGroup.hide();
+                printAddSize.hide();
+                tv.show();
+                radio.hide();
+                other.hide();
+            } else {
+                online.hide();
+                radioAndTvGroup.hide();
+                printGroup.hide();
+                printAddSize.hide();
+                tv.hide();
+                radio.hide();
+                other.show();
+            }
+        }).change();
+
+        includedServicesSelect.change(function () {
+            if (includedServicesSelect.val() == {{ constant(CampaignIncludedServicesEnum~'NONE') }}) {
+                includedServicesOther.hide();
+            } else {
+                includedServicesOther.show();
+            }
+        }).change();
+
+        $('#contactForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: false,
+            fields: {
+                'form[supplierName]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The supplier name is required and cannot be empty'
+                        }
+                    }
+                },
+
+                'form[supplierEmail]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The email address is required and cannot be empty'
+                        }
+                    }
+                },
+
+
+                'form[offerValidTill]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The offer duration is required and cannot be empty'
+                        }
+                    }
+                },
+
+                'form[price]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The price is required and cannot be empty'
+                        }
+                    }
+                },
+
+                'form[priceRegular]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The regular price is required and cannot be empty'
+                        }
+                    }
+                },
+
+                'form[offerPeriodStart]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The offer period start is required and cannot be empty'
+                        },
+                        callback: {
+                            message: 'Start date must be smaller than end date Or select again ',
+                            callback: function (value, validator) {
+                                var EndDate = jQuery('#form_offerPeriodEnd').val();
+                                if (EndDate) {
+                                    if (EndDate > value) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                } else {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                },
+
+                'form[offerPeriodEnd]': {
+                    validators: {
+                        notEmpty: {
+                            message: 'The offer period end is required and cannot be empty'
+                        },
+                        callback: {
+                            message: 'End date must be greater than start date or select again',
+                            callback: function (value, validator) {
+
+                                var startDate = jQuery('#form_offerPeriodStart').val();
+                                if (startDate) {
+                                    if (startDate < value) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                } else {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        })
+        
+        $('#form_offerValidTill').blur(function() {
+            $('#contactForm').bootstrapValidator('revalidateField', $(this));
+        });
+        
+        $('#form_offerPeriodStart, #form_offerPeriodEnd').blur(function() {
+            if ($('#form_offerPeriodStart').val()) $('#contactForm').bootstrapValidator('revalidateField', $('#form_offerPeriodStart'));
+            if ($('#form_offerPeriodEnd').val()) $('#contactForm').bootstrapValidator('revalidateField', $('#form_offerPeriodEnd'));
+        });
+
+    })(jQuery);
+
+
+</script>

@@ -1,0 +1,48 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    
+    <h1 class="page-title">{% trans %}Campaigns{% endtrans %}</h1>
+
+    <div class="btn-toolbar">
+	{% if is_granted('ROLE_CAMPAIGNS_ALL') %}
+	    <a href="{{ path('campaign_new') }}" class="btn"><i class="icon-plus"></i>{% trans %}New campaign{% endtrans %}</a>
+	{% endif %}
+	{{filterForm|raw}}
+    </div>
+    
+    <div class="well">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs unstyled">
+            <li class="active"><a href="#running" data-toggle="tab">{% trans %}Running{% endtrans %}</a></li>
+            <li><a href="#unapproved" data-toggle="tab">{% trans %}Unapproved{% endtrans %}</a></li>
+            <li><a href="#archived" data-toggle="tab">{% trans %}Archive{% endtrans %}</a></li>
+            <li><a href="#future" data-toggle="tab">{% trans %}Future{% endtrans %}</a></li>
+            <li><a href="#denied" data-toggle="tab">{% trans %}Denied{% endtrans %}</a></li>
+            <li><a href="#deleted" data-toggle="tab">{% trans %}Aborted{% endtrans %}</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            {% import "IntranetBundle:Campaign:indexTabPaneMacro.html.twig" as tabs %}
+            {{ tabs.pane(running,'running','active') }}
+            {{ tabs.pane(unapproved,'unapproved','') }}
+            {{ tabs.pane(archived,'archived','') }}
+            {{ tabs.pane(future,'future','') }}
+            {{ tabs.pane(denied,'denied','') }}
+            {{ tabs.pane(deleted,'deleted','') }}
+        </div>
+    </div>
+    
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+
+    {{ paginator.pager(runningPagesCount,1,'running') }}
+    {{ paginator.pager(unapprovedPagesCount,1,'unapproved') }}
+    {{ paginator.pager(archivedPagesCount,1,'archived') }}
+    {{ paginator.pager(futurePagesCount,1,'future') }}
+    {{ paginator.pager(deniedPagesCount,1,'denied') }}
+    {{ paginator.pager(deletedPagesCount,1,'deleted') }}
+
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+
+{% endblock content %}

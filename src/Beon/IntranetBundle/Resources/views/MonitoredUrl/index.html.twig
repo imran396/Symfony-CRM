@@ -1,0 +1,48 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Monitored Url{% endtrans %}</h1>
+    
+    <div class="btn-toolbar">
+        
+        <a href="{{ path('monitoredurl_new') }}" class="btn"><i class="icon-plus"></i> {% trans %}New monitored url{% endtrans %}</a>
+	
+	{{filterForm|raw}}
+	
+    </div>
+    
+    <div class="well">
+	    <!-- Nav tabs -->
+	    <ul class="nav nav-tabs unstyled">
+	        <li class="active"><a href="#ownUrl" data-toggle="tab">{% trans %}Own Urls{% endtrans %}</a></li>
+	        <li><a href="#otherUrl" data-toggle="tab">{% trans %}Other Urls{% endtrans %}</a></li>
+	    </ul>
+	
+	    <!-- Tab panes -->
+	    <div class="tab-content">
+	        {% import "IntranetBundle:MonitoredUrl:indexTabPaneMacro.html.twig" as tabs %}
+	        {{ tabs.pane(ownUrl,'ownUrl','active') }}
+	        {{ tabs.pane(otherUrl,'otherUrl','') }}
+	    </div>
+    </div>
+    
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+    {{ paginator.pager(ownUrlPageCount,1,'ownUrl') }}
+    {{ paginator.pager(otherUrlPageCount,1,'otherUrl') }}
+
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+
+<script>
+    $(function () {
+        $(document).on("click", "a.markdone", function (e) {
+            e.preventDefault();
+            var button = $(this);
+            $.ajax($(this).attr('href')).done(function (data) {
+                button.attr('disabled', true).closest('td').prev().text(data);
+            });
+        });
+    });
+</script>
+{% endblock content %}
+

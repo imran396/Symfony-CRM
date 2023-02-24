@@ -1,0 +1,21 @@
+enumvalue:
+    path:     /
+    defaults: { _controller: "IntranetBundle:EnumValue:index" }
+
+enumvalue_show:
+    path:     /{id}/show
+    defaults: { _controller: "IntranetBundle:EnumValue:show" }
+
+enumvalue_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "IntranetBundle:EnumValue:edit" }
+
+enumvalue_update:
+    path:     /{id}/update
+    defaults: { _controller: "IntranetBundle:EnumValue:update" }
+    requirements: { _method: post|put }
+
+enumvalue_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "IntranetBundle:EnumValue:delete" }
+    requirements: { _method: post|delete }

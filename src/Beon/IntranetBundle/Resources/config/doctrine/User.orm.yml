@@ -1,0 +1,63 @@
+Beon\IntranetBundle\Entity\User:
+    type: entity
+    table: User
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\UserRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        displayName:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        password:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        group:
+            column: grp
+            type: integer
+            nullable: true
+            default: 0
+    manyToOne:
+        customer:
+            targetEntity: Customer
+            inversedBy: users
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        accessLevel:
+            targetEntity: AccessLevel
+            inversedBy: users
+            joinColumn:
+                nullable: false
+                name: access_level_id
+                referencedColumnName: id
+                onDelete: "RESTRICT"
+    uniqueConstraints:
+        name:
+            columns: [name]
+
+    lifecycleCallbacks: {  }

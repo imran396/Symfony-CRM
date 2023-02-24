@@ -1,0 +1,51 @@
+{% macro modal(namespace, header, default, url, placeholder, default2) %}
+    <div class="modal small hide fade" id="{{namespace}}Modal" role="dialog">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3>{{ header|trans }}</h3>
+        </div>
+        <div class="modal-body">
+            <textarea data-post="text" style="width: 289px; height: {%if default2 %}25{% else %}100{% endif %}px;" placeholder="{{ placeholder|trans|trim }}">{{ default|trans }}</textarea>
+            {%if default2 %}
+            <textarea data-post="text2" style="width: 289px; height: 100px;">{{ default2|trans }}</textarea>
+            {% endif %}
+        </div>
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+            <button class="btn btn-danger" data-dismiss="sendAction">{% trans %}Send{% endtrans %}</button>
+        </div>
+    </div>
+
+    {% if namespace != 'submitPressrelease' %}
+    <script type="text/javascript">
+        jQuery(function ($) {
+            var modal = $('#{{namespace}}Modal');
+            var button = $('#{{namespace}}Button').removeClass('hidden');
+
+            button.click(function(e) {
+                e.preventDefault();
+                modal.modal('show');
+            });
+
+            modal.find('[data-dismiss="sendAction"]').click(function () {
+                modal.modal('hide');
+                var post = {};
+                $('textarea', modal).each(function() {
+                  post[$(this).data('post')] = $(this).val();
+                });
+                $.ajax({
+                    type: "POST",
+                    url: {% if url %}{{ url|json_encode|raw }}{% else %}button.attr('href'){% endif %},
+                    data: post,
+                    statusCode: {
+                        200: function () {
+                            console.log('done');
+                            location.reload();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    {% endif %}
+{% endmacro %}

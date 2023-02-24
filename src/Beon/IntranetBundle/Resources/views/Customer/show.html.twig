@@ -1,0 +1,601 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row-fluid">
+
+    <div class="block span6">
+    <div class="block-heading" data-toggle="collapse"
+        >{{ entity.level|customerLevel|trans }}</div>
+    <div class="block-body collapse in">
+    <h2>{{ entity }}</h2>
+
+    <div id="tablewidget" class="block-body collapse in">
+    <table class="table table-bordered">
+    <tbody>
+
+    {% if parentLevel is not null and entity.parent.name is defined and entity.parent.name is not empty  %}
+        <tr>
+            <th>{{ parentLevel|customerLevel|trans }}</th>
+            <td>
+                <a href="{{ path('customer_show', { 'id': entity.parent.id }) }}">{{ entity.parent.name }}</a>
+
+            </td>
+        </tr>
+    {% endif %}
+
+
+    {% if entity.level == 4 %}
+       {% if entity.cooperationType %}
+        <tr>
+            <th>{% trans %}Cooperation type{% endtrans %}</th>
+            <td>{{ entity.cooperationType }}</td>
+        </tr>
+        {% endif %}
+    {% endif %}
+
+    {% if entity.level == 3 %}
+        <tr>
+            <th>{% trans %}Fixed date{% endtrans %}</th>
+            <td>{{ entity.fixedDate|bool|trans }}</td>
+        </tr>
+    {% else %}
+        {% if entity.address %}
+        <tr>
+            <th>{% trans %}Address{% endtrans %}</th>
+            <td>{{ entity.address }}</td>
+
+        </tr>
+        {% endif %}
+       {% if entity.contactname %}
+        <tr>
+            <th>{% trans %}Contact name{% endtrans %}</th>
+            <td>{{ entity.contactname }}</td>
+        </tr>
+        {% endif %}
+    {% endif %}
+
+    {% if entity.level == 2 or entity.level == 4 %}
+        {% if entity.contactphone %}
+        <tr>
+            <th>{% trans %}Contact phone{% endtrans %}</th>
+            <td>{{ entity.contactphone }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.contactmobile %}
+        <tr>
+            <th>{% trans %}Contact mobile{% endtrans %}</th>
+            <td>{{ entity.contactmobile }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.contactemail %}
+        <tr>
+            <th>{% trans %}Contact email{% endtrans %}</th>
+            <td>{{ entity.contactemail }}</td>
+        </tr>
+        {% endif %}
+    {% endif %}
+
+    {% if entity.contractstart %}
+        <tr>
+            <th>{% trans %}Contract start{% endtrans %}</th>
+            <td>
+                {{ entity.contractstart|date(defaultDateFormat) }}
+
+            </td>
+        </tr>
+    {% endif %}
+
+     {% if entity.contractend  %}
+        <tr>
+            <th>{% trans %}Contract end{% endtrans %}</th>
+            <td>
+
+                    {{ entity.contractend|date(defaultDateFormat) }}
+
+            </td>
+        </tr>
+
+    {% endif %}
+
+    {% if entity.level == 2 %}
+    {% if entity.contactBirthday   %}
+        <tr>
+            <th>{% trans %}Contact birthday{% endtrans %}</th>
+            <td>
+                    {{ entity.contactBirthday|date(defaultDateFormat) }}
+
+            </td>
+        </tr>
+       {% endif %}
+     {% if entity.city  %}
+       <tr>
+            <th>{% trans %}City{% endtrans %}</th>
+            <td>
+                    {{ entity.city }}
+            </td>
+        </tr>
+       {% endif %}
+    {% endif %}
+
+
+    {% if entity.level in [2,3,4] and entity.note  %}
+
+        <tr>
+            <th>{% trans %}Note{% endtrans %}</th>
+            <td>{{ entity.note }}</td>
+        </tr>
+
+    {% endif %}
+
+    {% if entity.level in [4] and entity.discountInfo  %}
+        <tr>
+            <th>{% trans %}Discount info{% endtrans %}</th>
+            <td>{{ entity.discountInfo }}</td>
+        </tr>
+    {% endif %}
+
+
+    {% if entity.level == 2 %}
+        {% if entity.monday  %}
+        <tr>
+            <th>{% trans %}Monday{% endtrans %}</th>
+            <td>{{ entity.monday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.tuesday  %}
+        <tr>
+            <th>{% trans %}Tuesday{% endtrans %}</th>
+            <td>{{ entity.tuesday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.wednesday %}
+        <tr>
+            <th>{% trans %}Wednesday{% endtrans %}</th>
+            <td>{{ entity.wednesday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.thursday %}
+        <tr>
+            <th>{% trans %}Thursday{% endtrans %}</th>
+            <td>{{ entity.thursday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.friday %}
+        <tr>
+            <th>{% trans %}Friday{% endtrans %}</th>
+            <td>{{ entity.friday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.saturday %}
+        <tr>
+            <th>{% trans %}Saturday{% endtrans %}</th>
+            <td>{{ entity.saturday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.sunday %}
+        <tr>
+            <th>{% trans %}Sunday{% endtrans %}</th>
+            <td>{{ entity.sunday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.holiday %}
+        <tr>
+            <th>{% trans %}Holiday{% endtrans %}</th>
+            <td>{{ entity.holiday }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.daily %}
+        <tr>
+            <th>{% trans %}Daily{% endtrans %}</th>
+            <td>{{ entity.daily }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.irregular %}
+        <tr>
+            <th>{% trans %}Irregular{% endtrans %}</th>
+            <td>{{ entity.irregular }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.christmasEve %}
+        <tr>
+            <th>{% trans %}Christmas eve{% endtrans %}</th>
+            <td>{{ entity.christmasEve }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.christmasDay %}
+        <tr>
+            <th>{% trans %}Christmas day{% endtrans %}</th>
+            <td>{{ entity.christmasDay }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.boxingDay %}
+        <tr>
+            <th>{% trans %}Boxing day{% endtrans %}</th>
+            <td>{{ entity.boxingDay }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.newYearsEve %}
+        <tr>
+            <th>{% trans %}New years eve{% endtrans %}</th>
+            <td>{{ entity.newYearsEve }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.newYearsDay %}
+        <tr>
+            <th>{% trans %}New years day{% endtrans %}</th>
+            <td>{{ entity.newYearsDay }}</td>
+        </tr>
+        {% endif %}
+        {% if entity.postingInfo  %}
+        <tr>
+            <th>{% trans %}Posting info{% endtrans %}</th>
+            <td>{{ entity.postingInfo }}</td>
+        </tr>
+        {% endif %}
+
+
+        <tr>
+            <th>{% trans %}Internet permission{% endtrans %}</th>
+            <td>
+                {{ entity.internetPermission|bool|trans }}
+            </td>
+        </tr>
+
+        {% if entity.checkWebsite  %}
+        <tr>
+            <th>{% trans %}Check website{% endtrans %}</th>
+            <td>
+                {% if entity.checkWebsite %}
+                    {{ entity.checkWebsite|date(defaultDateFormat) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if entity.checkCityPage   %}
+        <tr>
+            <th>{% trans %}Check city page{% endtrans %}</th>
+            <td>
+                {% if entity.checkCityPage %}
+                    {{ entity.checkCityPage|date(defaultDateFormat) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if entity.lastFbPrivatePost %}
+        <tr>
+            <th>{% trans %}Last fb private post{% endtrans %}</th>
+            <td>
+                {% if entity.lastFbPrivatePost %}
+                    {{ entity.lastFbPrivatePost|date(defaultDateFormat) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+        {% if entity.lastVisit %}
+        <tr>
+            <th>{% trans %}Last visit{% endtrans %}</th>
+            <td>
+                    {{ entity.lastVisit|date(defaultDateFormat) }}
+            </td>
+        </tr>
+        {% endif %}
+
+        {% if entity.cocktailCasino %}
+        <tr>
+            <th>Premiere Cocktail Casino</th>
+            <td>
+
+                    {{ entity.cocktailCasino|date(defaultDateFormat) }}
+
+            </td>
+        </tr>
+         {% endif %}
+        {% if entity.ladiesNight  %}
+        <tr>
+            <th>Premiere Ladies Night</th>
+            <td>
+                    {{ entity.ladiesNight|date(defaultDateFormat) }}
+            </td>
+        </tr>
+        {% endif %}
+        {% if entity.nightlounge %}
+        <tr>
+            <th>Premiere Nightlounge</th>
+            <td>
+                {% if entity.nightlounge %}
+                    {{ entity.nightlounge|date(defaultDateFormat) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+
+       {% if entity.fajitaDay  %}
+        <tr>
+            <th>Premiere Fajita Day</th>
+            <td>
+                {% if entity.fajitaDay %}
+                    {{ entity.fajitaDay|date(defaultDateFormat) }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endif %}
+
+        <tr>
+            <th>{% trans %}Invoices to beon{% endtrans %}</th>
+            <td>
+                {{ entity.invoicesToBeon|bool|trans }}
+            </td>
+        </tr>
+
+        {% if entity.paymentMethod   %}
+        <tr>
+            <th>{% trans %}Payment method{% endtrans %}</th>
+             <td>
+                {{ entity.paymentMethod|stakeholderPaymentType }}
+            </td>
+        </tr>
+        {% endif %}
+
+    {% endif %}
+
+    </tbody>
+    </table>
+    </div>
+    
+    <div class="inline-forms">
+        {% if is_granted('ROLE_STAKEHOLDERS_EDIT') %}    
+            <a class="btn btn-table-actions" href="{{ path('customer_edit', { 'id': entity.id }) }}">
+                {% trans %}Edit{% endtrans %}
+            </a>
+        {% endif %}
+        {% if is_granted('ROLE_STAKEHOLDERS_ALL') %} 
+            {{ form(delete_form) }}
+        {% endif %}
+    </div>
+
+    {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+        <div class="inline-forms">
+            {% if is_granted('ROLE_CAMPAIGNS_ALL') %}
+                {{ form(create_campaign_form) }}
+            {% endif %}
+
+            {% if is_granted('ROLE_NOTES_ALL') %}
+                {{ form(create_note_form) }}
+            {% endif %}
+
+            {% if is_granted('ROLE_PRESSRELEASES_ALL') %}
+                {{ form(create_pressrelease_form) }}
+            {% endif %}
+
+            {% if is_granted('ROLE_USERS') %}
+                <a class="btn btn-table-actions"
+                   href="{{ path('customer_new_related', { 'id': entity.id, 'name':'user' }) }}">
+                    {% trans %}Create user{% endtrans %}
+                </a>
+            {% endif %}
+
+            {% if is_granted('ROLE_COMPLAINTS_ALL') %}
+                <a class="btn btn-table-actions"
+                   href="{{ path('customer_new_related', { 'id': entity.id, 'name':'complaint' }) }}">
+                   {% trans %}Create complaint{% endtrans %}
+                </a>
+            {% endif %}
+
+            {% if is_granted('ROLE_TASKS_NEW') %}
+                <a class="btn btn-table-actions"
+                   href="{{ path('customer_new_related', { 'id': entity.id, 'name':'task' }) }}">
+                    {% trans %}Create task{% endtrans %}
+                </a>
+            {% endif %}
+
+            {% if is_granted('ROLE_MONITOREDURL') %}
+                <a class="btn btn-table-actions"
+                   href="{{ path('customer_new_related', { 'id': entity.id, 'name':'monitoredurl' }) }}">
+                    {% trans %}Add monitored url{% endtrans %}
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div>
+        {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+            <a href="{{ path('IntranetBundle_CustomerDashboard', { 'id': entity.id }) }}">
+                {% trans %}Stakeholder Dashboard{% endtrans %}
+            </a><br/>
+        {% endif %}
+        {% if is_granted('ROLE_STAKEHOLDERS_LIST') %}
+            <a href="{{ path('customer_level',{'level':entity.Level}) }}">
+                {% trans %}Back to the list{% endtrans %}
+            </a>
+        {% endif %}
+    </div>
+    </div>
+
+    </div>
+
+    {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+        {% import "IntranetBundle:Macroses:budgetPeriodMacro.html.twig" as list %}
+        {{ list.budgetList(entity.budgetPeriods,true,addBudgetWithForm,'span6') }}
+        {% import "IntranetBundle:Macroses:uploadFileMacro.html.twig" as upload %}
+        {{ upload.template(entity,'customer') }}
+    {% endif %}
+
+    {% if entity.contacts is defined and entity.contacts |length > 0 %}
+        <div class="block span6">
+                <div class="block-heading" data-toggle="collapse" data-target="#contactcontainer">{% trans %}Contacts{% endtrans %}</div>
+
+                <div id="contactcontainer" class="block-body collapse in">
+
+                    <div id="tablewidget" class="block-body collapse in">
+                        {% set entities = entity.contacts %}
+
+                        {% embed "IntranetBundle:Contact:indexTable.html.twig" %}
+                            {% block actionsRows %}
+
+                                    <a class="btn btn-table-actions"
+                                       href="{{ path('contact_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+
+                            {% endblock %}
+                        {% endembed %}
+
+                    </div>
+                </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% include "IntranetBundle:Customer:dateNotesRow.html.twig" %}
+
+    {% if is_granted('ROLE_FACEBOOKURLS') and facebookUrls is defined and facebookUrls|length > 0 %}
+        <div class="row-fluid">
+            {% import "IntranetBundle:Macroses:customerFacebookUrlMacro.html.twig" as list %}
+            {{ list.fbUrlList(facebookUrls) }}
+
+        </div>
+    {% endif %}
+
+    {% if is_granted('ROLE_MONITOREDURLS') and monitoredUrls is defined and monitoredUrls|length > 0 %}
+    <div class="row-fluid">
+        {% import "IntranetBundle:Macroses:customerMonitoredUrlMacro.html.twig" as list %}
+        {{ list.monitoredUrlList(monitoredUrls) }}
+    </div>
+    {% endif %}
+
+    <div class="row-fluid">
+        {% if is_granted('ROLE_TASKS_ALL') and tasks|length > 0 %}
+            {% import "IntranetBundle:Macroses:taskListMacro.html.twig" as taskList %}
+            {{ taskList.template(tasks) }}
+        {% endif %}
+
+        {% if is_granted('ROLE_NOTES_ALL') and notes|length > 0 %}
+            <div class="block">
+                <div class="block-heading" data-toggle="collapse">{% trans %}Notes{% endtrans %}</div>
+
+                <div class="block-body collapse in">
+
+                    <div id="tablewidget" class="block-body collapse in">
+                        {% set entities = notes %}
+
+                        {% embed "IntranetBundle:Note:indexTable.html.twig" %}
+                            {% block actionsRows %}
+                                <td>
+                                    <a class="btn btn-table-actions"
+                                       href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                                </td>
+                            {% endblock %}
+                            {% block actionsHeader %}
+                                <th>{% trans %}Actions{% endtrans %}</th>
+                            {% endblock %}
+                        {% endembed %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_PRESSRELEASES_ALL') and presreleases|length > 0 %}
+            <div class="block">
+                <div class="block-heading" data-toggle="collapse">{% trans %}Press releases{% endtrans %}</div>
+
+                <div class="block-body collapse in">
+
+                    <div id="tablewidget" class="block-body collapse in">
+                        {% set entities = presreleases %}
+
+                        {% embed "IntranetBundle:Pressrelease:indexTable.html.twig" %}
+                            {% block actionsRows %}
+                                <td>
+                                    <a class="btn btn-table-actions"
+                                       href="{{ path('pressrelease_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                                </td>
+
+                            {% endblock %}
+                            {% block actionsHeader %}
+                                <th>{% trans %}Actions{% endtrans %}</th>
+                            {% endblock %}
+                        {% endembed %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_CAMPAIGNS_ALL') and campaigns|length > 0 %}
+            <div class="block">
+                <div class="block-heading" data-toggle="collapse">{% trans %}Campaigns{% endtrans %}</div>
+
+                <div class="block-body collapse in">
+
+                    <div id="tablewidget" class="block-body collapse in">
+                        {% set entities = campaigns %}
+
+                        {% embed "IntranetBundle:Campaign:indexTable.html.twig" %}
+                            {% block actionsRows %}
+                                <td>
+                                    <a class="btn btn-table-actions"
+                                       href="{{ path('campaign_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                                </td>
+                            {% endblock %}
+                            {% block actionsHeader %}
+                                <th>{% trans %}Actions{% endtrans %}</th>
+                            {% endblock %}
+                        {% endembed %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if is_granted('ROLE_COMPLAINTS_ALL') and entity and entity.complaints and entity.complaints|length > 0 %}
+            <div class="block">
+                <div class="block-heading" data-toggle="collapse">{% trans %}Complaints{% endtrans %}</div>
+
+                <div class="block-body collapse in">
+
+                    <div id="tablewidget" class="block-body collapse in">
+                        {% set entities = entity.complaints %}
+
+                        {% embed "IntranetBundle:Complaint:indexTable.html.twig" with {'flavor': 'status'} %}
+                            {% block actionsRows %}
+                                <td>
+                                    <a class="btn btn-table-actions"
+                                       href="{{ path('complaint_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+                                </td>
+                            {% endblock %}
+                            {% block actionsHeader %}
+                                <th>{% trans %}Actions{% endtrans %}</th>
+                            {% endblock %}
+                        {% endembed %}
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    {% import "IntranetBundle:Macroses:stakeHolderChildrenMacro.html.twig" as macro %}
+    {% if stakeHolder.affilicationType is defined and stakeHolder.affilicationType|length > 0 %}
+        <div class="row-fluid">
+            {{ macro.entitiesIndex(stakeHolder.affilicationType,'Affiliation types') }}
+        </div>
+    {% endif %}
+    {% if stakeHolder.customer is defined and stakeHolder.customer|length > 0 %}
+        <div class="row-fluid">
+            {{ macro.entitiesIndex(stakeHolder.customer,'Customers') }}
+        </div>
+    {% endif %}
+    {% if stakeHolder.project is defined and stakeHolder.project|length > 0 %}
+        <div class="row-fluid">
+            {{ macro.entitiesIndex(stakeHolder.project,'Projects') }}
+        </div>
+    {% endif %}
+    {% if stakeHolder.cooperation is defined and stakeHolder.cooperation|length > 0 %}
+        <div class="row-fluid">
+            {{ macro.entitiesIndex(stakeHolder.cooperation,'Cooperations') }}
+        </div>
+    {% endif %}
+
+
+
+{% endblock %}

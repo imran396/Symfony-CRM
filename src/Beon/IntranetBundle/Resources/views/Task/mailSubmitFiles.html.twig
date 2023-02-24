@@ -1,0 +1,14 @@
+Sehr geehrte Damen und Herren,
+
+hiermit senden wir Ihnen die Links zu den Druckunterlagen zur Bestellung {{ task.campaign.id }} von {{ task.campaign.customer.name }}.
+
+{% for link in links %}
+    <a href="{{ link.href }}">{{ link.filename }}</a>
+{% endfor %}
+
+Falls die Druckunterlagen nicht den gewünschten Bedingungen entsprechen senden Sie uns bitte umgehend eine Email an info@beon-communications.de.
+
+
+Vielen Dank.
+
+{{ sender.getClosing() }}

@@ -1,0 +1,52 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+	<div class="row-fluid">
+		<div class="block span12">
+			<div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Monitored Url{% endtrans %}</div>
+			<div id="widget1container" class="block-body collapse in">
+				<div id="tablewidget" class="">{#block-body collapse in#}
+					<table class="table table-bordered">
+						<tbody>
+							<tr>
+								<th>{% trans %}Stakeholder{% endtrans %}</th>
+								<td><a href="{{ path('customer_show', { 'id': entity.customer.id }) }}">{{ entity.customer }}</a></td>
+							</tr>
+							<tr>
+								<th>{% trans %}Url{% endtrans %}</th>
+								<td><a target="_blank" href="{{ entity.url }}">{{ entity.url|truncate(50) }}</a></td>
+							</tr>
+							<tr>
+								<th>{% trans %}Is own website{% endtrans %}</th>
+								<td>{{ entity.isOwnWebsite|bool|trans }}</td>
+							</tr>
+							<tr>
+								<th>{% trans %}Lastcheck{% endtrans %}</th>
+								<td>{{ entity.lastCheck|date('d.m.Y H:i') }}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="inline-forms">
+					<a class="btn btn-table-actions" href="{{ path('monitoredurl_edit', { 'id': entity.id }) }}">
+						{% trans %} Edit{% endtrans %}
+					</a>
+					{{ form(delete_form) }}
+          <a class="btn btn-table-actions markdone" href="{{ path('monitoredurl_postednow', { 'id': entity.id }) }}">{% trans %}mark done{% endtrans %}</a>
+				</div>
+                                <div class="inline-forms mb10">
+					<a class="btn btn-table-actions" href="{{ path('monitoredurl_new_related', { 'id': entity.id, 'name':'complaint' }) }}">
+						{% trans %}Create complaint{% endtrans %}
+					</a>
+					<a class="btn btn-table-actions" href="{{ path('note_new', { 'monitoredUrl': entity.id }) }}">
+						{% trans %}Create Note{% endtrans %}
+					</a>			
+				</div>
+			</div>
+		</div>
+	</div>
+
+    {% include 'IntranetBundle:Note:listChunk.html.twig' %}
+    {% include 'IntranetBundle:MonitoredUrl:logList.html.twig' %}
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock %}

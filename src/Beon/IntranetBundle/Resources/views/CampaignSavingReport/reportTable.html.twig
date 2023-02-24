@@ -1,0 +1,14 @@
+<table class="table">
+    <tr>
+        <th width="50%">Customer Name</th>
+        <th width="25%">Total Budget</th>
+        <th width="25%">Total Regular Price</th>
+    </tr>
+{% for customer in data %}
+ <tr>
+    <td>{{ customer.name }}</td>
+    <td>{{ customer.totalBudget|number_format(2,'.',',') }}</td>
+    <td>{{ customer.totalPrice|number_format(2,'.',',') }}</td>
+ </tr>
+{% endfor %}
+</table>

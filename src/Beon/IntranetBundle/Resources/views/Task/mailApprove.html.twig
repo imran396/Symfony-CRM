@@ -1,0 +1,17 @@
+Sehr geehrter Kunde,
+
+der Grafik-Auftrag "{{ entity }}" wurde bearbeitet und liegt zur Freigabe vor.
+
+<a href="{{ link }}">{{ link }}</a>
+
+{% if link_campaign %}
+    Der Auftrag gehört zur Kampagne "<a href="{{ link_campaign }}">{{ entity.campaign }}</a>".
+
+{% endif%}
+Bitte erteilen Sie zeitnah die Freigabe oder teilen Sie uns Änderungswünsche mit.
+
+
+{{ sender.getClosing() }}
+
+Wie können wir Ihnen helfen?
+<a href="http://www.beon-support.de/">www.beon-support.de</a>

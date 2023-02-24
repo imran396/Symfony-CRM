@@ -1,0 +1,251 @@
+Beon\IntranetBundle\Entity\Customer:
+    type: entity
+    table: Customer
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\CustomerRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        level:
+            type: smallint
+            unsigned: true
+        name:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+        address:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        contactname:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: contactName
+        contactphone:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: contactPhone
+        contactmobile:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: contactMobile
+        contactemail:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+            comment: ''
+            column: contactEmail
+        contractstart:
+            type: date
+            nullable: true
+            comment: ''
+            column: contractStart
+        contractend:
+            type: date
+            nullable: true
+            comment: ''
+            column: contractEnd
+        contactBirthday:
+            type: date
+            nullable: true
+            comment: ''
+            column: contactBirthday
+        note:
+            type: text
+            nullable: true
+        discountInfo:
+            type: text
+            nullable: true
+        cocktailCasino:
+            type: date
+            nullable: true
+            comment: ''
+            column: cocktailCasino
+        ladiesNight:
+            type: date
+            nullable: true
+            comment: ''
+            column: ladiesNight
+        nightlounge:
+            type: date
+            nullable: true
+            comment: ''
+            column: nightlounge
+        fajitaDay:
+            type: date
+            nullable: true
+            comment: ''
+            column: fajitaDay
+        fixedDate:
+            type: boolean
+            nullable: false
+
+
+# Additional text fields
+
+        monday:
+            type: string
+            nullable: true
+            length: 255
+        tuesday:
+            type: string
+            nullable: true
+            length: 255
+        wednesday:
+            type: string
+            nullable: true
+            length: 255
+        thursday:
+            type: string
+            nullable: true
+            length: 255
+        friday:
+            type: string
+            nullable: true
+            length: 255
+        saturday:
+            type: string
+            nullable: true
+            length: 255
+        sunday:
+            type: string
+            nullable: true
+            length: 255
+        holiday:
+            type: string
+            nullable: true
+            length: 255
+        daily:
+            type: text
+            nullable: true
+            length: 255
+        irregular:
+            type: string
+            nullable: true
+            length: 255
+        christmasEve:
+            type: string
+            nullable: true
+            length: 255
+        christmasDay:
+            type: string
+            nullable: true
+            length: 255
+        boxingDay:
+            type: string
+            nullable: true
+            length: 255
+        newYearsEve:
+            type: string
+            nullable: true
+            length: 255
+        newYearsDay:
+            type: string
+            nullable: true
+            length: 255
+        internetPermission:
+            type: boolean
+        postingInfo:
+            type: string
+            nullable: true
+            length: 255
+
+# Additional date text fields
+
+        checkWebsite:
+            type: date
+            nullable: true
+        checkCityPage:
+            type: date
+            nullable: true
+        lastFbPrivatePost:
+            type: date
+            nullable: true
+        lastVisit:
+            type: date
+            nullable: true
+        invoicesToBeon:
+            type: boolean
+        paymentMethod:
+            type: smallint
+
+    manyToMany:
+        contacts:
+            targetEntity: Contact
+            mappedBy: customers
+    manyToOne:
+        parent:
+            targetEntity: Customer
+            joinColumn:
+                name: parent_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        city:
+            targetEntity: City
+            joinColumn:
+                name: city_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        cooperationType:
+            targetEntity: EnumValue
+            joinColumn:
+                name: cooperationType
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+
+    oneToMany:
+        users:
+            targetEntity: User
+            mappedBy: customer
+        campaigns:
+            targetEntity: Campaign
+            mappedBy: customer
+        pressReleases:
+            targetEntity: Pressrelease
+            mappedBy: customer
+        monitoredUrl:
+            targetEntity: MonitoredUrl
+            mappedBy: customer
+        notes:
+            targetEntity: Note
+            mappedBy: customer
+        budgetPeriods:
+            targetEntity: BudgetPeriod
+            mappedBy: customer
+        tasks:
+            targetEntity: Task
+            mappedBy: customer
+        timetrackings:
+            targetEntity: Timetracking
+            mappedBy: customer
+        customerfacebookurls:
+            targetEntity: CustomerFacebookUrl
+            mappedBy: customer
+        complaints:
+            targetEntity: Complaint
+            mappedBy: customer
+        uploads:
+            targetEntity: Upload
+            mappedBy: customer
+    lifecycleCallbacks: {  }

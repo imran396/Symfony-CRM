@@ -1,0 +1,15 @@
+Hallo {{ user.displayName }},
+
+Für die Aufgabe "<a href="{{ link_task }}">{{ task }}</a>" wurde eine Notiz angelegt.
+
+{% if uploadCount == 1 %}
+Die Notiz hat einen Datei-Anhang.
+
+{% elseif uploadCount > 1 %}
+Die Notiz hat {{ uploadCount }} Datei-Anhänge.
+
+{% endif %}
+Die Notiz kann <a href="{{ link_note }}">hier</a> eingesehen werden.
+
+Thanks,
+Beon Communication

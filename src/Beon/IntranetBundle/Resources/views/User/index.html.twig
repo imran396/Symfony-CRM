@@ -1,0 +1,13 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Users{% endtrans %}</h1>
+    <div class="btn-toolbar">
+        <a href="{{ path('user_new') }}" class="btn "><i class="icon-plus"></i> {% trans %} New user {% endtrans %}</a>
+	    {{filterForm|raw}}
+    </div>
+    <div class="well">
+        {% include 'IntranetBundle:User:indexTable.html.twig' %}
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}

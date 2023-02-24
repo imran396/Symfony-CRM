@@ -1,0 +1,28 @@
+git clone u75435922@s503663270.online.de:intranet.git
+password: 3Ue#eWcgjlyW
+password: 3Ue#eWcgjlyW
+password: 3Ue#eWcgjlyW
+password: 3Ue#eWcgjlyW
+password: 3Ue#eWcgjlyW
+The git repo contains a README file to get you started with your local setup.
+
+php app/console project:deploy prod --go
+php app/console project:deploy staging --go
+
+php app/console assetic:dump --env=prod --no-debug
+php app/console assets:install web --relative --env=prod
+
+
+id | customer_id | fb_url | Total_like | date 
+http://s503663270.online.de/login
+
+
+beon-markus@salo.mailrange.com
+
+databases: db524071617
+password: %k06Q2q9haVSKI4E
+
+mysqldump -u 'dbo524071617' -h 'db524071617.db.1and1.com' -p db524071617 >text.txt
+
+SELECT Task.id FROM Task   WHERE graphicsFormat NOT IN 
+(SELECT id FROM EnumValue)

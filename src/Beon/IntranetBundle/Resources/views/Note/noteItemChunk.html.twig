@@ -1,0 +1,17 @@
+<tr>
+    <td style="max-width: 150px">
+        <span title="{{ entity.text }}">
+            {{ entity.text|truncate(100) }}
+        </span>
+    </td>
+    <td>{% if entity.createdat %}{{ entity.createdat|date( defaultDateTimeFormat) }}{% endif %}</td>
+    <td>{{ entity.user }}</td>
+    {% block actionsRows %}
+        <td>
+            <a class="btn btn-table-actions" href="{{ path('note_show', { 'id': entity.id }) }}">{% trans %}show{% endtrans %}</a>
+            {% if is_granted('ROLE_NOTES_ALL') %}
+                <a class="btn btn-table-actions" href="{{ path('note_edit', { 'id': entity.id }) }}">{% trans %}edit{% endtrans %}</a>
+            {% endif %}
+        </td>
+    {% endblock %}
+</tr>

@@ -1,0 +1,102 @@
+{% macro new(formView,path,header) %}
+
+    <div class="row-fluid">
+        <div class="block">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{{ header }}
+            </div>
+
+            <div id="widget1container" class="block-body collapse in">
+                {{ form(formView) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path(path) }}">
+                            {% trans %}Back{% endtrans %}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+
+{% macro edit(formView,path,header,editPath) %}
+    <div class="row-fluid">
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#tablewidget">{{ header }}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+                {{ form(formView, {'attr':{'class':'form-horizontal' }} ) }}
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a onclick="return confirmation()" class="btn btn-table-actions" href="{{ path(path) }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                        <a onclick="return confirmation()" class="btn btn-table-actions"  href="{{ editPath}}"> {% trans %}show{% endtrans %}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro show(entity,tableBody,delete_form,indexPath,editPath,header,extra) %}
+
+    <div class="row-fluid">
+
+        <div class="block span6">
+            <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{{ header }}</div>
+            <div id="widget1container" class="block-body collapse in">
+
+                <div id="tablewidget" class="block-body collapse in">
+                    <table class="table table-bordered">
+                        {{ tableBody }}
+                    </table>
+                </div>
+
+                <ul class="record_actions unstyled">
+                    <li>
+                        <a href="{{ path(indexPath) }}">
+                            {% trans %}Back to the list{% endtrans %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path(editPath, { 'id': entity.id }) }}">
+                            {% trans %}Edit{% endtrans %}
+                        </a>
+                    </li>
+                    <li>{{ form(delete_form) }}</li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+    {% if extra %}
+        {{ extra }}
+    {% endif %}
+
+{% endmacro %}
+
+{% macro index(entities,name,newPath,header,newHeader,pagesCount) %}
+
+    <h1 class="page-title">{{ header }}</h1>
+
+    {% if newPath is not empty %}
+        <div class="btn-toolbar">
+            <a href="{{ path(newPath) }}" class="btn "><i class="icon-plus"></i> {{ newHeader }}</a>
+        </div>
+    {% endif %}
+
+    <div class="well">
+        <div id="tablewidget" class="block-body collapse in">
+
+            {% include 'IntranetBundle:'~name~':indexTable.html.twig' %}
+
+        </div>
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endmacro %}

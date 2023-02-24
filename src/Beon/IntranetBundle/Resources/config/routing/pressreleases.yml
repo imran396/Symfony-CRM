@@ -1,0 +1,59 @@
+pressrelease:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Pressrelease:index" }
+
+pressrelease_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Pressrelease:show" }
+
+pressrelease_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:Pressrelease:new" }
+
+pressrelease_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:Pressrelease:create" }
+    requirements: { _method: post }
+
+pressrelease_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Pressrelease:edit" }
+
+pressrelease_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Pressrelease:update" }
+    requirements: { _method: post|put }
+
+pressrelease_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Pressrelease:delete" }
+    requirements: { _method: post|delete }
+
+pressrelease_send_approval_email:
+    pattern:  /{id}/send-approval-email
+    defaults: { _controller: "IntranetBundle:Pressrelease:sendApprovalEmail" }
+
+pressrelease_approve:
+    pattern:  /approve/{id}
+    defaults: { _controller: "IntranetBundle:Pressrelease:approve" }
+
+pressrelease_deny:
+    pattern:  /{id}/deny
+    defaults: { _controller: "IntranetBundle:Pressrelease:deny" }
+
+pressrelease_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:Pressrelease:newRelated" }
+    requirements:
+          name: ^note|task$
+
+affilation_type_pressrelease_duplicate:
+    pattern:  /{id}/duplicate-down/{type}
+    defaults: { _controller: "IntranetBundle:Pressrelease:duplicateDown" }
+    requirements:
+          type: ^all|current$
+
+pressrelease_submit:
+    pattern:  /submit/
+    defaults: { _controller: "IntranetBundle:Pressrelease:pressSubmit" }
+    requirements: { _method: post }

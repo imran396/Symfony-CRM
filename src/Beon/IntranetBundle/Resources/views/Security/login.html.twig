@@ -1,0 +1,56 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block body %}
+
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <ul class="nav pull-right unstyled">
+
+                </ul>
+                <a class="brand" href="/"><span class="first">EMAT</span> <span class="second">by beon-communications</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+
+
+        <div class="row-fluid">
+            <div class="dialog span4">
+                <div class="block">
+                    <div class="block-heading">{% trans %}Sign in for customers{% endtrans %}</div>
+                    <div class="block-body">
+                        <form action="{{ path('login_check') }}" method="post">
+                            <label>{% trans %}Username{% endtrans %}</label>
+                            <input type="text" class="span12" id="username" name="_username"
+                                   value="{{ last_username }}">
+                            <label>{% trans %}Password{% endtrans %}</label>
+                            <input type="password" id="password" class="span12" name="_password"/>
+                            <button type="submit" class="btn btn-primary pull-right">{% trans %}Sign in{% endtrans %}</button>
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+
+                {% if error %}
+                    <div>{{ error.message }}</div>
+                    <p><a href="mailto:markus.sieber@beon-communications.de?subject=Kennwort vergessen">Kennwort vergessen?</a></p>
+                {% endif %}
+            </div>
+            <div class="dialog span4">
+                <div class="block">
+                    <div class="block-heading"><a href="{{ path('supplier_offer') }}">{% trans %}Make supplier offer{% endtrans %} &raquo;</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% block javascripts %}
+        {{ parent() }}
+    {% endblock javascripts %}
+
+
+{% endblock %}

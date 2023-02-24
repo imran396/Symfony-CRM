@@ -1,0 +1,59 @@
+Beon\IntranetBundle\Entity\Timetracking:
+    type: entity
+    table: Timetracking
+    repositoryClass: 'Beon\IntranetBundle\Entity\Repository\TimetrackingRepository'
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        day:
+            type: date
+        hours:
+            type: float
+        note:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+    manyToOne:
+        user:
+            targetEntity: User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        tariff:
+            targetEntity: EnumValue
+            joinColumn:
+                name: tariff
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+        customer:
+            targetEntity: Customer
+            joinColumn:
+                name: customer_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        task:
+            targetEntity: Task
+            joinColumn:
+                name: task_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        campaign:
+            targetEntity: Campaign
+            joinColumn:
+                name: campaign_id
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+
+    lifecycleCallbacks: {  }

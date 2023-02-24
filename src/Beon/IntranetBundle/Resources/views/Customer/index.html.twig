@@ -1,0 +1,51 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    {% import "IntranetBundle:Customer:entitiesMacro.html.twig" as macro %}
+
+    <h1 class="page-title">{{ (level|customerLevel~'s')|trans }}</h1>
+    {% if is_granted('ROLE_STAKEHOLDERS_ALL') %}
+        <div class="btn-toolbar">
+            <a href="{{ path('customer_new',{'level':level}) }}" class="btn"><i class="icon-plus"></i>{{ ('New '~(level|customerLevel))|trans }}</a>
+	        {{filterForm|raw}}
+        </div>
+    {% endif %}
+    <div class="well">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs unstyled">
+            <li class="active"><a href="#running" data-toggle="tab">{% trans %}Running{% endtrans %} </a></li>
+            <li><a href="#canceled" data-toggle="tab">{% trans %}Canceled{% endtrans %} </a></li>
+            <li><a href="#archive" data-toggle="tab">{% trans %}Archive{% endtrans %} </a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="running">
+
+                {{ macro.entitiesIndex(runningContracts, level) }}
+
+            </div>
+            <div class="tab-pane" id="canceled">
+
+                {{ macro.entitiesIndex(canceledContracts, level) }}
+
+            </div>
+            <div class="tab-pane" id="archive">
+
+                {{ macro.entitiesIndex(archiveContracts, level) }}
+
+            </div>
+
+        </div>
+    </div>
+
+    {% import "IntranetBundle:Macroses:paginator.html.twig" as paginator %}
+
+    {{ paginator.pager(runningContractsPagesCount,1,'running') }}
+    {{ paginator.pager(archiveContractsPagesCount,1,'archive') }}
+    {{ paginator.pager(canceledContractsPagesCount,1,'canceled') }}
+
+    {% include "IntranetBundle::paginationForTabbedContent.html.twig" %}
+
+{% endblock content %}

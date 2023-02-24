@@ -1,0 +1,49 @@
+complaint:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:Complaint:index" }
+
+complaint_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:Complaint:show" }
+
+complaint_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:Complaint:new" }
+
+complaint_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:Complaint:create" }
+    requirements: { _method: post }
+
+complaint_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:Complaint:edit" }
+
+complaint_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:Complaint:update" }
+    requirements: { _method: post|put }
+
+complaint_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:Complaint:delete" }
+    requirements: { _method: post|delete }
+
+complaint_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:Complaint:newRelated" }
+    requirements:
+          name: ^task|note$
+
+complaint_notify:
+    pattern:  /{id}/notify
+    defaults: { _controller: "IntranetBundle:Complaint:notify" }
+
+Complaint_proposal:
+    pattern:  /{id}/proposal
+    defaults: { _controller: "IntranetBundle:Complaint:proposal" }
+
+Complaint_no_answer:
+    pattern:  /{id}/no-answer
+    defaults: { _controller: "IntranetBundle:Complaint:noAnswer" }
+

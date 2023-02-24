@@ -1,0 +1,9 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+
+    {% import "IntranetBundle:Macroses:budgetPeriodMacro.html.twig" as list %}
+    {{ list.budgetList(entities,true,addBudgetWithForm) }}
+
+{% endblock %}

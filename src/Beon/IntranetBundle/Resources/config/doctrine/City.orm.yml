@@ -1,0 +1,43 @@
+Beon\IntranetBundle\Entity\City:
+    type: entity
+    table: City
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\CityRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+        population:
+            type: integer
+        notes:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        events:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+    oneToMany:
+        customers:
+            targetEntity: Customer
+            mappedBy: city
+        suppliers:
+            targetEntity: Supplier
+            mappedBy: city
+
+
+    manyToMany:
+        contacts:
+            targetEntity: Contact
+            mappedBy: cities
+
+    lifecycleCallbacks: {  }

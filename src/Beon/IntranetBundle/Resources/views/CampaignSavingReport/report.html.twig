@@ -1,0 +1,36 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+<h1 class="page-title"> {% trans %}Campaign Saving Report{% endtrans %}</h1>
+<div class="btn-toolbar">
+    <div class="btn-group">
+	{{ form_start(form,{'attr':{'id':'campaignSavingReportFilter'} }) }}
+	{{ form_widget(form.fromDate) }}
+	{{ form_widget(form.toDate) }}
+	{{ form_widget(form.generate) }} 
+	{{ form_end(form) }}
+    </div>
+</div>
+
+<div class="well">
+    {% if data %}
+        <div class="collapsibleList clear">
+            {% include 'IntranetBundle:CampaignSavingReport:hierarchyItem.html.twig' with {'currentItem': data} %}
+        </div>
+    {% endif %}
+</div>
+<script>
+    $(function() {
+        $('.collapsibleList').jstree();
+    });
+</script>
+<style>
+    .collapsibleList .data .jstree-icon {
+        background-image: none;
+        width: 12px;
+    }
+	.jstree-default .jstree-anchor {
+	    width: 100%;
+	}
+</style>
+{% endblock content %}

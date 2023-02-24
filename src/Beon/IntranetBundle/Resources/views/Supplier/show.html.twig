@@ -1,0 +1,14 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+    {% set supplier = entity %}
+    {% include 'IntranetBundle:Supplier:showChunk.html.twig' %}
+
+    {% include "IntranetBundle:Campaign:listChunk.html.twig" %}
+    {% if task|length %}
+        {% import "IntranetBundle:Macroses:taskListMacro.html.twig" as taskList %}
+        {{ taskList.template(task) }}
+    {% endif %}
+
+{% endblock %}

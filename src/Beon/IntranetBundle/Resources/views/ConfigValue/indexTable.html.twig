@@ -1,0 +1,26 @@
+<table id="indexTable" class="table">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for entity in entities %}
+            {% if entity.role in  app.user.roles %}
+                <tr>
+                    <td>{{ entity.description|truncate(100) }}</td>
+                    <td>{{ entity.value }}</td>
+                    <td>
+                      <div class="inline-forms">
+                        <a  class="btn btn-table-actions"  href="{{ path('configvalue_show', { 'id': entity.id }) }}"> {% trans %}show{% endtrans %}</a>
+                        <a  class="btn btn-table-actions"  href="{{ path('configvalue_edit', { 'id': entity.id }) }}"> {% trans %}edit{% endtrans %}</a>
+                      </div>
+                    </td>
+
+            {% endif %}</tr>
+        {% endfor %}
+        </tbody>
+    </table>

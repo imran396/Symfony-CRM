@@ -1,0 +1,7 @@
+Guten Tag, 
+
+der Auftrag {{ "AG%05d"|format(entity.id) }} "{{ entity.title }}" wurde Ihnen zugewiesen und ist überfällig.
+
+Fälligkeitsdatum: {{entity.dueDate|date(defaultDateFormat)}}
+ 
+<a href="{{ link }}">{{ link }}</a>

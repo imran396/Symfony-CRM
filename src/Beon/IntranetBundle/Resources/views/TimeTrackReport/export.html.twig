@@ -1,0 +1,6 @@
+{%trans%}Id{%endtrans%};{%trans%}Username{%endtrans%};{%trans%}Customer{%endtrans%};{%trans%}Beteiligter{%endtrans%};{%trans%}Day{%endtrans%};{%trans%}Hours{%endtrans%};{%trans%}Note{%endtrans%};{%trans%}Tariff{%endtrans%};{%trans%}Price{%endtrans%};{%trans%}Task{%endtrans%};{%trans%}Campaign{%endtrans%}
+
+{% if timeTrackingEntity %}
+{% for timeTrackingEntity in timeTrackingEntity %}
+{{timeTrackingEntity.id}};"{%if timeTrackingEntity.user%}{{timeTrackingEntity.user.displayName|excelCompat|raw}}{%endif%}";"{%if timeTrackingEntity.parentCustomer %}{{timeTrackingEntity.parentCustomer.name|excelCompat|raw}}{%endif%}";"{%if timeTrackingEntity.customer %}{{timeTrackingEntity.customer.name|excelCompat|raw}}{%endif%}";{{timeTrackingEntity.day|date('Y-m-d')|raw}};"{{timeTrackingEntity.hours|replace(".", ",")|raw}}";"{{timeTrackingEntity.note|excelCompat|raw}}";"{{timeTrackingEntity.tariff|ttTariff|excelCompat|raw}}";{{timeTrackingEntity.tariff|ttRate|raw}};"{{timeTrackingEntity.task|excelCompat|raw}}";"{{timeTrackingEntity.campaign|excelCompat|raw}}"
+{% endfor %}{%endif%}

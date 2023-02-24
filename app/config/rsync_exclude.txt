@@ -1,0 +1,12 @@
+app/config/parameters.yml
+app/cache
+app/logs
+app/spool
+uploads/
+web/js
+web/css
+web/bundles
+web/images
+web/app_dev.php
+web/php.ini
+web/.htaccess

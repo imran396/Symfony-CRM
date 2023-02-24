@@ -1,0 +1,30 @@
+customerfacebookurl:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:index" }
+
+customerfacebookurl_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:show" }
+
+customerfacebookurl_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:new" }
+
+customerfacebookurl_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:create" }
+    requirements: { _method: post }
+
+customerfacebookurl_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:edit" }
+
+customerfacebookurl_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:update" }
+    requirements: { _method: post|put }
+
+customerfacebookurl_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:CustomerFacebookUrl:delete" }
+    requirements: { _method: post|delete }

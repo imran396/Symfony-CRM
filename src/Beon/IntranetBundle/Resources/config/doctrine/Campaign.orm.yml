@@ -1,0 +1,196 @@
+Beon\IntranetBundle\Entity\Campaign:
+    type: entity
+    table: Campaign
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\CampaignRepository
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator: { strategy: AUTO }
+    fields:
+        title:
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+        approvalmailsent:
+            type: boolean
+            column: approvalMailSent
+        approved:
+            type: boolean
+        denied:
+            type: boolean
+        status:
+            type: smallint
+            nullable: true
+            unsigned: true
+        details:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        start:
+            type: date
+            nullable: true
+            comment: ''
+        end:
+            type: date
+            nullable: true
+            comment: ''
+        budget:
+            type: float
+            nullable: true
+            comment: ''
+        regularPrice:
+            type: float
+            nullable: true
+            comment: ''
+        numberOfAds:
+            type: decimal
+            nullable: true
+            scale: 1
+            unsigned: true
+            comment: ''
+        numberOfSeconds:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+        audiencesize:
+            type: integer
+            nullable: true
+            unsigned: true
+            comment: ''
+            column: audienceSize
+        adDetails:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        deleted:
+            type: boolean
+        createdat:
+            type: datetime
+            nullable: true
+            comment: ''
+            column: createdAt
+        approvedAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        confirmedAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        approvalMailSentAt:
+            type: datetime
+            nullable: true
+            comment: ''
+        adsizeWidth:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: adsizeWidth
+        adsizeHeight:
+            type: integer
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: adsizeHeight
+        invoiceAddress:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        returnPath: 
+            type: string
+            nullable: true
+            length: 255
+            fixed: false
+        lastApprovalMailSentAt:
+            type: datetime
+            nullable: true
+        serializedApprovalMail:
+            type: text
+            nullable: true
+    manyToOne:
+        supplier:
+            targetEntity: Supplier
+            joinColumn:
+                name: supplier_id
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        customer:
+          targetEntity: Customer
+          inversedBy: campaigns
+          joinColumn:
+              nullable: false
+              onDelete: "CASCADE"
+              name: customer_id
+              referencedColumnName: id
+        contact:
+            targetEntity: Contact
+            joinColumn:
+                name: contact_id
+                nullable: true
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        approvedBy:
+            targetEntity: User
+            joinColumn:
+                name: approved_by_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        approvementSender:
+            targetEntity: User
+            joinColumn:
+                name: approvement_sender_id
+                referencedColumnName: id
+                onDelete: "SET NULL"
+        duplicateOf:
+            targetEntity: Campaign
+            joinColumn:
+                name: duplicate_of
+                referencedColumnName: id
+                nullable: true
+                onDelete: "SET NULL"
+        includedServices:
+            targetEntity: EnumValue
+            joinColumn:
+                name: includedServices
+                referencedColumnName: id
+                nullable: false
+                onDelete: "RESTRICT"
+        beonRecommendation:
+            targetEntity: EnumValue
+            joinColumn:
+                name: beonRecommendation
+                referencedColumnName: id
+                nullable: true
+                onDelete: "RESTRICT"
+
+    oneToMany:
+        uploads:
+            targetEntity: Upload
+            mappedBy: campaign
+        notes:
+            targetEntity: Note
+            mappedBy: campaign
+        tasks:
+            targetEntity: Task
+            mappedBy: campaign
+        timetrackings:
+            targetEntity: Timetracking
+            mappedBy: campaign
+        pressreleases:
+            targetEntity: Pressrelease
+            mappedBy: campaign
+    lifecycleCallbacks: {  }

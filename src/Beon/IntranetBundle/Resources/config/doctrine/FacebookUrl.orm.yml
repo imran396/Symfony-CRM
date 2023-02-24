@@ -1,0 +1,39 @@
+Beon\IntranetBundle\Entity\FacebookUrl:
+    type: entity
+    table: null
+    repositoryClass: Beon\IntranetBundle\Entity\Repository\FacebookUrlRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        url:
+            type: string
+            length: 255
+            unique: true
+        alias:
+            type: string
+            length: 50
+            unique: true
+        last_post:
+            type: datetime
+            nullable: true
+            comment: ''
+        warning_mail_sent:
+            type: boolean
+        page_id:
+            type: bigint
+            nullable: true
+            comment: ''
+    oneToMany:
+        facebooklikecounts:
+            targetEntity: FacebookLikecount
+            mappedBy: facebookUrl
+
+        customerfacebookurls:
+            targetEntity: CustomerFacebookUrl
+            mappedBy: facebookUrl
+
+    lifecycleCallbacks: {  }

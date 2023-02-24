@@ -1,0 +1,31 @@
+<div class="row-fluid" id="indexTable">
+    <div class="block span12">
+    <div class="block-heading" data-toggle="collapse" data-target="#widget1container">{% trans %}Logs{% endtrans %}</div>
+        <div id="widget1container" class="block-body collapse in">
+            <div id="tablewidget" class="block-body collapse in">
+                <table class="table table-bordered" >
+                  <thead>
+                    <tr>
+                        <th>{% trans %}Date/Time{% endtrans %}</th>
+                        <th>{% trans %}User Name{% endtrans %}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% if logs is not empty %}
+                      {% for log in logs %}
+                        <tr>
+                            <td>{{ log.createdAt|date(defaultDateTimeFormat) }}</td>
+                            <td>{{ log.user }}</td>
+                        </tr>
+                       {% endfor %}
+                   {% else %}
+                    <tr>
+                        <td colspan="2">No records found.</td>
+                    </tr>
+                   {% endif %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

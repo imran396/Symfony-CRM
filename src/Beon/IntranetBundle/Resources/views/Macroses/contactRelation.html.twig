@@ -1,0 +1,57 @@
+
+    <div class="modal small hide fade" id="contactRelation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="modalLabel">{% trans %}Add new contact relation{% endtrans %}</h3>
+        </div>
+        <div class="modal-body">
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">{% trans %}Cancel{% endtrans %}</button>
+            <button class="btn btn-danger" data-dismiss="ContactAction">{% trans %}Save{% endtrans %}</button>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        jQuery(function ($) {
+
+            $modal = $('#contactRelation');
+            $('#supplierContact').click(function () {
+                $('.modal-body').html($('#supplierContactForm').html());
+                $('.select2-container').html("");
+                $modal.modal('show');
+                $('select#form_supplier_id').select2();
+            });
+
+            $('#supplierGroupContact').click(function () {
+                $('.modal-body').html($('#supplierGroupContactForm').html());
+                $('.select2-container').html("");
+                $modal.modal('show');
+                $('select#form_supplierGroup_id').select2();
+            });
+
+            $('#cityContact').click(function () {
+                $('.modal-body').html($('#cityContactForm').html());
+                $('.select2-container').html("");
+                $modal.modal('show');
+                $('select#form_city_id').select2();
+            });
+
+            $('#customerContact').click(function () {
+                $('.modal-body').html($('#customerContactForm').html());
+                $('.select2-container').html("");
+                $modal.modal('show');
+                $('select#form_customer_id').select2();
+            });
+
+            $modal.find('[data-dismiss="ContactAction"]').click(function () {
+                $modal.find('form').submit();
+                $modal.modal('hide');
+            });
+
+        });
+    </script>
+

@@ -1,0 +1,27 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+<h1 class="page-title"> {% trans %}Survey Analysis Report{% endtrans %}</h1>
+
+{{ form_start(form,{'attr':{'id':'reportFilter'} }) }}
+    {{ form_widget(form.customer, { 'attr':{'placeholder':'Select a customer'|trans}} ) }}
+    {{ form_widget(form.fromDate) }}
+    {{ form_widget(form.toDate) }}
+    {{ form_widget(form.generate) }}
+{{ form_end(form) }}
+
+<div class="clear">&nbsp;</div>
+
+<div class="well">
+    {% if data.nominal is not defined 
+        and data.ordinal is not defined 
+        and data.lengthOfStay is not defined %}
+        <p>No records found.</p>
+    {% else %}
+        <div id="tablewidget" class="block-body collapse in">
+        {% include 'IntranetBundle:SurveyAnalysis:reportTable.html.twig' %} 
+        </div>
+    {% endif %} 
+    {# <pre>{{ dump(data) }}</pre> #}
+</div>
+{% endblock content %}

@@ -1,0 +1,46 @@
+suppliergroup:
+    pattern:  /
+    defaults: { _controller: "IntranetBundle:SupplierGroup:index" }
+
+suppliergroup_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "IntranetBundle:SupplierGroup:show" }
+
+suppliergroup_new:
+    pattern:  /new
+    defaults: { _controller: "IntranetBundle:SupplierGroup:new" }
+
+suppliergroup_create:
+    pattern:  /create
+    defaults: { _controller: "IntranetBundle:SupplierGroup:create" }
+    requirements: { _method: post }
+
+suppliergroup_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "IntranetBundle:SupplierGroup:edit" }
+
+suppliergroup_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "IntranetBundle:SupplierGroup:update" }
+    requirements: { _method: post|put }
+
+suppliergroup_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "IntranetBundle:SupplierGroup:delete" }
+    requirements: { _method: post|delete }
+
+suppliergroup_contact:
+    pattern: /contact-suppliergroup
+    defaults: { _controller: "IntranetBundle:SupplierGroup:contactSupplierGroupRelation" }
+    requirements: { _method: post }
+
+suppliergroup_contact_delete:
+    pattern: /{id}/{contactId}/contact-suppliergroup-delete
+    defaults: { _controller: "IntranetBundle:SupplierGroup:supplierGroupContactDelete" }
+    requirements: { _method: get|delete }
+
+suppliergroup_new_related:
+    pattern:  /{id}/{name}/new
+    defaults: { _controller: "IntranetBundle:SupplierGroup:newRelated" }
+    requirements:
+          name: ^supplier$

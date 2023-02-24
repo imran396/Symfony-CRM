@@ -1,0 +1,9 @@
+Hi {{ recipient }}, 
+
+die Pressemitteilung "{{ entity.title }}" wurde freigegeben von {{ approver }}.
+
+{% if comment %}
+{{ comment }}
+
+{% endif %}
+<a href="{{ link }}">{{ link }}</a>

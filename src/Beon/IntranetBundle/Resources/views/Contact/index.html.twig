@@ -1,0 +1,15 @@
+
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+    <h1 class="page-title">{% trans %}Contacts{% endtrans %}</h1>
+    <div class="btn-toolbar">
+        <a href="{{ path('contact_new') }}" class="btn"><i class="icon-plus"></i> {% trans %} New contact{% endtrans %}</a>
+	    {{filterForm|raw}}
+    </div>
+    <div class="well">
+        {% include 'IntranetBundle:Contact:indexTable.html.twig' %}
+    </div>
+    {% include 'IntranetBundle::simplePaginatorBlock.html.twig' %}
+{% endblock content %}
+

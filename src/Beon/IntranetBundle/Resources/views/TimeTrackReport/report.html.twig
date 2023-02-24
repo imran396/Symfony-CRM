@@ -1,0 +1,52 @@
+{% extends 'IntranetBundle::mainLayout.html.twig' %}
+
+{% block content %}
+
+<h1 class="page-title">Time Track Report</h1> 
+<div class="clear">&nbsp;</div>
+
+{{ form_start(form,{'attr':{'id':'timeTrackReportFilter'} }) }}
+    <div class="span3 date-form">{{ form_widget(form.fromDate) }}</div>
+    <div class="span3 date-form"> {{ form_widget(form.toDate) }}</div>
+    <div class="span3">{{ form_widget(form.generate) }} </div>
+{{ form_end(form) }}
+
+<div class="clear">&nbsp;</div>
+
+<div class="well">
+    
+    {% if data %}
+	<div class="clear">
+	  <div class="pull-right export-main">
+		{{ form_start(exportTimeTrackingReportForm,{'attr':{'id':'timeTrackReportFilter'} }) }}
+		    <div class="hide">
+			{{ form_widget(exportTimeTrackingReportForm.fromDate) }}
+			{{ form_widget(exportTimeTrackingReportForm.toDate) }}
+		    </div>
+		    {{ form_widget(exportTimeTrackingReportForm.generate) }} 
+		{{ form_end(exportTimeTrackingReportForm) }}
+	</div>
+	</div>
+	
+	
+        <div class="collapsibleList clear">
+            {% include 'IntranetBundle:TimeTrackReport:hierarchyItem.html.twig' with {'currentItem': data.customer} %}
+        </div>
+        <hr/>
+        <div class="collapsibleList">
+            {% include 'IntranetBundle:TimeTrackReport:hierarchyItem.html.twig' with {'currentItem': data.user} %}
+        </div>
+    {% endif %}
+</div>
+<script>
+    $(function() {
+        $('.collapsibleList').jstree();
+    });
+</script>
+<style>
+    .collapsibleList .data .jstree-icon {
+        background-image: none;
+        width: 12px;
+    }
+</style>
+{% endblock content %}

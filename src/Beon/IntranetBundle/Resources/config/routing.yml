@@ -1,0 +1,107 @@
+intranet_enumvalue:
+    resource: "@IntranetBundle/Resources/config/routing/enumvalue.yml"
+    prefix:   /enumvalue
+
+intranet_facebookauth:
+    resource: "@IntranetBundle/Resources/config/routing/facebookauth.yml"
+    prefix:   /facebookauth
+
+beon_homepage:
+    pattern:  /
+    defaults: { _controller: IntranetBundle:Default:index }
+BeonBundle_customer:
+    resource: "@IntranetBundle/Resources/config/routing/customer.yml"
+    prefix:   /stakeholder
+
+IntranetBundle_CustomerDashboard:
+    pattern:  /stakeholder/{id}/dashboard
+    defaults: { _controller: "IntranetBundle:Default:index" }
+
+BeonBundle_user:
+    resource: "@IntranetBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
+BeonBundle_campaign:
+    resource: "@IntranetBundle/Resources/config/routing/campaign.yml"
+    prefix:   /campaign
+
+BeonBundle_upload:
+    resource: "@IntranetBundle/Resources/config/routing/upload.yml"
+    prefix:   /upload
+
+BeonBundle_pressrelease:
+    resource: "@IntranetBundle/Resources/config/routing/pressreleases.yml"
+    prefix:   /pressrelease
+
+BeonBundle_note:
+    resource: "@IntranetBundle/Resources/config/routing/note.yml"
+    prefix:   /note
+
+BeonBundle_supplier:
+    resource: "@IntranetBundle/Resources/config/routing/supplier.yml"
+    prefix:   /supplier
+
+IntranetBundle_contact:
+    resource: "@IntranetBundle/Resources/config/routing/contact.yml"
+    prefix:   /contact
+
+IntranetBundle_budgetperiod:
+    resource: "@IntranetBundle/Resources/config/routing/budgetperiod.yml"
+    prefix:   /budgetperiod
+
+IntranetBundle_MailQueueController:
+    resource: "@IntranetBundle/Resources/config/routing/mailqueue.yml"
+    prefix:   /approve
+
+IntranetBundle_task:
+    resource: "@IntranetBundle/Resources/config/routing/task.yml"
+    prefix:   /task
+
+IntranetBundle_suppliergroup:
+    resource: "@IntranetBundle/Resources/config/routing/suppliergroup.yml"
+    prefix:   /suppliergroup
+
+IntranetBundle_customerfacebookurl:
+     resource: "@IntranetBundle/Resources/config/routing/customerfacebookurl.yml"
+     prefix:   /stakeholderfacebookurl
+
+IntranetBundle_facebookurl:
+     resource: "@IntranetBundle/Resources/config/routing/facebookurl.yml"
+     prefix:   /facebookurl
+
+IntranetBundle_surveyresult:
+    resource: "@IntranetBundle/Resources/config/routing/surveyresult.yml"
+    prefix:   /surveyresult
+
+IntranetBundle_complaint:
+    resource: "@IntranetBundle/Resources/config/routing/complaint.yml"
+    prefix:   /complaint
+
+
+IntranetBundle_monitoredurl:
+    resource: "@IntranetBundle/Resources/config/routing/monitoredurl.yml"
+    prefix:   /monitoredurl
+
+IntranetBundle_timetracking:
+    resource: "@IntranetBundle/Resources/config/routing/timetracking.yml"
+    prefix:   /timetracking
+
+IntranetBundle_city:
+    resource: "@IntranetBundle/Resources/config/routing/city.yml"
+    prefix:   /city
+IntranetBundle_report:
+    resource: "@IntranetBundle/Resources/config/routing/report.yml"
+    prefix:   /report
+
+IntranetBundle_accesslevel:
+    resource: "@IntranetBundle/Resources/config/routing/accesslevel.yml"
+    prefix:   /accesslevel
+
+
+IntranetBundle_configvalue:
+    resource: "@IntranetBundle/Resources/config/routing/configvalue.yml"
+    prefix:   /conf
+
+IntranetBundle_excelimport:
+    resource: "@IntranetBundle/Resources/config/routing/excelimport.yml"
+    prefix:   /excelimport
